@@ -2,7 +2,7 @@ package MITP.team.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
+//TODO stworzenie podstawowych endpointow do rejestracji + loginu
 @SpringBootApplication
 public class MitpBackendApplication {
 
