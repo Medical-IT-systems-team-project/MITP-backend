@@ -1,6 +1,5 @@
 package MITP.team.backend;
 
-
 import MITP.team.backend.infrastructure.errorvalidation.ApiValidationErrorResponseDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j2;
