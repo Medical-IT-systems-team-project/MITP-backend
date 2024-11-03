@@ -31,7 +31,8 @@ public class LoginAndRegisterRestController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<RegisterResponseDto> registerUser(@RequestBody @Valid RegisterRequestDto registerRequestDto) {
         final UserResponseDto userResponseDto = loginAndRegisterFacade.register(mapper.fromReqisterRequestDto(registerRequestDto));
-        final RegisterResponseDto registered = mapper.fromUserResponseDto(userResponseDto, "REGISTERED");
+        String responseMessage = "REGISTERED";
+        final RegisterResponseDto registered = mapper.fromUserResponseDto(userResponseDto, responseMessage);
         log.info("User registered: {}", registered);
         return ResponseEntity.status(HttpStatus.CREATED).body(registered);
     }
