@@ -14,9 +14,9 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set up JDK 17
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v4
       with:
         java-version: '17'
         distribution: 'adopt'
@@ -34,7 +34,7 @@ jobs:
       
     - name: Upload test results
       if: ${{ always() }}
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: test-results
         path: backend/target/surefire-reports
@@ -42,7 +42,7 @@ jobs:
     - name: Notify Success
       if: ${{ steps.tests.outcome == 'success' }}
       run: |
-        echo "✅ Tests passed! Commit can be merged safely."
+        echo "Tests passed! Commit can be merged safely."
         gh issue create --title "Tests passed" --body "All tests have passed successfully. The commit can be merged." --label "CI"
       env:
         GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
@@ -50,7 +50,7 @@ jobs:
     - name: Notify Failure  
       if: ${{ steps.tests.outcome == 'failure' }}
       run: |
-        echo "❌ Tests failed! Please fix the issues before merging."
+        echo "Tests failed! Please fix the issues before merging."
         gh issue create --title "Tests failed" --body "Some tests have failed. Please fix the issues before merging the commit." --label "CI"
       env:
         GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
