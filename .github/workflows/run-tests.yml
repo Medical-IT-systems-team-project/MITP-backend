@@ -25,7 +25,7 @@ jobs:
     - name: Run tests
       run: mvn test
       
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       if: ${{ failure() }}
       with:
         name: test-results
