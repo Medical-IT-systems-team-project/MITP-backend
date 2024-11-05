@@ -21,9 +21,9 @@ jobs:
         java-version: '17'
         distribution: 'adopt'
     - name: Build with Maven
-      run: mvn clean install
+      run: ./MITP-backend/mvn clean install
     - name: Run tests
-      run: mvn test
+      run: ./MITP-backend/mvn test
       
     - uses: actions/upload-artifact@v3
       if: ${{ failure() }}
