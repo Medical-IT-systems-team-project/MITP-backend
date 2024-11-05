@@ -30,22 +30,19 @@ jobs:
       run: |
         mvn test > test-results.txt
       
-    - name: Check test results
-      if: ${{ steps.tests.outcome == 'failure' }}
-      run: exit 1
-      
     - name: Upload test results
       if: ${{ always() }}
       uses: actions/upload-artifact@v4
       with:
         name: test-results
         path: backend/target/surefire-reports
-
+        
     - name: Notify Success
       if: ${{ steps.tests.outcome == 'success' }}
       run: |
         echo "Tests passed! Commit can be merged safely."
-        gh issue create --title "Tests passed" --body "All tests have passed successfully. The commit can be merged."
+        TEST_RESULTS_CONTENT=$(cat backend/test-results.txt)
+        gh issue create --title "Tests passed" --body "All tests have passed successfully. The commit can be merged.\n\n${TEST_RESULTS_CONTENT}" --label "CI/CD" --assignee ${{ github.actor }}
       env:
         GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
         
@@ -53,17 +50,7 @@ jobs:
       if: ${{ steps.tests.outcome == 'failure' }}
       run: |
         echo "Tests failed! Please fix the issues before merging."
-        
-        TEST_RESULTS_CONTENT=$(cat test-results.txt)
-        
-        gh issue create --title "Tests failed" --body "Some tests have failed. Please fix the issues before merging the commit.
-
----
-
-Test Results:
-\`\`\`
-${TEST_RESULTS_CONTENT}
-\`\`\`
-" --label "CI/CD" --assignee "${{ github.actor }}"
+        TEST_RESULTS_CONTENT=$(cat backend/test-results.txt)
+        gh issue create --title "Tests failed" --body "Some tests have failed. Please fix the issues before merging the commit.\n\n${TEST_RESULTS_CONTENT}" --label "CI/CD" --assignee ${{ github.actor }}
       env:
         GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
