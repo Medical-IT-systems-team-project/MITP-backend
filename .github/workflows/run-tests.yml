@@ -40,7 +40,8 @@ jobs:
       if: ${{ steps.tests.outcome == 'success' }}
       run: |
         LAST_LINES=$(tail -n 10 backend/test-results.txt)
-        MESSAGE="All tests have passed successfully. The commit can be merged.\n\n$LAST_LINES"
+        MESSAGE="All tests have passed successfully. The commit can be merged.
+        $LAST_LINES"
         gh issue create --title "Tests passed" --body "$MESSAGE" --label "CI/CD" --assignee ${{ github.actor }}
       env:
         GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
@@ -49,7 +50,8 @@ jobs:
       if: ${{ steps.tests.outcome == 'failure' }}
       run: |
         LAST_LINES=$(tail -n 10 backend/test-results.txt)
-        MESSAGE="Some tests have failed. Please fix the issues before merging the commit.\n\n$LAST_LINES"
+        MESSAGE="Some tests have failed. Please fix the issues before merging the commit.
+        $LAST_LINES"
         gh issue create --title "Tests failed" --body "$MESSAGE" --label "CI/CD" --assignee ${{ github.actor }} 
       env:
         GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
