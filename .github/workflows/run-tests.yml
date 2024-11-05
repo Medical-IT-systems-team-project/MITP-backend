@@ -43,7 +43,7 @@ jobs:
       if: ${{ steps.tests.outcome == 'success' }}
       run: |
         echo "Tests passed! Commit can be merged safely."
-        gh issue create --title "Tests passed" --body "All tests have passed successfully. The commit can be merged." --label "CI"
+        gh issue create --title "Tests passed" --body "All tests have passed successfully. The commit can be merged." --label "CI/CD"
       env:
         GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
         
@@ -51,6 +51,6 @@ jobs:
       if: ${{ steps.tests.outcome == 'failure' }}
       run: |
         echo "Tests failed! Please fix the issues before merging."
-        gh issue create --title "Tests failed" --body "Some tests have failed. Please fix the issues before merging the commit." --label "CI"
+        gh issue create --title "Tests failed" --body "Some tests have failed. Please fix the issues before merging the commit." --label "CI/CD"
       env:
         GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
