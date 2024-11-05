@@ -39,17 +39,18 @@ jobs:
     - name: Notify Success
       if: ${{ steps.tests.outcome == 'success' }}
       run: |
-        echo "Tests passed! Commit can be merged safely."
         LAST_LINES=$(tail -n 10 backend/test-results.txt)
-        gh issue create --title "Tests passed" --body "All tests have passed successfully. The commit can be merged. \n ${LAST_LINES}" --label "CI/CD" --assignee ${{ github.actor }}
+        MESSAGE="All tests have passed successfully. The commit can be merged.\n\n$LAST_LINES"
+        gh issue create --title "Tests passed" --body "$MESSAGE" --label "CI/CD" --assignee ${{ github.actor }}
       env:
         GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
-
+      
     - name: Notify Failure  
       if: ${{ steps.tests.outcome == 'failure' }}
       run: |
-        echo "Tests failed! Please fix the issues before merging."
         LAST_LINES=$(tail -n 10 backend/test-results.txt)
-        gh issue create --title "Tests failed" --body "Some tests have failed. Please fix the issues before merging the commit. \n ${LAST_LINES}" --label "CI/CD" --assignee ${{ github.actor }}
+        MESSAGE="Some tests have failed. Please fix the issues before merging the commit.\n\n$LAST_LINES"
+        gh issue create --title "Tests failed" --body "$MESSAGE" --label "CI/CD" --assignee ${{ github.actor }} 
       env:
         GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+      
