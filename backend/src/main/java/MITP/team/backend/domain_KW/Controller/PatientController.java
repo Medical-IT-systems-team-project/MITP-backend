@@ -14,7 +14,8 @@ public class PatientController {
 
 
     @GetMapping("/new")
-    public Long generateUUID() {
+    public Long generateID() {
         return patientService.generateNewPatientId();
     }
+
 }
