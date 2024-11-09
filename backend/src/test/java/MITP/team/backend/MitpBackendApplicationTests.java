@@ -24,9 +24,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -247,5 +245,24 @@ class MitpBackendApplicationTests {
 				() -> assertEquals("someUser2", username3)
 		);
 	}
+
+    @Test
+    public void MedicatDatacontrolelrtest() {
+
+        /* happy path
+         * there is not any users in database
+         * step 1 user made POST request to /register endpoint with not data and status is 400 with list of errors
+         * step 2 user made POST request to /register endpoint with data someUser and somePassword and status is 201
+         * step 3 user made POST request to /register endpoint with data someUser and somePassword and status is 409 with message "Login already exists"
+         * step 4 user made POST request to /login endpoint with data someUser2 and somePassword and status is 401
+         * step 5 user made POST request to /login endpoint with data someUser and somePassword and status is 200. response contains token
+         * step 6 user made GET request to /find/{login} without token endpoint with token and status is 401. response contains username
+         * step 7 user made GET request to /find/{login} with token endpoint with token and status is 200. response contains username
+         * step 8 user made PUT request to /update/{login} without token endpoint with token and status is 401.
+         * step 9 user made PUT request to /update/{login} with token endpoint with token with body someUser2 and status is 200. response contains someUser2
+         * step 10 user made DELETE request to /delete/{login} without token endpoint with token and status is 401
+         * step 11 user made DELETE request to /delete/{login} with token endpoint with token and status is 200. response contains deleted username
+         * */
+    }
 
 }
