@@ -18,11 +18,7 @@ public class MedicalDataController {
 
     @GetMapping("/all/{patientId}")
     public ResponseEntity<MedicalDataDto> getMedicalDataByID(@PathVariable Long patientId) {
-        return medicalDataService.getMedicalDataById(patientId)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-
+        MedicalDataDto medicalDataById = medicalDataService.getMedicalDataById(patientId);
+        return ResponseEntity.ok(medicalDataById);
     }
-
-
 }
