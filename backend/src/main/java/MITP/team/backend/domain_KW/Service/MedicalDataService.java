@@ -23,7 +23,7 @@ public class MedicalDataService implements IMedicalDataService {
     private final MedicationRepository medicationRepository;
 
     @Override
-    public Optional<MedicalDataDto> getMedicalDataById(Long id) {
+    public MedicalDataDto getMedicalDataById(Long id) {
         List<Treatment> treatments = treatmentRepository.findAllById(List.of(id));
         List<Medication> medications = medicationRepository.findAllById(List.of(id));
         List<DrugTeratment> drugTeratments = drugTreatmentRepository.findAllById(List.of(id));
@@ -34,6 +34,6 @@ public class MedicalDataService implements IMedicalDataService {
         medicalDataDto.setMedications(medications);
         medicalDataDto.setDrugTeratments(drugTeratments);
 
-        return Optional.of(medicalDataDto);
+        return medicalDataDto;
     }
 }
