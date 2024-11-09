@@ -7,6 +7,9 @@
     <changeSet id="0" author="admin">
 
     </changeSet>
+<!--    logowanie-->
     <include file="db/changelog/2024/11/03-01-changelog.xml"/>
-    <include file="db/changelog/2024/11/08-01-changelog.xml"/>
+<!--    patient-->
+    <include file="db/changelog/2024/11/09-01-changelog.xml"/>
+
 </databaseChangeLog>

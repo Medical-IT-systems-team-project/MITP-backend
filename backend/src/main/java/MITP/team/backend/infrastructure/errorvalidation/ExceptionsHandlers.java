@@ -1,5 +1,7 @@
 package MITP.team.backend.infrastructure.errorvalidation;
 
+import MITP.team.backend.domain_KW.Exceptions.DataNotFoundException;
+import MITP.team.backend.domain_KW.Exceptions.DuplicatedPatientException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -39,6 +41,7 @@ public class ExceptionsHandlers {
                 .build();
     }
 
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -48,6 +51,28 @@ public class ExceptionsHandlers {
         return ApiValidationErrorResponseDto.builder()
                 .errors(errors)
                 .status(HttpStatus.BAD_REQUEST)
+                .build();
+    }
+
+    @ExceptionHandler(DuplicatedPatientException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public DuplicateKeyExceptionDto handleMethodArgumentNotValidException(DuplicatedPatientException exception) {
+        final String loginNotFound = "Patient already exist in system.";
+        log.warn(loginNotFound);
+        return DuplicateKeyExceptionDto.builder()
+                .message(loginNotFound)
+                .build();
+    }
+
+    @ExceptionHandler(DataNotFoundException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public DuplicateKeyExceptionDto handleMethodArgumentNotValidException(DataNotFoundException exception) {
+        final String notFound = "Not found in system.";
+        log.warn(notFound);
+        return DuplicateKeyExceptionDto.builder()
+                .message(notFound)
                 .build();
     }
 }
