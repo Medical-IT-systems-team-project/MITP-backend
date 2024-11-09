@@ -11,5 +11,9 @@
     <include file="db/changelog/2024/11/03-01-changelog.xml"/>
 <!--    patient-->
     <include file="db/changelog/2024/11/09-01-changelog.xml"/>
+<!--    PRZETESTOWANE _ NIE RUSZAJ!!!-->
+
+
+
 
 </databaseChangeLog>

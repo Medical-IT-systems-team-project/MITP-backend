@@ -235,13 +235,75 @@ class MitpBackendApplicationTests {
     }
 
     @Test
-    public void MedicatDatacontrolelrtest() {
+    public void registerPatientHappyPath() throws Exception {
 
         /* happy path
          * there is not any users in database
          * step 1 enroll user and get token
          * step 2 send POST request to /patient/new with token and status is 200. response contains id
+         * step 3 send POST request to /patient/new with token with the same data and status is 400 with message "Patient already exist in system."
+         * step 4 send GET request to /patient/{id} with token and status is 200. response contains patient data
+         * step 5 send GET request to /patient/{id} with token and status is 404 with message "Patient not found in system."
          * */
+
+
+        //step 1 enroll user and get token
+        String token = registerAndGetToken();
+
+
+        //step 2 send POST request to /patient/new with token and status is 200. response contains id
+        final MvcResult result = mockMvc.perform(post("/patient/new")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Bearer " + token)
+                        .content("""
+                                {
+                                "firstName": "someName",
+                                "lastName": "someLastName",
+                                "age": 20,
+                                "gender": "MALE"
+                                }
+                                """))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        final String accessId = objectMapper.readTree(result.getResponse().getContentAsString()).get("accessId").asText();
+
+        // step 3 send POST request to /patient/new with token with the same data and status is 400 with message "Patient already exist in system."
+        mockMvc.perform(post("/patient/new")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Bearer " + token)
+                        .content("""
+                                {
+                                "firstName": "someName",
+                                "lastName": "someLastName",
+                                "age": 20,
+                                "gender": "MALE"
+                                }
+                                """))
+                .andExpect(status().isBadRequest());
+
+
+        //step 4 send GET request to /patient/{id} with token and status is 200. response contains patient data
+        MvcResult result1 = mockMvc.perform(get("/patient/" + accessId)
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        assertAll(
+                () -> assertThat(objectMapper.readTree(result1.getResponse().getContentAsString()).get("firstName").asText()).isEqualTo("someName"),
+                () -> assertThat(objectMapper.readTree(result1.getResponse().getContentAsString()).get("lastName").asText()).isEqualTo("someLastName"),
+                () -> assertThat(objectMapper.readTree(result1.getResponse().getContentAsString()).get("age").asInt()).isEqualTo(20),
+                () -> assertThat(objectMapper.readTree(result1.getResponse().getContentAsString()).get("gender").asText()).isEqualTo("MALE"),
+                () -> assertThat(objectMapper.readTree(result1.getResponse().getContentAsString()).get("accessId").asText()).isEqualTo(accessId)
+        );
+
+
+        //step 5 send GET request to /patient/{id} with token and status is 404 with message "Patient not found in system."
+        mockMvc.perform(get("/patient/" + accessId + "1")
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 
     private String registerAndGetToken() throws Exception {

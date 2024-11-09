@@ -67,7 +67,7 @@ public class ExceptionsHandlers {
 
     @ExceptionHandler(DataNotFoundException.class)
     @ResponseBody
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public DuplicateKeyExceptionDto handleMethodArgumentNotValidException(DataNotFoundException exception) {
         final String notFound = "Not found in system.";
         log.warn(notFound);

@@ -10,17 +10,19 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/patient")
 public class PatientController {
+
     private final PatientService patientService;
 
-
     @PostMapping("/new")
-    public String createNewPatient(@RequestBody PatientRequestDto patientRequestDto) {
-        return patientService.createNewPatient(patientRequestDto);
+    public PatientResponeDto createNewPatient(@RequestBody PatientRequestDto patientRequestDto) {
+        String accessId = patientService.createNewPatient(patientRequestDto);
+        return PatientResponeDto.builder()
+                .accessId(accessId)
+                .build();
     }
 
     @GetMapping("/{accessId}")
     public PatientResponeDto createNewPatient(@PathVariable String accessId) {
         return patientService.getPatientByAccessId(accessId);
     }
-
 }
