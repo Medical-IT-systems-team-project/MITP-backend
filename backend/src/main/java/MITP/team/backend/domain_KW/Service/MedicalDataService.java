@@ -24,9 +24,9 @@ public class MedicalDataService implements IMedicalDataService {
 
     @Override
     public Optional<MedicalDataDto> getMedicalDataById(Long id) {
-        List<Treatment> treatments = treatmentRepository.findAllByPatientId(id);
-        List<Medication> medications = medicationRepository.findAllByPatientId(id);
-        List<DrugTeratment> drugTeratments = drugTreatmentRepository.findAllByPatientId(id);
+        List<Treatment> treatments = treatmentRepository.findAllById(List.of(id));
+        List<Medication> medications = medicationRepository.findAllById(List.of(id));
+        List<DrugTeratment> drugTeratments = drugTreatmentRepository.findAllById(List.of(id));
 
         MedicalDataDto medicalDataDto = new MedicalDataDto();
         medicalDataDto.setPatientId(id);
