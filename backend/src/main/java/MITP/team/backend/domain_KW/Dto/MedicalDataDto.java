@@ -5,11 +5,13 @@ import MITP.team.backend.domain_KW.Model.DrugTeratment;
 import MITP.team.backend.domain_KW.Model.Medication;
 import MITP.team.backend.domain_KW.Model.Treatment;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
 
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
