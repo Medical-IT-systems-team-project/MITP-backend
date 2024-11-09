@@ -1,10 +1,10 @@
 package MITP.team.backend.domain_KW.Controller;
 
+import MITP.team.backend.domain_KW.Dto.PatientRequestDto;
+import MITP.team.backend.domain_KW.Dto.PatientResponeDto;
 import MITP.team.backend.domain_KW.Service.PatientService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
 @RestController
@@ -13,9 +13,14 @@ public class PatientController {
     private final PatientService patientService;
 
 
-    @GetMapping("/new")
-    public Long generateID() {
-        return patientService.generateNewPatientId();
+    @PostMapping("/new")
+    public String createNewPatient(@RequestBody PatientRequestDto patientRequestDto) {
+        return patientService.createNewPatient(patientRequestDto);
+    }
+
+    @GetMapping("/{accessId}")
+    public PatientResponeDto createNewPatient(@PathVariable String accessId) {
+        return patientService.getPatientByAccessId(accessId);
     }
 
 }
