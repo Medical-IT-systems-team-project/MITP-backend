@@ -1,7 +1,7 @@
 package MITP.team.backend.domain_KW.Controller;
 
 import MITP.team.backend.domain_KW.Dto.MedicalDataDto;
-import MITP.team.backend.domain_KW.Service.MedicalDataService;
+import MITP.team.backend.domain_KW.Service.IMedicalDataService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,11 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/medicalData")
 public class MedicalDataController {
 
-    private final MedicalDataService medicalDataService;
+  private final IMedicalDataService medicalDataService;
 
-    @GetMapping("/all/{patientId}")
-    public ResponseEntity<MedicalDataDto> getMedicalDataByID(@PathVariable Long patientId) {
-        MedicalDataDto medicalDataById = medicalDataService.getMedicalDataById(patientId);
+  @GetMapping("/{patientId}/summary")
+  public ResponseEntity<MedicalDataDto> getMedicalDataByAccessID(@PathVariable String UUID) {
+    MedicalDataDto medicalDataById = medicalDataService.getMedicalDataById(UUID);
         return ResponseEntity.ok(medicalDataById);
     }
+
 }

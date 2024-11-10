@@ -11,7 +11,6 @@ public class Medication {
 
     private String medName;
     private String description;
-    //TODO czy aby na pewno ten typ ???
-    private String dosage;
-
+  // TODO czy aby na pewno ten typ ???
+  private Long dosage;
 }
