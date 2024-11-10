@@ -1,15 +1,10 @@
 package MITP.team.backend.domain_KW.Dto;
 
-
-import MITP.team.backend.domain_KW.Model.DrugTeratment;
+import MITP.team.backend.domain_KW.Model.DrugTreatement;
 import MITP.team.backend.domain_KW.Model.Medication;
 import MITP.team.backend.domain_KW.Model.Treatment;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import java.util.List;
+import lombok.*;
 
 @Builder
 @NoArgsConstructor
@@ -20,7 +15,14 @@ public class MedicalDataDto {
 
     private List<Treatment> treatments;
     private List<Medication> medications;
-    private List<DrugTeratment> drugTeratments;
+  private List<DrugTreatement> drugTreatments;
 
-
+  public MedicalDataDto(
+      List<Treatment> treatments,
+      List<Medication> medications,
+      List<DrugTreatement> drugTreatments) {
+    this.treatments = treatments;
+    this.medications = medications;
+    this.drugTreatments = drugTreatments;
+  }
 }

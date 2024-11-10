@@ -1,20 +1,19 @@
 package MITP.team.backend.domain_KW.Model;
 
 import jakarta.persistence.*;
-
-import java.util.Date;
+import java.time.LocalTime;
 import java.util.List;
 
 @Entity
 @Table(name = "drug_treatment")
-public class DrugTeratment {
+public class DrugTreatement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
     private String drugTreatment;
-    private Date startDate;
-    private Date endDate;
+  private LocalTime startDate;
+  private LocalTime endDate;
     private String description;
 
 
