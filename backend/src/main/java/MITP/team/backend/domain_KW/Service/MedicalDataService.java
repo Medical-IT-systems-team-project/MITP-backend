@@ -22,7 +22,8 @@ public class MedicalDataService implements IMedicalDataService {
                 () ->
                     new UserNotFoundException(
                         "Patient with access ID " + uuid + " does not exist"));
-
+    System.out.println(patient.getId());
+    System.out.println(patient.getTreatments());
     return new MedicalDataDto(
         patient.getTreatments(), patient.getMedications(), patient.getDrugTreatment());
   }
