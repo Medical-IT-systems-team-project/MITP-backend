@@ -1,0 +1,15 @@
+GRANT
+ALL
+PRIVILEGES
+ON
+ALL
+TABLES IN SCHEMA projekt_med TO PUBLIC;
+
+GRANT ALL PRIVILEGES ON ALL
+TABLES IN SCHEMA projekt_med TO "krystian.wasil";
+
+GRANT ALL PRIVILEGES ON ALL
+TABLES IN SCHEMA projekt_med TO "pawel.pirog";
+
+GRANT ALL PRIVILEGES ON ALL
+TABLES IN SCHEMA projekt_med TO "kamil.golawski";
