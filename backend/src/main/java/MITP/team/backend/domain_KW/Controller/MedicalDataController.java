@@ -16,10 +16,9 @@ public class MedicalDataController {
 
   private final IMedicalDataService medicalDataService;
 
-  @GetMapping("/{patientId}/summary")
-  public ResponseEntity<MedicalDataDto> getMedicalDataByAccessID(@PathVariable String UUID) {
-    MedicalDataDto medicalDataById = medicalDataService.getMedicalDataById(UUID);
+  @GetMapping("/{id}/summary")
+  public ResponseEntity<MedicalDataDto> getMedicalDataByAccessID(@PathVariable String id) {
+    MedicalDataDto medicalDataById = medicalDataService.getMedicalDataById(id);
         return ResponseEntity.ok(medicalDataById);
     }
-
 }

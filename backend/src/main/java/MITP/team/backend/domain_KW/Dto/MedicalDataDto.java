@@ -10,6 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
+@Getter
 public class MedicalDataDto {
     private Long patientId;
 
