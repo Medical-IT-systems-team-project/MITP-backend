@@ -1,11 +1,10 @@
 package MITP.team.backend.domain_KW.Repository;
 
-import MITP.team.backend.domain_KW.Model.Medication;
 import MITP.team.backend.domain_KW.Model.Patient;
-import java.util.List;
-import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+
+import java.util.Optional;
 
 public interface PatientRepository extends JpaRepository<Patient, Long> {
 
@@ -14,7 +13,7 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
 
     Optional<Patient> findByAccessId(String accessId);
 
-  boolean existsByAccessId(String accessId);
+    boolean existsByAccessId(String accessId);
 
-  List<Medication> findMedicationsByAccessId(String accessId);
+
 }
