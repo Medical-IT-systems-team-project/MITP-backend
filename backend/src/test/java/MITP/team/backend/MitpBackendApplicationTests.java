@@ -343,4 +343,62 @@ class MitpBackendApplicationTests {
         return token;
     }
 
+    @Test
+    public void getMedicalDataByAccessID() throws Exception {
+        // happy path
+        // there is not any users in database
+        // step 1 enroll user and get token
+        // step 2 send POST request to /patient/new with token and status is 200. response contains id
+        // step 3 send Get request to /medicalData/{id}/summary with token and status is 200. response contains medical data
+        // step 4 send Get request to /medicalData/{id}/summary with token and status is 404 with message "Patient not found in system."
+
+        //step 1 enroll user and get token
+        String token = registerAndGetToken();
+
+        //step 2 send POST request to /patient/new with token and status is 200. response contains id
+
+        //step 2 send POST request to /patient/new with token and status is 200. response contains id
+        final MvcResult result = mockMvc.perform(post("/patient/new")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Bearer " + token)
+                        .content("""
+                                {
+                                "firstName": "someName",
+                                "lastName": "someLastName",
+                                "age": 20,
+                                "gender": "MALE"
+                                }
+                                """))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        final String accessId = objectMapper.readTree(result.getResponse().getContentAsString()).get("accessId").asText();
+
+        // step 3 send Get request to /medicalData/{id}/summary with token and status is 200. response contains medical data
+
+        MvcResult result1 = mockMvc.perform(get("/medicalData/" + accessId + "/summary")
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        //assert
+        assertAll(
+
+        );
+
+
+        //TODO dokonczyc test nie wiem jak sprawdzac listę
+
+
+        // step 4 send Get request to /medicalData/{id}/summary with token and status is 404 with message "Patient not found in system."
+
+        mockMvc.perform(get("/medicalData/" + accessId + "1" + "/summary")
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+
+
+    }
+
 }
