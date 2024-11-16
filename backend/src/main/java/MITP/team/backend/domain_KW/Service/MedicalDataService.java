@@ -1,6 +1,8 @@
 package MITP.team.backend.domain_KW.Service;
 
+import MITP.team.backend.domain_KW.Dto.DrugTreatmentDto;
 import MITP.team.backend.domain_KW.Dto.MedicalDataDto;
+import MITP.team.backend.domain_KW.Dto.MedicationsDto;
 import MITP.team.backend.domain_KW.Dto.TreatmentDto;
 import MITP.team.backend.domain_KW.Exceptions.UserNotFoundException;
 import MITP.team.backend.domain_KW.Model.Patient;
@@ -53,6 +55,54 @@ public class MedicalDataService implements IMedicalDataService {
                         .date(treatment.getDate())
                         .build()
                 )
+                .toList();
+    }
+
+    @Override
+    public List<DrugTreatmentDto> getDrugTreatmentByAccessId(String uuid) {
+        Patient patient =
+                patientRepository
+                        .findByAccessId(uuid)
+                        .orElseThrow(
+                                () ->
+                                        new UserNotFoundException(
+                                                "Patient with access ID" + uuid + "does not exsit"
+                                        )
+                        );
+        return Optional.ofNullable(patient.getDrugTreatment())
+                .orElse(Collections.emptyList())
+                .stream()
+                .map(drugTreatment -> DrugTreatmentDto.builder()
+                        .drugTreatment(drugTreatment.getDrugTreatment())
+                        .description(drugTreatment.getDescription())
+                        .startDate(drugTreatment.getStartDate())
+                        .endDate(drugTreatment.getEndDate())
+                        .build()
+                )
+                .toList();
+    }
+
+    @Override
+    public List<MedicationsDto> getMedicationsByAccessId(String uuid) {
+        Patient patient =
+                patientRepository
+                        .findByAccessId(uuid)
+                        .orElseThrow(
+                                () ->
+                                        new UserNotFoundException(
+                                                "Patient with access ID" + uuid + "does not exsit"
+                                        )
+                        );
+
+        return Optional
+                .ofNullable(patient.getMedications())
+                .orElse(Collections.emptyList())
+                .stream()
+                .map(medications -> new MedicationsDto(
+                        medications.getMedName(),
+                        medications.getDescription(),
+                        medications.getDosage()
+                ))
                 .toList();
     }
 }

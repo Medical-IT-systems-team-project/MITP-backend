@@ -1,7 +1,9 @@
 package MITP.team.backend.domain_KW.Model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "medication")
 public class Medication {
@@ -11,6 +13,6 @@ public class Medication {
 
     private String medName;
     private String description;
-  // TODO czy aby na pewno ten typ ???
-  private Long dosage;
+    // TODO czy aby na pewno ten typ ???
+    private Long dosage;
 }

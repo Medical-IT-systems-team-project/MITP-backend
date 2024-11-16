@@ -2,6 +2,7 @@ package MITP.team.backend.infrastructure.errorvalidation;
 
 import MITP.team.backend.domain_KW.Exceptions.DataNotFoundException;
 import MITP.team.backend.domain_KW.Exceptions.DuplicatedPatientException;
+import MITP.team.backend.domain_KW.Exceptions.UserNotFoundException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -73,6 +74,17 @@ public class ExceptionsHandlers {
         log.warn(notFound);
         return DuplicateKeyExceptionDto.builder()
                 .message(notFound)
+                .build();
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public DuplicateKeyExceptionDto handleMethodArgumentNotValidException(UserNotFoundException exception) {
+        final String PatientNotFound = "Patient not found in system.";
+        log.warn(PatientNotFound);
+        return DuplicateKeyExceptionDto.builder()
+                .message(PatientNotFound)
                 .build();
     }
 }
