@@ -1,6 +1,8 @@
 package MITP.team.backend.domain_KW.Controller;
 
+import MITP.team.backend.domain_KW.Dto.DrugTreatmentDto;
 import MITP.team.backend.domain_KW.Dto.MedicalDataDto;
+import MITP.team.backend.domain_KW.Dto.MedicationsDto;
 import MITP.team.backend.domain_KW.Dto.TreatmentDto;
 import MITP.team.backend.domain_KW.Service.IMedicalDataService;
 import lombok.AllArgsConstructor;
@@ -30,5 +32,19 @@ public class MedicalDataController {
         List<TreatmentDto> treatments = medicalDataService.getTreatmentByAccessId(Id);
         return ResponseEntity.ok(treatments);
     }
+
+    @GetMapping("/{Id}/drugTreatments")
+    public ResponseEntity<List<DrugTreatmentDto>> getDrugTreatmentsByAccessID(@PathVariable String Id) {
+        List<DrugTreatmentDto> drugTreatments = medicalDataService.getDrugTreatmentByAccessId(Id);
+        return ResponseEntity.ok(drugTreatments);
+    }
+
+    @GetMapping("/{Id}/medications")
+    public ResponseEntity<List<MedicationsDto>> getMedicationsByAccessID(@PathVariable String Id) {
+        List<MedicationsDto> medications = medicalDataService.getMedicationsByAccessId(Id);
+        return ResponseEntity.ok(medications);
+    }
+
+
 
 }
