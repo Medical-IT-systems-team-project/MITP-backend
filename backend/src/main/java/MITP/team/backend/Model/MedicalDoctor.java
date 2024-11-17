@@ -47,11 +47,17 @@ public class MedicalDoctor implements UserDetails {
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "attendingDoctor")
   private List<MedicalCaseData> medicalCaseData;
 
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "createdBy")
+  private List<MedicalCaseData> createdMedicalCaseData;
+
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "medicalDoctor")
   private List<Medication> medications;
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "medicalDoctor")
   private List<Treatment> treatments;
+
+  @ManyToMany(fetch = FetchType.LAZY, mappedBy = "allowedDoctors")
+  private List<MedicalCaseData> allowedMedicalCases;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -11,7 +11,7 @@ import java.util.List;
 public class MedicalCaseData {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
   @Column(name = "medical_case_data_id", nullable = false)
   private Long id;
 
@@ -24,17 +24,27 @@ public class MedicalCaseData {
   private String description;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "medical_doctor_id")
+  @JoinColumn(name = "created_by_doctor_id")
+  private MedicalDoctor createdBy;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "attending_doctor_id")
   private MedicalDoctor attendingDoctor;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "patient_id")
   private Patient patient;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "medicalCaseData")
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "medicalCaseData", cascade = CascadeType.ALL)
   private List<Medication> medications;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "medicalCaseData")
-  @Transient
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "medicalCaseData", cascade = CascadeType.ALL)
   private List<Treatment> treatments;
+
+  @ManyToMany(fetch = FetchType.LAZY)
+  @JoinTable(
+      name = "medical_case_allowed_doctors",
+      joinColumns = @JoinColumn(name = "medical_case_data_id"),
+      inverseJoinColumns = @JoinColumn(name = "medical_doctor_id"))
+  private List<MedicalDoctor> allowedDoctors;
 }
