@@ -4,11 +4,7 @@ import MITP.team.backend.Config.security.dto.JwtResponseDto;
 import MITP.team.backend.Config.security.dto.TokenRequestDto;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import java.time.Clock;
-import java.time.Duration;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -42,8 +38,8 @@ public class JwtAuthFacade {
     private String createToken(final User user) {
         String secretKey =  properties.secret();
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
-
-        Instant now = LocalDateTime.now(clock).toInstant(ZoneOffset.UTC);
+    ZonedDateTime localTime = LocalDateTime.now(clock).atZone(ZoneId.of("Europe/Warsaw"));
+    Instant now = localTime.toInstant();
         Instant expireAt = now.plus(Duration.ofHours(properties.hours()));
         String issuer = "Zadanie Rekrutacyjne Service";
 
