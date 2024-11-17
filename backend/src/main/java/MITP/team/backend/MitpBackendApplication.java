@@ -1,6 +1,6 @@
 package MITP.team.backend;
 
-import MITP.team.backend.infrastructure.security.JwtConfigProperties;
+import MITP.team.backend.Config.security.JwtConfigProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
