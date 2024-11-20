@@ -21,4 +21,6 @@ public class MedicalDoctorMapper {
         .password(medicalDoctor.getPassword())
         .build();
   }
+
+
 }
