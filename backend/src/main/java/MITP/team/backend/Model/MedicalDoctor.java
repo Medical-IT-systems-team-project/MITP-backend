@@ -1,15 +1,12 @@
 package MITP.team.backend.Model;
 
 import jakarta.persistence.*;
-import java.util.Collection;
-import java.util.List;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 @Builder
 @Entity
@@ -42,7 +39,7 @@ public class MedicalDoctor implements UserDetails {
   private String email; // TODO validate REGEX
 
   @Column(name = "phone_number")
-  private String phoneNumber; // TODO validate REGEX
+  private String phoneNumber; // TODO validate REGEX w setterach
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "attendingDoctor")
   private List<MedicalCaseData> medicalCaseData;

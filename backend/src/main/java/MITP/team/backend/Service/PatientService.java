@@ -3,7 +3,7 @@ package MITP.team.backend.Service;
 import MITP.team.backend.Exceptions.DataNotFoundException;
 import MITP.team.backend.Exceptions.DuplicatedPatientException;
 import MITP.team.backend.Model.Dto.PatientRequestDto;
-import MITP.team.backend.Model.Dto.PatientResponeDto;
+import MITP.team.backend.Model.Dto.PatientResponseDto;
 import MITP.team.backend.Model.Patient;
 import MITP.team.backend.Repository.PatientRepository;
 import lombok.AllArgsConstructor;
@@ -38,12 +38,12 @@ public class PatientService {
     return save.getAccessId();
   }
 
-  public PatientResponeDto getPatientByAccessId(String accessId) {
+  public PatientResponseDto getPatientByAccessId(String accessId) {
     Patient patient =
         repo.findByAccessId(accessId)
             .orElseThrow(() -> new DataNotFoundException("Patient not found in system."));
 
-    return PatientResponeDto.builder()
+    return PatientResponseDto.builder()
         .firstName(patient.getFirstName())
         .lastName(patient.getLastName())
         .age(patient.getAge())

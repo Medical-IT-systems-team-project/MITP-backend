@@ -1,9 +1,10 @@
 package MITP.team.backend.Model;
 
 import jakarta.persistence.*;
-import java.time.LocalTime;
-import java.util.List;
 import lombok.*;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Builder
 @Getter
@@ -21,7 +22,7 @@ public class Patient {
   private String firstName;
   private String lastName;
   private int age;
-  private LocalTime birthDate;
+  private LocalDateTime birthDate;
   private String gender;
   private String accessId;
   private Long socialSecurityNumber;
