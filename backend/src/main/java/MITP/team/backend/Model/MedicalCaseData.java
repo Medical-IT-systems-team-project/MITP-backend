@@ -3,9 +3,13 @@ package MITP.team.backend.Model;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
 // TODO: zawracanie DTO posortowane po dacie (medication & treatment) najlpiej przechowywac juz
 // postortowane po prostu
+@Getter
+@Setter
 @Entity
 @Table(name = "medical_case_data")
 public class MedicalCaseData {
