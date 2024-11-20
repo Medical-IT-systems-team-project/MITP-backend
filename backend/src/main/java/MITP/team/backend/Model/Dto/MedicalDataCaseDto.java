@@ -1,22 +1,18 @@
 package MITP.team.backend.Model.Dto;
 
 import MITP.team.backend.Model.MedicalDoctor;
-import lombok.Builder;
-
+import MITP.team.backend.Model.Medication;
+import MITP.team.backend.Model.Treatment;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Builder
-
 public record MedicalDataCaseDto(
-        String admissionReason,
-        LocalDateTime admissionDate,
-        String description,
-        MedicalDoctor createdBy,
-        List<MedicationsDto> medications,
-        List<TreatmentDto> treatments) {
-    public MedicalDataCaseDto sortMedicationsByDate() {
-        return null;
-        //TODO: implement (czy chcemy czasem sortować listę leków? a moze odrazu przy dodawnanuiu? )
-    }
-}
+    @NotNull Long patientId,
+    @NotNull String admissionReason,
+    @NotNull LocalDateTime admissionDate,
+    @NotBlank String description,
+    @NotNull MedicalDoctor createdBy,
+    List<Medication> medications,
+    List<Treatment> treatments) {}
