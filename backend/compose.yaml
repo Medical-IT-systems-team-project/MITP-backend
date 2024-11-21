@@ -3,8 +3,8 @@ services:
     image: 'postgres:latest'
     environment:
       - 'POSTGRES_DB=mydatabase'
-    #      - 'POSTGRES_PASSWORD=xd' TODO haslo login jak do kola
-    #      - 'POSTGRES_USER=xd'     TODO haslo login jak do kola
+      - 'POSTGRES_USER=myuser'
+      - 'POSTGRES_PASSWORD=secret'
     ports:
       - '34250:5432'
     volumes:
