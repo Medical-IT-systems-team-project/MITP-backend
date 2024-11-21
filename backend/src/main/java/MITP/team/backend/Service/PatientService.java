@@ -27,6 +27,7 @@ public class PatientService {
 
     Patient patient =
         Patient.builder()
+            .socialSecurityNumber(patientRequestDto.socialSecurityNumber())
             .firstName(patientRequestDto.firstName())
             .lastName(patientRequestDto.lastName())
             .age(patientRequestDto.age())
@@ -51,5 +52,4 @@ public class PatientService {
         .accessId(patient.getAccessId())
         .build();
   }
-
 }

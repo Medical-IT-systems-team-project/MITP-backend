@@ -248,37 +248,47 @@ class MitpBackendApplicationTests {
         //step 1 enroll user and get token
         String token = registerAndGetToken();
 
-        //step 2 send POST request to /patient/new with token and status is 200. response contains id
-        final MvcResult result = mockMvc.perform(post("/patient/new")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization", "Bearer " + token)
-                        .content("""
+    // step 2 send POST request to /patient/new with token and status is 200. response contains id
+    final MvcResult result =
+        mockMvc
+            .perform(
+                post("/patient/new")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .header("Authorization", "Bearer " + token)
+                    .content(
+                        """
                                 {
+                                                              "socialSecurityNumber": 123456789,
                                 "firstName": "someName",
                                 "lastName": "someLastName",
                                 "age": 20,
                                 "gender": "MALE"
                                 }
                                 """))
-                .andExpect(status().isOk())
-                .andReturn();
+            .andExpect(status().isOk())
+            .andReturn();
 
         final String accessId = objectMapper.readTree(result.getResponse().getContentAsString()).get("accessId").asText();
 
-        // step 3 send POST request to /patient/new with token with the same data and status is 400 with message "Patient already exist in system."
-        mockMvc.perform(post("/patient/new")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization", "Bearer " + token)
-                        .content("""
+    // step 3 send POST request to /patient/new with token with the same data and status is 400 with
+    // message "Patient already exist in system."
+    mockMvc
+        .perform(
+            post("/patient/new")
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "Bearer " + token)
+                .content(
+                    """
                                 {
+                                                                "socialSecurityNumber": 123456789,
                                 "firstName": "someName",
                                 "lastName": "someLastName",
                                 "age": 20,
                                 "gender": "MALE"
+
                                 }
                                 """))
-                .andExpect(status().isBadRequest());
-
+        .andExpect(status().isBadRequest());
 
         //step 4 send GET request to /patient/{id} with token and status is 200. response contains patient data
         MvcResult result1 = mockMvc.perform(get("/patient/" + accessId)
