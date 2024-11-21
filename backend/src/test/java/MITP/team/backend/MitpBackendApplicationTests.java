@@ -248,7 +248,6 @@ class MitpBackendApplicationTests {
         //step 1 enroll user and get token
         String token = registerAndGetToken();
 
-
         //step 2 send POST request to /patient/new with token and status is 200. response contains id
         final MvcResult result = mockMvc.perform(post("/patient/new")
                         .contentType(MediaType.APPLICATION_JSON)
