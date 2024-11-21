@@ -26,9 +26,6 @@
 
     <changeSet id="1730662143940-3" author="pawel">
         <addUniqueConstraint columnNames="login" constraintName="uc_app_user_login" tableName="app_user" schemaName="projekt_med"/>
-        <addUniqueConstraint columnNames="login" constraintName="uc_app_user_login" tableName="app_user"
-                             schemaName="projekt_med"/>
-        <addUniqueConstraint columnNames="login" constraintName="uc_app_user_login" tableName="app_user" schemaName="projekt_med"/>
     </changeSet>
 
     <changeSet id="1730662143940-4" author="pawel">
