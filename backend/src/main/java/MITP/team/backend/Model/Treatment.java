@@ -1,8 +1,10 @@
 package MITP.team.backend.Model;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 import lombok.Getter;
+
+import java.time.LocalDateTime;
+
 
 @Getter
 @Entity

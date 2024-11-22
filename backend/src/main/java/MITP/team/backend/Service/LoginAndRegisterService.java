@@ -1,7 +1,7 @@
 package MITP.team.backend.Service;
 
-import MITP.team.backend.Model.Dto.MedicalDoctorRequest;
-import MITP.team.backend.Model.Dto.MedicalDoctorResponse;
+import MITP.team.backend.Model.Dto.LoginRequest;
+import MITP.team.backend.Model.Dto.LoginResponse;
 import MITP.team.backend.Model.Mapper.MedicalDoctorMapper;
 import MITP.team.backend.Model.MedicalDoctor;
 import MITP.team.backend.Repository.MedicalDoctorRepository;
@@ -20,13 +20,13 @@ public class LoginAndRegisterService {
   private final MedicalDoctorMapper medicalDoctorMapper;
   private final MedicalDoctorUpdater medicalDoctorUpdater;
 
-  public MedicalDoctorResponse register(MedicalDoctorRequest requestDto) {
+  public LoginResponse register(LoginRequest requestDto) {
     final MedicalDoctor medicalDoctor = medicalDoctorMapper.mapToMedicalDoctor(requestDto);
     final MedicalDoctor saved = medicalDoctorRepository.save(medicalDoctor);
     return medicalDoctorMapper.mapToMedicalDoctorResponseDto(saved);
   }
 
-  public MedicalDoctorResponse findByUsername(String username) {
+  public LoginResponse findByUsername(String username) {
 
     final MedicalDoctor medicalDoctor =
         medicalDoctorRepository
@@ -36,11 +36,11 @@ public class LoginAndRegisterService {
     return medicalDoctorMapper.mapToMedicalDoctorResponseDto(medicalDoctor);
   }
 
-  public MedicalDoctorResponse updateByLogin(String login, MedicalDoctorRequest requestDto) {
+  public LoginResponse updateByLogin(String login, LoginRequest requestDto) {
     return medicalDoctorUpdater.updateByLogin(login, requestDto);
   }
 
-  public MedicalDoctorResponse deleteUser(final String login) {
+  public LoginResponse deleteUser(final String login) {
     final MedicalDoctor deleted =
         medicalDoctorRepository
             .findByLogin(login)
