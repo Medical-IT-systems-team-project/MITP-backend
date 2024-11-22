@@ -1,7 +1,7 @@
 package MITP.team.backend.Service;
 
-import MITP.team.backend.Model.Dto.MedicalDoctorRequest;
-import MITP.team.backend.Model.Dto.MedicalDoctorResponse;
+import MITP.team.backend.Model.Dto.LoginRequest;
+import MITP.team.backend.Model.Dto.LoginResponse;
 import MITP.team.backend.Model.Mapper.MedicalDoctorMapper;
 import MITP.team.backend.Model.MedicalDoctor;
 import MITP.team.backend.Repository.MedicalDoctorRepository;
@@ -20,7 +20,7 @@ class MedicalDoctorUpdater {
   private final MedicalDoctorRepository medicalDoctorRepository;
   private final MedicalDoctorMapper medicalDoctorMapper;
 
-  MedicalDoctorResponse updateByLogin(String login, MedicalDoctorRequest requestDto) {
+  LoginResponse updateByLogin(String login, LoginRequest requestDto) {
     final MedicalDoctor medicalDoctor =
         medicalDoctorRepository
             .findByLogin(login)
