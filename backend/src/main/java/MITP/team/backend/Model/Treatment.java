@@ -1,11 +1,11 @@
 package MITP.team.backend.Model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-
 import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.Setter;
 
-
+@Setter
 @Getter
 @Entity
 @Table(name = "treatment")
