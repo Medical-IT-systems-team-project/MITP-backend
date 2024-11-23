@@ -3,7 +3,9 @@ package MITP.team.backend.Model;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import lombok.Getter;
+import lombok.Setter;
 
+@Setter
 @Getter
 @Entity
 @Table(name = "medication")
