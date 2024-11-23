@@ -1,14 +1,13 @@
 package MITP.team.backend.Service;
 
 import MITP.team.backend.Exceptions.UserNotFoundException;
-import MITP.team.backend.Model.Dto.DrugTreatmentDto;
 import MITP.team.backend.Model.Dto.MedicalDataCaseDto;
 import MITP.team.backend.Model.Dto.MedicationsDto;
 import MITP.team.backend.Model.Dto.TreatmentDto;
 import MITP.team.backend.Model.Mapper.MedicalDataCaseMapper;
 import MITP.team.backend.Model.MedicalDoctor;
 import MITP.team.backend.Model.Patient;
-import MITP.team.backend.Repository.MedicalCaseDataRepository;
+import MITP.team.backend.Repository.MedicalCaseRepository;
 import MITP.team.backend.Repository.PatientRepository;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -24,7 +23,7 @@ import org.springframework.stereotype.Service;
 public class MedicalDataService implements IMedicalDataService {
 
   private final PatientRepository patientRepository;
-  private final MedicalCaseDataRepository medicalCaseDataRepository;
+  private final MedicalCaseRepository medicalCaseDataRepository;
   private final MedicalDataCaseMapper medicalDataCaseMapper;
 
   @Override
@@ -41,17 +40,6 @@ public class MedicalDataService implements IMedicalDataService {
 
   @Override
   public List<TreatmentDto> getTreatmentByAccessId(String uuid) {
-    Patient patient =
-        patientRepository
-            .findByAccessId(uuid)
-            .orElseThrow(
-                () ->
-                    new UserNotFoundException("Patient with access ID" + uuid + "does not exist"));
-    return null;
-  }
-
-  @Override
-  public List<DrugTreatmentDto> getDrugTreatmentByAccessId(String uuid) {
     Patient patient =
         patientRepository
             .findByAccessId(uuid)

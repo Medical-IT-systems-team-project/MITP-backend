@@ -1,12 +1,11 @@
 package MITP.team.backend.Model;
 
 import jakarta.persistence.*;
+import java.util.Collection;
+import java.util.List;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.Collection;
-import java.util.List;
 
 @Builder
 @Entity
@@ -42,10 +41,10 @@ public class MedicalDoctor implements UserDetails {
   private String phoneNumber; // TODO validate REGEX w setterach
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "attendingDoctor")
-  private List<MedicalCaseData> medicalCaseData;
+  private List<MedicalCase> medicalCaseData;
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "createdBy")
-  private List<MedicalCaseData> createdMedicalCaseData;
+  private List<MedicalCase> createdMedicalCaseData;
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "medicalDoctor")
   private List<Medication> medications;
@@ -54,7 +53,7 @@ public class MedicalDoctor implements UserDetails {
   private List<Treatment> treatments;
 
   @ManyToMany(fetch = FetchType.LAZY, mappedBy = "allowedDoctors")
-  private List<MedicalCaseData> allowedMedicalCases;
+  private List<MedicalCase> allowedMedicalCases;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {

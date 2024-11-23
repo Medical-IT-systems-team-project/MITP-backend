@@ -1,9 +1,9 @@
 package MITP.team.backend.Controller;
 
-import MITP.team.backend.Model.Dto.DrugTreatmentDto;
 import MITP.team.backend.Model.Dto.MedicalDataCaseDto;
 import MITP.team.backend.Model.Dto.MedicationsDto;
 import MITP.team.backend.Model.Dto.TreatmentDto;
+import MITP.team.backend.Service.EmailService;
 import MITP.team.backend.Service.IMedicalDataService;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -19,6 +19,8 @@ public class MedicalDataController {
 
   private final IMedicalDataService medicalDataService;
 
+  private final EmailService emailService;
+
   @GetMapping("/{Id}/summary")
   public ResponseEntity<MedicalDataCaseDto> getMedicalDataByAccessID(@PathVariable String Id) {
     MedicalDataCaseDto medicalDataById = medicalDataService.getMedicalDataByAccessId(Id);
@@ -29,13 +31,6 @@ public class MedicalDataController {
   public ResponseEntity<List<TreatmentDto>> getTreatmentsByAccessID(@PathVariable String Id) {
     List<TreatmentDto> treatments = medicalDataService.getTreatmentByAccessId(Id);
     return ResponseEntity.ok(treatments);
-  }
-
-  @GetMapping("/{Id}/drugTreatments")
-  public ResponseEntity<List<DrugTreatmentDto>> getDrugTreatmentsByAccessID(
-      @PathVariable String Id) {
-    List<DrugTreatmentDto> drugTreatments = medicalDataService.getDrugTreatmentByAccessId(Id);
-    return ResponseEntity.ok(drugTreatments);
   }
 
   @GetMapping("/{Id}/medications")
@@ -49,5 +44,11 @@ public class MedicalDataController {
       @RequestBody MedicalDataCaseDto medicalDataCaseDto, Authentication authentication) {
     medicalDataService.createNewCase(medicalDataCaseDto, authentication);
     return ResponseEntity.status(HttpStatus.CREATED).body("New case added");
+  }
+
+  @PatchMapping("/{Id}")
+  public ResponseEntity<?> closeCase(@PathVariable String Id) {
+    //    emailService.sendSummaryEmail();
+    return null;
   }
 }
