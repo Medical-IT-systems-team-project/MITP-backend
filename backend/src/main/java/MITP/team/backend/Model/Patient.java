@@ -1,5 +1,6 @@
 package MITP.team.backend.Model;
 
+import MITP.team.backend.Model.Enum.PatientStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -14,8 +15,10 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @NoArgsConstructor
 public class Patient {
+
   @NotBlank(groups = {CreateValidation.class, UpdateValidation.class})
   private String firstName;
+
   @NotBlank(groups = {CreateValidation.class, UpdateValidation.class})
   private String lastName;
 
@@ -23,9 +26,14 @@ public class Patient {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "patient_id", nullable = false)
   private Long id;
+
+  @Enumerated(EnumType.STRING)
+  private PatientStatus status;
+
   @NotNull(groups = UpdateValidation.class)
   @Column(name = "birth_date")
   private LocalDateTime birthDate;
+
   @NotNull(groups = {CreateValidation.class})
   @Column(nullable = false)
   private Long socialSecurityNumber;
@@ -44,5 +52,5 @@ public class Patient {
   private String address;
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "patient")
-  private List<MedicalCaseData> medicalCaseData;
+  private List<MedicalCase> medicalCaseData;
 }

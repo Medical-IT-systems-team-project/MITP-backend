@@ -3,10 +3,10 @@ package MITP.team.backend.Model.Mapper;
 
 import MITP.team.backend.Exceptions.MedicalDoctorNotFoundException;
 import MITP.team.backend.Model.Dto.MedicationsDto;
-import MITP.team.backend.Model.MedicalCaseData;
+import MITP.team.backend.Model.MedicalCase;
 import MITP.team.backend.Model.MedicalDoctor;
 import MITP.team.backend.Model.Medication;
-import MITP.team.backend.Repository.MedicalCaseDataRepository;
+import MITP.team.backend.Repository.MedicalCaseRepository;
 import MITP.team.backend.Repository.MedicalDoctorRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -19,11 +19,14 @@ import org.mapstruct.Named;
 @Mapper(componentModel = "spring")
 public abstract class MedicationsMapper {
     private MedicalDoctorRepository medicalDoctorRepository;
-    private MedicalCaseDataRepository medicalCaseDataRepository;
+  private MedicalCaseRepository medicalCaseRepository;
 
-    @Mapping(source = "medicalCaseDataId", target = "medicalCaseData", qualifiedByName = "mapToMedicalCaseData")
-    @Mapping(source = "medicalDoctorId", target = "medicalDoctor", qualifiedByName = "mapToMedicalDoctor")
-    public abstract Medication mapToMedication(MedicationsDto medicationsDto);
+  @Mapping(source = "medicalCaseId", target = "medicalCase", qualifiedByName = "mapToMedicalCase")
+  @Mapping(
+      source = "medicalDoctorId",
+      target = "medicalDoctor",
+      qualifiedByName = "mapToMedicalDoctor")
+  public abstract Medication mapToMedication(MedicationsDto medicationsDto);
 
     @Named("mapToMedicalDoctor")
     protected MedicalDoctor mapToMedicalDoctor(Long medicalDoctorId) {
@@ -32,11 +35,14 @@ public abstract class MedicationsMapper {
                 .orElseThrow(() -> new MedicalDoctorNotFoundException("MedicalDoctor not found with id: " + medicalDoctorId));
     }
 
-    @Named("mapToMedicalCaseData")
-    protected MedicalCaseData mapToMedicalCaseData(Long medicalCaseDataId) {
-        return medicalCaseDataRepository
-                .findById(medicalCaseDataId)
-                .orElseThrow(() -> new MedicalDoctorNotFoundException("MedicalCaseData not found with id: " + medicalCaseDataId));
+  @Named("mapToMedicalCase")
+  protected MedicalCase mapToMedicalCaseData(Long medicalCaseId) {
+    return medicalCaseRepository
+        .findById(medicalCaseId)
+        .orElseThrow(
+            () ->
+                new MedicalDoctorNotFoundException(
+                    "MedicalCaseData not found with id: " + medicalCaseId));
     }
 
 }

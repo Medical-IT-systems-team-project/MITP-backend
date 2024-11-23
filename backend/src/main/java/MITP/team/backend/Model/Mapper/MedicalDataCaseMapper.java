@@ -2,7 +2,7 @@ package MITP.team.backend.Model.Mapper;
 
 import MITP.team.backend.Exceptions.PatientNotFoundException;
 import MITP.team.backend.Model.Dto.MedicalDataCaseDto;
-import MITP.team.backend.Model.MedicalCaseData;
+import MITP.team.backend.Model.MedicalCase;
 import MITP.team.backend.Model.Patient;
 import MITP.team.backend.Repository.PatientRepository;
 import lombok.AllArgsConstructor;
@@ -19,7 +19,7 @@ public abstract class MedicalDataCaseMapper {
   private PatientRepository patientRepository;
 
   @Mapping(source = "patientId", target = "patient", qualifiedByName = "mapToPatient")
-  public abstract MedicalCaseData mapToMedicalDataCase(MedicalDataCaseDto medicalDataCaseDto);
+  public abstract MedicalCase mapToMedicalDataCase(MedicalDataCaseDto medicalDataCaseDto);
 
   @Named("mapToPatient")
   protected Patient mapToPatient(Long patientId) {
