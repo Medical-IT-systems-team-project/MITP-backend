@@ -1,6 +1,6 @@
 package MITP.team.backend.Model.Enum;
 
-public enum TreatmentStatus {
+public enum MedicalStatus {
   PLANNED,
   ONGOING,
   COMPLETED,

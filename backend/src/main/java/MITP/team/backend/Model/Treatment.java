@@ -1,6 +1,6 @@
 package MITP.team.backend.Model;
 
-import MITP.team.backend.Model.Enum.TreatmentStatus;
+import MITP.team.backend.Model.Enum.MedicalStatus;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import lombok.Getter;
@@ -16,8 +16,7 @@ public class Treatment {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long Id;
 
-  @Column(name = "treatment_name")
-  private String treatmentName;
+  private String name;
 
   @Column(name = "start_date", nullable = false)
   private LocalDateTime startDate;
@@ -36,5 +35,5 @@ public class Treatment {
   private MedicalDoctor medicalDoctor;
 
   @Enumerated(EnumType.STRING)
-  private TreatmentStatus status;
+  private MedicalStatus status;
 }

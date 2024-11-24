@@ -3,7 +3,6 @@ package MITP.team.backend.Controller;
 import MITP.team.backend.Model.Dto.MedicalDataCaseDto;
 import MITP.team.backend.Model.Dto.MedicationsDto;
 import MITP.team.backend.Model.Dto.TreatmentDto;
-import MITP.team.backend.Service.EmailService;
 import MITP.team.backend.Service.IMedicalDataService;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -18,8 +17,6 @@ import org.springframework.web.bind.annotation.*;
 public class MedicalDataController {
 
   private final IMedicalDataService medicalDataService;
-
-  private final EmailService emailService;
 
   @GetMapping("/{Id}/summary")
   public ResponseEntity<MedicalDataCaseDto> getMedicalDataByAccessID(@PathVariable String Id) {
@@ -47,8 +44,13 @@ public class MedicalDataController {
   }
 
   @PatchMapping("/{Id}")
-  public ResponseEntity<?> closeCase(@PathVariable String Id) {
-    //    emailService.sendSummaryEmail();
-    return null;
+  public ResponseEntity<?> closeCase(@PathVariable Long Id, @RequestParam Boolean force) {
+    List<Object> incompleteItems = medicalDataService.getIncompleteList(Id);
+
+    if (!incompleteItems.isEmpty() && !force) {
+      return ResponseEntity.status(HttpStatus.CONFLICT).body(incompleteItems);
+    }
+    medicalDataService.closeCase(Id);
+    return ResponseEntity.ok("Case closed");
   }
 }

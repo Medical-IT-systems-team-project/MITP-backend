@@ -1,6 +1,6 @@
 package MITP.team.backend.Model;
 
-import MITP.team.backend.Model.Enum.PatientStatus;
+import MITP.team.backend.Model.Enum.MedicalStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -28,7 +28,7 @@ public class Patient {
   private Long id;
 
   @Enumerated(EnumType.STRING)
-  private PatientStatus status;
+  private MedicalStatus status;
 
   @NotNull(groups = UpdateValidation.class)
   @Column(name = "birth_date")
