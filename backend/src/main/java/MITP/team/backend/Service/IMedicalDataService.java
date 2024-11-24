@@ -7,11 +7,15 @@ import java.util.List;
 import org.springframework.security.core.Authentication;
 
 public interface IMedicalDataService {
-    MedicalDataCaseDto getMedicalDataByAccessId(String id);
+  MedicalDataCaseDto getMedicalDataByAccessId(String id);
 
-    List<TreatmentDto> getTreatmentByAccessId(String uuid);
+  List<TreatmentDto> getTreatmentByAccessId(String uuid);
 
-    List<MedicationsDto> getMedicationsByAccessId(String id);
+  List<MedicationsDto> getMedicationsByAccessId(String id);
 
   void createNewCase(MedicalDataCaseDto medicalDataCaseDto, Authentication authentication);
+
+  void closeCase(Long id);
+
+  List<Object> getIncompleteList(Long id);
 }

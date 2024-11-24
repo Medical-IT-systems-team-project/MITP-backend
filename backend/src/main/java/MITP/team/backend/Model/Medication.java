@@ -1,6 +1,6 @@
 package MITP.team.backend.Model;
 
-import MITP.team.backend.Model.Enum.MedicationStatus;
+import MITP.team.backend.Model.Enum.MedicalStatus;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import lombok.Getter;
@@ -37,5 +37,6 @@ public class Medication {
   @JoinColumn(name = "medical_doctor_id")
   private MedicalDoctor medicalDoctor;
 
-  private MedicationStatus status;
+  @Enumerated(EnumType.STRING)
+  private MedicalStatus status;
 }
