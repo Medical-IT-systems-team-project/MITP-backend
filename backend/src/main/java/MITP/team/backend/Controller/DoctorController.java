@@ -4,14 +4,13 @@ import MITP.team.backend.Model.Dto.MedicationsDto;
 import MITP.team.backend.Model.Dto.TreatmentDto;
 import MITP.team.backend.Service.IMedicationService;
 import MITP.team.backend.Service.ITreatmentService;
+import MITP.team.backend.Service.PatientService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
 @RestController
@@ -20,6 +19,7 @@ public class DoctorController {
 
     private final ITreatmentService treatmentService;
     private final IMedicationService medicationService;
+    private final PatientService patientService;
 
     @PostMapping("/new/Treatment")
     public ResponseEntity<?> createNewTreatment(@Valid @RequestBody TreatmentDto treatmentDto) {
@@ -31,6 +31,11 @@ public class DoctorController {
     public ResponseEntity<?> createNewMedications(@Valid @RequestBody MedicationsDto medicationsDto) {
         medicationService.createNewMedications(medicationsDto);
         return ResponseEntity.status(HttpStatus.CREATED).body("New medications added");
+    }
+
+    @GetMapping("/patient/all")
+    public ResponseEntity<?> getAllPatients(Authentication auth) {
+        return ResponseEntity.ok().body(patientService.getAllPatients(auth));
     }
 
 }
