@@ -3,4 +3,10 @@ package MITP.team.backend.Repository;
 import MITP.team.backend.Model.MedicalCase;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface MedicalCaseRepository extends JpaRepository<MedicalCase, Long> {}
+import java.util.List;
+
+public interface MedicalCaseRepository extends JpaRepository<MedicalCase, Long> {
+    List<MedicalCase> getAllMedicalCaseByAttendingDoctorId(Long Id);
+
+    List<MedicalCase> getAllMedicalCaseByAllowedDoctorsId(Long Id);
+}

@@ -1,15 +1,7 @@
 package MITP.team.backend;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import MITP.team.backend.Config.errorvalidation.ApiValidationErrorResponseDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.List;
-import java.util.regex.Pattern;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -28,6 +20,15 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import java.util.List;
+import java.util.regex.Pattern;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 @Log4j2
 @SpringBootTest
 @ActiveProfiles("test")
@@ -36,7 +37,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 class MitpBackendApplicationTests {
 
     @Container
-    private static final PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:latest") .withInitScript("initTest.sql");
+    private static final PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:latest").withInitScript("initTest.sql");
 
     @Autowired
     public ObjectMapper objectMapper;
@@ -248,47 +249,47 @@ class MitpBackendApplicationTests {
         //step 1 enroll user and get token
         String token = registerAndGetToken();
 
-    // step 2 send POST request to /patient/new with token and status is 200. response contains id
-    final MvcResult result =
-        mockMvc
-            .perform(
-                post("/patient/new")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .header("Authorization", "Bearer " + token)
-                    .content(
-                        """
-                                {
-                                                              "socialSecurityNumber": 123456789,
-                                "firstName": "someName",
-                                "lastName": "someLastName",
-                                "age": 20,
-                                "gender": "MALE"
-                                }
-                                """))
-            .andExpect(status().isOk())
-            .andReturn();
+        // step 2 send POST request to /patient/new with token and status is 200. response contains id
+        final MvcResult result =
+                mockMvc
+                        .perform(
+                                post("/patient/new")
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .header("Authorization", "Bearer " + token)
+                                        .content(
+                                                """
+                                                        {
+                                                                                      "socialSecurityNumber": 123456789,
+                                                        "firstName": "someName",
+                                                        "lastName": "someLastName",
+                                                        "age": 20,
+                                                        "gender": "MALE"
+                                                        }
+                                                        """))
+                        .andExpect(status().isOk())
+                        .andReturn();
 
         final String accessId = objectMapper.readTree(result.getResponse().getContentAsString()).get("accessId").asText();
 
-    // step 3 send POST request to /patient/new with token with the same data and status is 400 with
-    // message "Patient already exist in system."
-    mockMvc
-        .perform(
-            post("/patient/new")
-                .contentType(MediaType.APPLICATION_JSON)
-                .header("Authorization", "Bearer " + token)
-                .content(
-                    """
-                                {
-                                                                "socialSecurityNumber": 123456789,
-                                "firstName": "someName",
-                                "lastName": "someLastName",
-                                "age": 20,
-                                "gender": "MALE"
-
-                                }
-                                """))
-        .andExpect(status().isBadRequest());
+        // step 3 send POST request to /patient/new with token with the same data and status is 400 with
+        // message "Patient already exist in system."
+        mockMvc
+                .perform(
+                        post("/patient/new")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .header("Authorization", "Bearer " + token)
+                                .content(
+                                        """
+                                                {
+                                                                                "socialSecurityNumber": 123456789,
+                                                "firstName": "someName",
+                                                "lastName": "someLastName",
+                                                "age": 20,
+                                                "gender": "MALE"
+                                                
+                                                }
+                                                """))
+                .andExpect(status().isBadRequest());
 
         //step 4 send GET request to /patient/{id} with token and status is 200. response contains patient data
         MvcResult result1 = mockMvc.perform(get("/patient/" + accessId)
@@ -350,68 +351,5 @@ class MitpBackendApplicationTests {
         return token;
     }
 
-  //    @Test
-  //    public void getMedicalDataByAccessID() throws Exception {
-  //        // happy path
-  //        // there is not any users in database
-  //        // step 1 enroll user and get token
-  //        // step 2 send POST request to /patient/new with token and status is 200. response
-  // contains id
-  //        // step 3 send Get request to /medicalData/{id}/summary with token and status is 200.
-  // response contains medical data
-  //        // step 4 send Get request to /medicalData/{id}/summary with token and status is 404
-  // with message "Patient not found in system."
-  //
-  //        //step 1 enroll user and get token
-  //        String token = registerAndGetToken();
-  //
-  //
-  //        //step 2 send POST request to /patient/new with token and status is 200. response
-  // contains id
-  //        final MvcResult result = mockMvc.perform(post("/patient/new")
-  //                        .contentType(MediaType.APPLICATION_JSON)
-  //                        .header("Authorization", "Bearer " + token)
-  //                        .content("""
-  //                                {
-  //                                "firstName": "someName",
-  //                                "lastName": "someLastName",
-  //                                "age": 20,
-  //                                "gender": "MALE"
-  //                                }
-  //                                """))
-  //                .andExpect(status().isOk())
-  //                .andReturn();
-  //
-  //        final String accessId =
-  // objectMapper.readTree(result.getResponse().getContentAsString()).get("accessId").asText();
-  //
-  //        // step 3 send Get request to /medicalData/{id}/summary with token and status is 200.
-  // response contains medical data
-  //
-  //        MvcResult result1 = mockMvc.perform(get("/medicalData/" + accessId + "/summary")
-  //                        .header("Authorization", "Bearer " + token)
-  //                        .contentType(MediaType.APPLICATION_JSON))
-  //                .andExpect(status().isOk())
-  //                .andReturn();
-  //
-  //        //assert
-  //        assertAll(
-  //
-  //        );
-  //
-  //
-  //        //TODO dokonczyc test nie wiem jak sprawdzac listę
-  //
-  //
-  //        // step 4 send Get request to /medicalData/{id}/summary with token and status is 404
-  // with message "Patient not found in system."
-  //
-  //        mockMvc.perform(get("/medicalData/" + accessId + "1" + "/summary")
-  //                        .header("Authorization", "Bearer " + token)
-  //                        .contentType(MediaType.APPLICATION_JSON))
-  //                .andExpect(status().isNotFound());
-  //
-  //
-  //    }
 
 }
