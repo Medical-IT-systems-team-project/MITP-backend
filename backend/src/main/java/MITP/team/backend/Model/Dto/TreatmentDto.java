@@ -14,4 +14,5 @@ public record TreatmentDto(
     @NotBlank String treatmentName,
     String details,
     Long medicalCaseId,
-    Long medicalDoctorId) {}
+    Long medicalDoctorId
+) {}

@@ -269,7 +269,7 @@ class MitpBackendApplicationTests {
                         .andExpect(status().isOk())
                         .andReturn();
 
-        final String accessId = objectMapper.readTree(result.getResponse().getContentAsString()).get("accessId").asText();
+        final String accessId = objectMapper.readTree(result.getResponse().getContentAsString()).get("patientLastName").asText();
 
         // step 3 send POST request to /patient/new with token with the same data and status is 400 with
         // message "Patient already exist in system."
@@ -303,7 +303,7 @@ class MitpBackendApplicationTests {
                 () -> assertThat(objectMapper.readTree(result1.getResponse().getContentAsString()).get("lastName").asText()).isEqualTo("someLastName"),
                 () -> assertThat(objectMapper.readTree(result1.getResponse().getContentAsString()).get("age").asInt()).isEqualTo(20),
                 () -> assertThat(objectMapper.readTree(result1.getResponse().getContentAsString()).get("gender").asText()).isEqualTo("MALE"),
-                () -> assertThat(objectMapper.readTree(result1.getResponse().getContentAsString()).get("accessId").asText()).isEqualTo(accessId)
+                () -> assertThat(objectMapper.readTree(result1.getResponse().getContentAsString()).get("patientLastName").asText()).isEqualTo(accessId)
         );
 
 
@@ -312,6 +312,9 @@ class MitpBackendApplicationTests {
                         .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
+
+
+
     }
 
     private String registerAndGetToken() throws Exception {

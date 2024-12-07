@@ -14,5 +14,4 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
 
     boolean existsByAccessId(String accessId);
 
-
 }
