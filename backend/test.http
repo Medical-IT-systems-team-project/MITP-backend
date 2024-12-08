@@ -80,3 +80,22 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0Iiwia
   "medicalCaseId": 1,
   "medicalDoctorId": 1
 }
+
+###
+POST http://localhost:9090/doctor/new/Medication
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0IiwiaWF0IjoxNzMzNjYxNDY1LCJleHAiOjE3MzM2NjUwNjUsImlzcyI6IlphZGFuaWUgUmVrcnV0YWN5am5lIFNlcnZpY2UifQ.M6L0Zjj_yVD4fKX3jfVZ83p7WGlfjYVchljaEtO0oyU
+
+{
+  "name": "Tescior123",
+  "startDate": "2025-07-10T10:00:00",
+  "endDate": "2025-07-20T15:00:00",
+  "details": "test test",
+  "medicalCaseId": 1,
+  "medicalDoctorId": 1,
+  "dosageForm": "1x1",
+  "strength": "200mg",
+  "unit": "tabletki"
+
+
+}

@@ -29,10 +29,11 @@ public class DoctorController {
     return ResponseEntity.status(HttpStatus.CREATED).body("New treatment added");
   }
 
-  @PostMapping("/new/Medications")
-  public ResponseEntity<?> createNewMedications(
+  //przetestowane
+  @PostMapping("/new/Medication")
+  public ResponseEntity<?> createNewMedication(
       @Valid @RequestBody MedicationRequestDto medicationRequestDto) {
-    medicationService.createNewMedications(medicationRequestDto);
+    medicationService.createNewMedication(medicationRequestDto);
     return ResponseEntity.status(HttpStatus.CREATED).body("New medications added");
   }
 

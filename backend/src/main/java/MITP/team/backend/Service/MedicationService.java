@@ -1,7 +1,9 @@
 package MITP.team.backend.Service;
 
 import MITP.team.backend.Model.Dto.MedicationRequestDto;
+import MITP.team.backend.Model.Enum.MedicalStatus;
 import MITP.team.backend.Model.Mapper.MedicationMapper;
+import MITP.team.backend.Model.Medication;
 import MITP.team.backend.Repository.MedicationRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +18,9 @@ public class MedicationService implements IMedicationService {
   public final MedicationMapper medicationsMapper;
 
   @Override
-  public void createNewMedications(MedicationRequestDto medicationRequestDto) {
-    medicationRepository.save(medicationsMapper.mapToMedication(medicationRequestDto));
+  public void createNewMedication(MedicationRequestDto medicationRequestDto) {
+    Medication medicationToSave = medicationsMapper.mapToMedication(medicationRequestDto);
+    medicationToSave.setStatus(MedicalStatus.PLANNED);
+    medicationRepository.save(medicationToSave);
     }
 }
