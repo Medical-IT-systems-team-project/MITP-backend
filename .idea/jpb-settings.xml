@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JpaLiquibaseChangesConfig">
+    <exclude-change idName="drug_treatment" tagName="createTable" />
+    <exclude-change idName="drug_treatment_medications" tagName="createTable" />
+    <exclude-change idName="medication" tagName="createTable" />
+    <exclude-change idName="patient_drug_treatment" tagName="createTable" />
+    <exclude-change idName="patient_medication" tagName="createTable" />
+    <exclude-change idName="patient_treatment" tagName="createTable" />
+    <exclude-change idName="treatment" tagName="createTable" />
+    <exclude-change idName="patient#age" tagName="addNotNullConstraint" />
+    <exclude-change idName="fk_drutremed_on_drug_teratment" tagName="addForeignKeyConstraint" />
+    <exclude-change idName="fk_drutremed_on_medication" tagName="addForeignKeyConstraint" />
+    <exclude-change idName="fk_patdrutre_on_drug_teratment" tagName="addForeignKeyConstraint" />
+    <exclude-change idName="fk_patdrutre_on_patient" tagName="addForeignKeyConstraint" />
+    <exclude-change idName="fk_patmed_on_medication" tagName="addForeignKeyConstraint" />
+    <exclude-change idName="fk_patmed_on_patient" tagName="addForeignKeyConstraint" />
+    <exclude-change idName="fk_pattre_on_patient" tagName="addForeignKeyConstraint" />
+    <exclude-change idName="fk_pattre_on_treatment" tagName="addForeignKeyConstraint" />
+    <exclude-change idName="patient#adadada" tagName="dropColumn" />
+    <exclude-change idName="patient#ertertreter" tagName="dropColumn" />
+    <exclude-change idName="patient#name" tagName="dropColumn" />
+    <exclude-change idName="patient#surname" tagName="dropColumn" />
+    <exclude-change idName="patient_seq" tagName="dropSequence" />
+    <exclude-change idName="idx_login" tagName="createIndex" />
+  </component>
+</project>

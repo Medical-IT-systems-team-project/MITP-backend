@@ -1,0 +1,108 @@
+###
+Wypisane wszystkie endpointy (podstawowe htttp do manualego testowania)
+###
+POST http://localhost:9090/register
+Content-Type: application/json
+
+{
+  "login": "test",
+  "password": "test"
+}
+
+###
+POST http://localhost:9090/login
+Content-Type: application/json
+
+{
+  "login": "test",
+  "password": "test"
+}
+
+###
+POST http://localhost:9090/medicalCase/newCase
+Content-Type: application/json
+Authorization: Bearer {{JWT_token}}
+
+{
+  "patientId": 3,
+  "admissionReason": "test",
+  "admissionDate": "2025-07-10T10:00:00",
+  "description": "testowe przyjecie",
+  "attendingDoctorId": 102
+}
+
+###
+GET http://localhost:9090/medicalCase/kE4WwRkDiE/summary
+Content-Type: application/json
+Authorization: Bearer {{JWT_token}}
+
+###
+POST http://localhost:9090/doctor/new/Treatment
+Content-Type: application/json
+Authorization: Bearer {{JWT_token}}
+
+{
+  "description": "test test",
+  "startDate": "2025-07-10T10:00:00",
+  "endDate": "2025-07-20T15:00:00",
+  "name": "Test",
+  "details": "test test",
+  "medicalCaseId": 52,
+  "medicalDoctorId": 102
+}
+
+###
+GET http://localhost:9090/medicalCase/52/treatments
+Accept: application/json
+Authorization: Bearer {{JWT_token}}
+
+###
+POST http://localhost:9090/doctor/new/Medication
+Content-Type: application/json
+Authorization: Bearer {{JWT_token}}
+
+{
+  "name": "Tescior123",
+  "startDate": "2025-07-10T10:00:00",
+  "endDate": "2025-07-20T15:00:00",
+  "details": "test test",
+  "medicalCaseId": 52,
+  "medicalDoctorId": 102,
+  "dosageForm": "1x1",
+  "strength": "200mg",
+  "unit": "tabletki"
+}
+
+###
+GET http://localhost:9090/medicalCase/52/medications
+Accept: application/json
+Authorization: Bearer {{JWT_token}}
+
+#actions dedicated for patient menagment
+###
+POST http://localhost:9090/patient/new
+Content-Type: application/json
+Authorization: Bearer {{JWT_token}}
+
+{
+  "socialSecurityNumber": 2115,
+  "firstName": "krystian",
+  "lastName": "test",
+  "endDate": "2003-07-11T10:00:00",
+  "age": 22,
+  "gender": "male"
+}
+###
+GET http://localhost:9090/patient/kE4WwRkDiE
+Accept: application/json
+Authorization: Bearer {{JWT_token}}
+
+###
+GET http://localhost:9090/doctor/patient/all
+Accept: application/json
+Authorization: Bearer {{JWT_token}}
+
+###
+PATCH http://localhost:9090/medicalCase/52?force=true
+Accept: application/json
+Authorization: Bearer {{JWT_token}}

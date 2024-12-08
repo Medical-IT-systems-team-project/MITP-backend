@@ -1,6 +1,6 @@
 package MITP.team.backend;
 
-import MITP.team.backend.infrastructure.errorvalidation.ApiValidationErrorResponseDto;
+import MITP.team.backend.Config.errorvalidation.ApiValidationErrorResponseDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.AfterAll;
@@ -24,13 +24,10 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 
 @Log4j2
 @SpringBootTest
@@ -39,213 +36,320 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class MitpBackendApplicationTests {
 
-	@Container
-	private static final PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:latest");
+    @Container
+    private static final PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:latest").withInitScript("initTest.sql");
 
-	@Autowired
-	public ObjectMapper objectMapper;
+    @Autowired
+    public ObjectMapper objectMapper;
 
-	@Autowired
-	private MockMvc mockMvc;
+    @Autowired
+    private MockMvc mockMvc;
 
-	@DynamicPropertySource
-	static void postgreSQLProperties(DynamicPropertyRegistry registry) {
-		registry.add("spring.datasource.url", postgreSQLContainer::getJdbcUrl);
-		registry.add("spring.datasource.username", postgreSQLContainer::getUsername);
-		registry.add("spring.datasource.password", postgreSQLContainer::getPassword);
-	}
+    @DynamicPropertySource
+    static void postgreSQLProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.datasource.url", postgreSQLContainer::getJdbcUrl);
+        registry.add("spring.datasource.username", postgreSQLContainer::getUsername);
+        registry.add("spring.datasource.password", postgreSQLContainer::getPassword);
+    }
 
-	@BeforeAll
-	static void beforeAll() {
-		postgreSQLContainer.start();
-	}
+    @BeforeAll
+    static void beforeAll() {
+        postgreSQLContainer.start();
+    }
 
-	@AfterAll
-	static void afterAll() {
-		postgreSQLContainer.stop();
-	}
+    @AfterAll
+    static void afterAll() {
+        postgreSQLContainer.stop();
+    }
 
-	@Test
-	void happy_path() throws Exception {
-
-
-		/* happy path
-		 * there is not any users in database
-		 * step 1 user made POST request to /register endpoint with not data and status is 400 with list of errors
-		 * step 2 user made POST request to /register endpoint with data someUser and somePassword and status is 201
-		 * step 3 user made POST request to /register endpoint with data someUser and somePassword and status is 409 with message "Login already exists"
-		 * step 4 user made POST request to /login endpoint with data someUser2 and somePassword and status is 401
-		 * step 5 user made POST request to /login endpoint with data someUser and somePassword and status is 200. response contains token
-		 * step 6 user made GET request to /find/{login} without token endpoint with token and status is 401. response contains username
-		 * step 7 user made GET request to /find/{login} with token endpoint with token and status is 200. response contains username
-		 * step 8 user made PUT request to /update/{login} without token endpoint with token and status is 401.
-		 * step 9 user made PUT request to /update/{login} with token endpoint with token with body someUser2 and status is 200. response contains someUser2
-		 * step 10 user made DELETE request to /delete/{login} without token endpoint with token and status is 401
-		 * step 11 user made DELETE request to /delete/{login} with token endpoint with token and status is 200. response contains deleted username
-		 * */
+    @Test
+    void happy_path() throws Exception {
 
 
+        /* happy path
+         * there is not any users in database
+         * step 1 user made POST request to /register endpoint with not data and status is 400 with list of errors
+         * step 2 user made POST request to /register endpoint with data someUser and somePassword and status is 201
+         * step 3 user made POST request to /register endpoint with data someUser and somePassword and status is 409 with message "Login already exists"
+         * step 4 user made POST request to /login endpoint with data someUser2 and somePassword and status is 401
+         * step 5 user made POST request to /login endpoint with data someUser and somePassword and status is 200. response contains token
+         * step 6 user made GET request to /find/{login} without token endpoint with token and status is 401. response contains username
+         * step 7 user made GET request to /find/{login} with token endpoint with token and status is 200. response contains username
+         * step 8 user made PUT request to /update/{login} without token endpoint with token and status is 401.
+         * step 9 user made PUT request to /update/{login} with token endpoint with token with body someUser2 and status is 200. response contains someUser2
+         * step 10 user made DELETE request to /delete/{login} without token endpoint with token and status is 401
+         * step 11 user made DELETE request to /delete/{login} with token endpoint with token and status is 200. response contains deleted username
+         * */
 
-		//step 1 user made POST request to /register endpoint with not data and status is 400 with list of errors
-		final MvcResult result5 = mockMvc.perform(post("/register")
-						.contentType(MediaType.APPLICATION_JSON)
-						.content("""
+
+        //step 1 user made POST request to /register endpoint with not data and status is 400 with list of errors
+        final MvcResult result5 = mockMvc.perform(post("/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
                                 {}
                                 """))
-				.andExpect(status().isBadRequest())
-				.andReturn();
+                .andExpect(status().isBadRequest())
+                .andReturn();
 
-		final ApiValidationErrorResponseDto apiValidationErrorResponseDto = objectMapper.readValue(result5.getResponse().getContentAsString(), ApiValidationErrorResponseDto.class);
-		final List<String> errors = apiValidationErrorResponseDto.errors();
+        final ApiValidationErrorResponseDto apiValidationErrorResponseDto = objectMapper.readValue(result5.getResponse().getContentAsString(), ApiValidationErrorResponseDto.class);
+        final List<String> errors = apiValidationErrorResponseDto.errors();
 
-		assertAll(
-				() -> assertTrue(errors.contains("login cannot be null")),
-				() -> assertTrue(errors.contains("login cannot be empty")),
-				() -> assertTrue(errors.contains("login cannot be blank")),
-				() -> assertTrue(errors.contains("password cannot be null")),
-				() -> assertTrue(errors.contains("password cannot be empty")),
-				() -> assertTrue(errors.contains("password cannot be blank"))
-		);
+        assertAll(
+                () -> assertTrue(errors.contains("login cannot be null")),
+                () -> assertTrue(errors.contains("login cannot be empty")),
+                () -> assertTrue(errors.contains("login cannot be blank")),
+                () -> assertTrue(errors.contains("password cannot be null")),
+                () -> assertTrue(errors.contains("password cannot be empty")),
+                () -> assertTrue(errors.contains("password cannot be blank"))
+        );
 
 
-
-		//step 2 user made POST request to /register endpoint with data someUser and somePassword and status is 201
-		final MvcResult result = mockMvc.perform(post("/register")
-						.contentType(MediaType.APPLICATION_JSON)
-						.content("""
+        //step 2 user made POST request to /register endpoint with data someUser and somePassword and status is 201
+        final MvcResult result = mockMvc.perform(post("/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
                                 {
                                 "login": "someUser",
                                 "password": "somePassword"
                                 }
                                 """))
-				.andExpect(status().isCreated())
-				.andReturn();
+                .andExpect(status().isCreated())
+                .andReturn();
 
-		assertAll(
-				() -> assertThat(result.getResponse().getContentAsString()).contains("someUser"),
-				() -> assertThat(result.getResponse().getContentAsString()).contains("REGISTERED")
-		);
+        assertAll(
+                () -> assertThat(result.getResponse().getContentAsString()).contains("someUser"),
+                () -> assertThat(result.getResponse().getContentAsString()).contains("REGISTERED")
+        );
 
 
-
-		//step 3 user made POST request to /register endpoint with data someUser and somePassword and status is 409 with message "Login already exists"
-		mockMvc.perform(post("/register")
-						.contentType(MediaType.APPLICATION_JSON)
-						.content("""
+        //step 3 user made POST request to /register endpoint with data someUser and somePassword and status is 409 with message "Login already exists"
+        mockMvc.perform(post("/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
                                 {
                                 "login": "someUser",
                                 "password": "somePassword"
                                 }
                                 """))
-				.andExpect(status().isConflict());
+                .andExpect(status().isConflict());
 
 
-
-		//step 4 user made POST request to /login endpoint with data someUser2 and somePassword and status is 401
-		mockMvc.perform(post("/login")
-						.contentType(MediaType.APPLICATION_JSON)
-						.content("""
+        //step 4 user made POST request to /login endpoint with data someUser2 and somePassword and status is 401
+        mockMvc.perform(post("/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
                                 {
                                 "login": "someUser2",
                                 "password": "somePassword"
                                 }
                                 """))
-				.andExpect(status().isUnauthorized());
+                .andExpect(status().isUnauthorized());
 
 
-
-		//step 5 user made POST request to /login endpoint with data someUser and somePassword and status is 200. response contains token
-		final MvcResult result1 = mockMvc.perform(post("/login")
-						.contentType(MediaType.APPLICATION_JSON)
-						.content("""
+        //step 5 user made POST request to /login endpoint with data someUser and somePassword and status is 200. response contains token
+        final MvcResult result1 = mockMvc.perform(post("/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
                                 {
                                 "login": "someUser",
                                 "password": "somePassword"
                                 }
                                 """))
-				.andExpect(status().isOk())
-				.andReturn();
+                .andExpect(status().isOk())
+                .andReturn();
 
-		final String token = objectMapper.readTree(result1.getResponse().getContentAsString()).get("token").asText();
-		assertAll(
-				() -> assertThat(token).matches(Pattern.compile("^[A-Za-z0-9-_=]+\\.[A-Za-z0-9-_=]+\\.?[A-Za-z0-9-_.+/=]*$"))
-		);
-
-
-
-		//step 6 user made GET request to /find/{login} without token endpoint with token and status is 401. response contains username
-		mockMvc.perform(MockMvcRequestBuilders.get("/find/someUser")
-						.contentType(MediaType.APPLICATION_JSON))
-				.andExpect(status().isUnauthorized());
+        final String token = objectMapper.readTree(result1.getResponse().getContentAsString()).get("token").asText();
+        assertAll(
+                () -> assertThat(token).matches(Pattern.compile("^[A-Za-z0-9-_=]+\\.[A-Za-z0-9-_=]+\\.?[A-Za-z0-9-_.+/=]*$"))
+        );
 
 
-
-		//step 7 user made GET request to /find/{login} with token endpoint with token and status is 200. response contains username
-		final MvcResult result2 = mockMvc.perform(get("/find/someUser")
-						.header("Authorization", "Bearer " + token)
-						.contentType(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk())
-				.andReturn();
-
-		final String username = objectMapper.readTree(result2.getResponse().getContentAsString()).get("login").asText();
-		assertAll(
-				() -> assertEquals("someUser", username)
-		);
+        //step 6 user made GET request to /find/{login} without token endpoint with token and status is 401. response contains username
+        mockMvc.perform(MockMvcRequestBuilders.get("/find/someUser")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized());
 
 
+        //step 7 user made GET request to /find/{login} with token endpoint with token and status is 200. response contains username
+        final MvcResult result2 = mockMvc.perform(get("/find/someUser")
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
 
-		//step 8 user made PUT request to /update/{login} without token endpoint with token and status is 401.
-		mockMvc.perform(MockMvcRequestBuilders.get("/update/someUser")
-						.contentType(MediaType.APPLICATION_JSON)
-						.content("""
+        final String username = objectMapper.readTree(result2.getResponse().getContentAsString()).get("login").asText();
+        assertAll(
+                () -> assertEquals("someUser", username)
+        );
+
+
+        //step 8 user made PUT request to /update/{login} without token endpoint with token and status is 401.
+        mockMvc.perform(MockMvcRequestBuilders.get("/update/someUser")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
                                 {
                                 "login": "someUser2",
                                 "password":"$2a$10$hUSgGkm15T9ksN5XZtwGBejfKjj4ytjvM1sC39pmp/5MnnZ.9ssvS"
                                 }
                                 """))
-				.andExpect(status().isUnauthorized());
+                .andExpect(status().isUnauthorized());
 
 
-
-		//step 9 user made PUT request to /update/{login} with token endpoint with token with body someUser2 and status is 200. response contains someUser2
-		final MvcResult result3 = mockMvc.perform(MockMvcRequestBuilders.put("/update/someUser")
-						.header("Authorization", "Bearer " + token)
-						.contentType(MediaType.APPLICATION_JSON)
-						.content("""
+        //step 9 user made PUT request to /update/{login} with token endpoint with token with body someUser2 and status is 200. response contains someUser2
+        final MvcResult result3 = mockMvc.perform(MockMvcRequestBuilders.put("/update/someUser")
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
                                 {
                                 "login": "someUser2",
                                 "password":"$2a$10$hUSgGkm15T9ksN5XZtwGBejfKjj4ytjvM1sC39pmp/5MnnZ.9ssvS"
                                 }
                                 """))
-				.andExpect(status().isOk())
-				.andReturn();
+                .andExpect(status().isOk())
+                .andReturn();
 
-		final String username2 = objectMapper.readTree(result3.getResponse().getContentAsString()).get("login").asText();
-		assertAll(
-				() -> assertEquals("someUser2", username2)
-		);
-
-
-
-		//step 10 user made DELETE request to /delete/{login} without token endpoint with token and status is 401
-		mockMvc.perform(MockMvcRequestBuilders.delete("/delete/someUser2")
-						.contentType(MediaType.APPLICATION_JSON))
-				.andExpect(status().isUnauthorized());
+        final String username2 = objectMapper.readTree(result3.getResponse().getContentAsString()).get("login").asText();
+        assertAll(
+                () -> assertEquals("someUser2", username2)
+        );
 
 
+        //step 10 user made DELETE request to /delete/{login} without token endpoint with token and status is 401
+        mockMvc.perform(MockMvcRequestBuilders.delete("/delete/someUser2")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized());
 
 
-		//step 11 user made DELETE request to /delete/{login} with token endpoint with token and status is 200. response contains deleted username
-		final MvcResult result4 = mockMvc.perform(MockMvcRequestBuilders.delete("/delete/someUser2")
-						.header("Authorization", "Bearer " + token)
-						.contentType(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk())
-				.andReturn();
+        //step 11 user made DELETE request to /delete/{login} with token endpoint with token and status is 200. response contains deleted username
+        final MvcResult result4 = mockMvc.perform(MockMvcRequestBuilders.delete("/delete/someUser2")
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
 
-		final String username3 = objectMapper.readTree(result4.getResponse().getContentAsString()).get("login").asText();
-		assertAll(
-				() -> assertEquals("someUser2", username3)
-		);
-	}
+        final String username3 = objectMapper.readTree(result4.getResponse().getContentAsString()).get("login").asText();
+        assertAll(
+                () -> assertEquals("someUser2", username3)
+        );
+    }
+
+    @Test
+    public void registerPatientHappyPath() throws Exception {
+
+        /* happy path
+         * there is not any users in database
+         * step 1 enroll user and get token
+         * step 2 send POST request to /patient/new with token and status is 200. response contains id
+         * step 3 send POST request to /patient/new with token with the same data and status is 400 with message "Patient already exist in system."
+         * step 4 send GET request to /patient/{id} with token and status is 200. response contains patient data
+         * step 5 send GET request to /patient/{id} with token and status is 404 with message "Patient not found in system."
+         * */
+
+
+        //step 1 enroll user and get token
+        String token = registerAndGetToken();
+
+        // step 2 send POST request to /patient/new with token and status is 200. response contains id
+        final MvcResult result =
+                mockMvc
+                        .perform(
+                                post("/patient/new")
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .header("Authorization", "Bearer " + token)
+                                        .content(
+                                                """
+                                                        {
+                                                                                      "socialSecurityNumber": 123456789,
+                                                        "firstName": "someName",
+                                                        "lastName": "someLastName",
+                                                        "age": 20,
+                                                        "gender": "MALE"
+                                                        }
+                                                        """))
+                        .andExpect(status().isOk())
+                        .andReturn();
+
+        final String accessId = objectMapper.readTree(result.getResponse().getContentAsString()).get("accessId").asText();
+
+        // step 3 send POST request to /patient/new with token with the same data and status is 400 with
+        // message "Patient already exist in system."
+        mockMvc
+                .perform(
+                        post("/patient/new")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .header("Authorization", "Bearer " + token)
+                                .content(
+                                        """
+                                                {
+                                                                                "socialSecurityNumber": 123456789,
+                                                "firstName": "someName",
+                                                "lastName": "someLastName",
+                                                "age": 20,
+                                                "gender": "MALE"
+                                                
+                                                }
+                                                """))
+                .andExpect(status().isBadRequest());
+
+        //step 4 send GET request to /patient/{id} with token and status is 200. response contains patient data
+        MvcResult result1 = mockMvc.perform(get("/patient/" + accessId)
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        assertAll(
+                () -> assertThat(objectMapper.readTree(result1.getResponse().getContentAsString()).get("firstName").asText()).isEqualTo("someName"),
+                () -> assertThat(objectMapper.readTree(result1.getResponse().getContentAsString()).get("lastName").asText()).isEqualTo("someLastName"),
+                () -> assertThat(objectMapper.readTree(result1.getResponse().getContentAsString()).get("age").asInt()).isEqualTo(20),
+                () -> assertThat(objectMapper.readTree(result1.getResponse().getContentAsString()).get("gender").asText()).isEqualTo("MALE"),
+                () -> assertThat(objectMapper.readTree(result1.getResponse().getContentAsString()).get("accessId").asText()).isEqualTo(accessId)
+        );
+
+
+        //step 5 send GET request to /patient/{id} with token and status is 404 with message "Patient not found in system."
+        mockMvc.perform(get("/patient/" + accessId + "1")
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
+    private String registerAndGetToken() throws Exception {
+        //step 1 user made POST request to /register endpoint with data someUser and somePassword and status is 201
+        final MvcResult result = mockMvc.perform(post("/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                "login": "someUser",
+                                "password": "somePassword"
+                                }
+                                """))
+                .andExpect(status().isCreated())
+                .andReturn();
+
+        assertAll(
+                () -> assertThat(result.getResponse().getContentAsString()).contains("someUser"),
+                () -> assertThat(result.getResponse().getContentAsString()).contains("REGISTERED")
+        );
+
+        //step 2 user made POST request to /login endpoint with data someUser and somePassword and status is 200. response contains token
+        final MvcResult result1 = mockMvc.perform(post("/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                "login": "someUser",
+                                "password": "somePassword"
+                                }
+                                """))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        final String token = objectMapper.readTree(result1.getResponse().getContentAsString()).get("token").asText();
+        assertAll(
+                () -> assertThat(token).matches(Pattern.compile("^[A-Za-z0-9-_=]+\\.[A-Za-z0-9-_=]+\\.?[A-Za-z0-9-_.+/=]*$"))
+        );
+        return token;
+    }
+
 
 }
