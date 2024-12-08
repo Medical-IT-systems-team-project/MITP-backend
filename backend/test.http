@@ -101,3 +101,8 @@ Authorization: Bearer {{JWT_token}}
 GET http://localhost:9090/doctor/patient/all
 Accept: application/json
 Authorization: Bearer {{JWT_token}}
+
+###
+PATCH http://localhost:9090/medicalCase/52?force=true
+Accept: application/json
+Authorization: Bearer {{JWT_token}}

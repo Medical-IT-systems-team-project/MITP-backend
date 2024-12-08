@@ -13,6 +13,7 @@ import MITP.team.backend.Repository.*;
 import jakarta.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -93,22 +94,29 @@ public class MedicalCaseService implements IMedicalCaseService {
   }
 
   @Override
-  public List<Object> getIncompleteList(Long Id) {
+  public List<Object> getIncompleteList(Long id) {
     MedicalCase medicalCaseToClose =
-        medicalCaseRepository.findById(Id).orElseThrow(() -> new MedicalCaseNotFoundException(Id));
+        medicalCaseRepository.findById(id).orElseThrow(() -> new MedicalCaseNotFoundException(id));
 
     List<Object> incompleteItems = new ArrayList<>();
-    for (Medication medication : medicalCaseToClose.getMedications()) {
-      if (medication.getStatus() != MedicalStatus.COMPLETED) {
-        incompleteItems.add(medication);
-      }
-    }
 
-    for (Treatment treatment : medicalCaseToClose.getTreatments()) {
-      if (treatment.getStatus() != MedicalStatus.COMPLETED) {
-        incompleteItems.add(treatment);
-      }
-    }
+    incompleteItems.addAll(
+        medicationRepository.getAllMedicationsByMedicalCase(medicalCaseToClose).stream()
+            .filter(
+                medication ->
+                    medication.getStatus() != MedicalStatus.COMPLETED
+                        && medication.getStatus() != MedicalStatus.CANCELLED)
+            .map(medicationMapper::mapToMedicationResponseDto)
+            .toList());
+
+    incompleteItems.addAll(
+        treatmentRepository.getAllTreatmentsByMedicalCase(medicalCaseToClose).stream()
+            .filter(
+                treatment ->
+                    treatment.getStatus() != MedicalStatus.COMPLETED
+                        && treatment.getStatus() != MedicalStatus.CANCELLED)
+            .map(treatmentMapper::mapToTreatmentResponseDto)
+            .toList());
 
     return incompleteItems;
   }

@@ -43,7 +43,7 @@ public class MedicalCaseController {
     return ResponseEntity.status(HttpStatus.CREATED).body("New case added");
   }
 
-  @PatchMapping("/{Id}") // TODO test this endpoint
+  @PatchMapping("/{Id}")
   public ResponseEntity<?> closeCase(@PathVariable Long Id, @RequestParam Boolean force) {
     List<Object> incompleteItems = medicalDataService.getIncompleteList(Id);
 
