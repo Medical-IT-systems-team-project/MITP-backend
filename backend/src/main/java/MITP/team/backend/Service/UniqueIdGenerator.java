@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.text.RandomStringGenerator;
 import org.springframework.stereotype.Service;
 
-// TODO zrobic interfejs
 @Service
 @RequiredArgsConstructor
 public class UniqueIdGenerator {

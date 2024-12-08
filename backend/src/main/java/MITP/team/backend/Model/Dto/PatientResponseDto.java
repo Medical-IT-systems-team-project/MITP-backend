@@ -1,5 +1,6 @@
 package MITP.team.backend.Model.Dto;
 
+import MITP.team.backend.Model.Enum.MedicalStatus;
 import lombok.Builder;
 
 import java.time.LocalDateTime;
@@ -8,11 +9,12 @@ import java.time.LocalDateTime;
 public record PatientResponseDto(
         String firstName,
         String lastName,
+        MedicalStatus status,
+        LocalDateTime birthDate,
+        Long SocialSecurityNumber,
         Integer age,
         String gender,
         String accessId,
-        LocalDateTime birthDate,
-        Long SocialSecurityNumber,
         String email,
         String phoneNumber,
         String address

@@ -21,7 +21,6 @@ public class DoctorController {
   private final IMedicationService medicationService;
   private final IPatientService patientService;
 
-  //przetestowane
   @PostMapping("/new/Treatment")
   public ResponseEntity<?> createNewTreatment(
       @Valid @RequestBody TreatmentRequestDto treatmentRequestDto) {
@@ -29,7 +28,6 @@ public class DoctorController {
     return ResponseEntity.status(HttpStatus.CREATED).body("New treatment added");
   }
 
-  //przetestowane
   @PostMapping("/new/Medication")
   public ResponseEntity<?> createNewMedication(
       @Valid @RequestBody MedicationRequestDto medicationRequestDto) {

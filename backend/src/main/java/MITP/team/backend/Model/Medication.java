@@ -15,13 +15,14 @@ public class Medication {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long Id;
 
+  private String name;
+
   @Column(name = "start_date", nullable = false)
   private LocalDateTime startDate;
 
   @Column(name = "end_date", nullable = false)
   private LocalDateTime endDate;
 
-  private String name;
   private String dosageForm;
   private String strength;
   private String unit;

@@ -1,9 +1,6 @@
 package MITP.team.backend.Controller;
 
-import MITP.team.backend.Model.Dto.MedicalCaseRequestDto;
-import MITP.team.backend.Model.Dto.MedicalCaseResponseDto;
-import MITP.team.backend.Model.Dto.MedicationRequestDto;
-import MITP.team.backend.Model.Dto.TreatmentRequestDto;
+import MITP.team.backend.Model.Dto.*;
 import MITP.team.backend.Service.IMedicalCaseService;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -19,7 +16,7 @@ public class MedicalCaseController {
 
   private final IMedicalCaseService medicalDataService;
 
-  @GetMapping("/{Id}/summary") // PRZETESTOWANY
+  @GetMapping("/{Id}/summary")
   public ResponseEntity<List<MedicalCaseResponseDto>> getMedicalDataByAccessID(
       @PathVariable String Id) {
     List<MedicalCaseResponseDto> medicalDataById = medicalDataService.getMedicalDataByAccessId(Id);
@@ -27,27 +24,26 @@ public class MedicalCaseController {
   }
 
   @GetMapping("/{Id}/treatments")
-  public ResponseEntity<List<TreatmentRequestDto>> getTreatmentsByAccessID(
-      @PathVariable String Id) {
-    List<TreatmentRequestDto> treatments = medicalDataService.getTreatmentByAccessId(Id);
+  public ResponseEntity<List<TreatmentResponseDto>> getTreatmentsByAccessID(@PathVariable Long Id) {
+    List<TreatmentResponseDto> treatments = medicalDataService.getTreatmentsById(Id);
     return ResponseEntity.ok(treatments);
   }
 
   @GetMapping("/{Id}/medications")
-  public ResponseEntity<List<MedicationRequestDto>> getMedicationsByAccessID(
-      @PathVariable String Id) {
-    List<MedicationRequestDto> medications = medicalDataService.getMedicationsByAccessId(Id);
+  public ResponseEntity<List<MedicationResponseDto>> getMedicationsByAccessID(
+      @PathVariable Long Id) {
+    List<MedicationResponseDto> medications = medicalDataService.getMedicationsById(Id);
     return ResponseEntity.ok(medications);
   }
 
-  @PostMapping("/newCase") // PRZETESTOWANY
+  @PostMapping("/newCase")
   public ResponseEntity<String> addNewCase(
       @RequestBody MedicalCaseRequestDto medicalDataCaseRequestDto, Authentication authentication) {
     medicalDataService.createNewCase(medicalDataCaseRequestDto, authentication);
     return ResponseEntity.status(HttpStatus.CREATED).body("New case added");
   }
 
-  @PatchMapping("/{Id}")
+  @PatchMapping("/{Id}") // TODO test this endpoint
   public ResponseEntity<?> closeCase(@PathVariable Long Id, @RequestParam Boolean force) {
     List<Object> incompleteItems = medicalDataService.getIncompleteList(Id);
 

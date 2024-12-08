@@ -38,7 +38,7 @@ public class Patient {
   @Column(nullable = false)
   private Long socialSecurityNumber;
 
-  private int age;
+  private Integer age;
 
   public interface CreateValidation {}
 
@@ -52,5 +52,5 @@ public class Patient {
   private String address;
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "patient")
-  private List<MedicalCase> medicalCaseData;
+  private List<MedicalCase> medicalCase;
 }

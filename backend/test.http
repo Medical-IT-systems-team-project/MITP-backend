@@ -1,7 +1,5 @@
 ###
-
 Wypisane wszystkie endpointy (podstawowe htttp do manualego testowania)
-
 ###
 POST http://localhost:9090/register
 Content-Type: application/json
@@ -21,55 +19,27 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:9090/doctor/new/Treatment
-Content-Type: application/json
-
-{
-  "treatment": "test",
-  "description": "testowy zabieg",
-  "startDate": "2025-07-10T10:00:00",
-  "endDate": "2025-07-20T15:00:00",
-  "treatmentName": "testowy",
-  "details": "podstawowy",
-  "medicalCaseId": 0,
-  "medicalDoctorId": 1
-}
-
-###
 POST http://localhost:9090/medicalCase/newCase
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0IiwiaWF0IjoxNzMzNjU4NDA5LCJleHAiOjE3MzM2NjIwMDksImlzcyI6IlphZGFuaWUgUmVrcnV0YWN5am5lIFNlcnZpY2UifQ.-DoWmWVZc2Eakqk_qJJBzvGCZbLuQ337g9HyVrxkqSc
+Authorization: Bearer {{JWT_token}}
 
 {
-  "patientId": 1,
+  "patientId": 3,
   "admissionReason": "test",
   "admissionDate": "2025-07-10T10:00:00",
   "description": "testowe przyjecie",
-  "attendingDoctorId": 1
-}
-
-###
-POST http://localhost:9090/patient/new
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0IiwiaWF0IjoxNzMzNjU4NDA5LCJleHAiOjE3MzM2NjIwMDksImlzcyI6IlphZGFuaWUgUmVrcnV0YWN5am5lIFNlcnZpY2UifQ.-DoWmWVZc2Eakqk_qJJBzvGCZbLuQ337g9HyVrxkqSc
-
-{
-  "socialSecurityNumber": 4747447,
-  "firstName": "kamil",
-  "lastName": "test",
-  "age": 21,
-  "gender": "male"
+  "attendingDoctorId": 102
 }
 
 ###
 GET http://localhost:9090/medicalCase/kE4WwRkDiE/summary
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0IiwiaWF0IjoxNzMzNjU4NDA5LCJleHAiOjE3MzM2NjIwMDksImlzcyI6IlphZGFuaWUgUmVrcnV0YWN5am5lIFNlcnZpY2UifQ.-DoWmWVZc2Eakqk_qJJBzvGCZbLuQ337g9HyVrxkqSc
+Authorization: Bearer {{JWT_token}}
 
 ###
 POST http://localhost:9090/doctor/new/Treatment
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0IiwiaWF0IjoxNzMzNjU4NDA5LCJleHAiOjE3MzM2NjIwMDksImlzcyI6IlphZGFuaWUgUmVrcnV0YWN5am5lIFNlcnZpY2UifQ.-DoWmWVZc2Eakqk_qJJBzvGCZbLuQ337g9HyVrxkqSc
+Authorization: Bearer {{JWT_token}}
 
 {
   "description": "test test",
@@ -77,25 +47,57 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0Iiwia
   "endDate": "2025-07-20T15:00:00",
   "name": "Test",
   "details": "test test",
-  "medicalCaseId": 1,
-  "medicalDoctorId": 1
+  "medicalCaseId": 52,
+  "medicalDoctorId": 102
 }
+
+###
+GET http://localhost:9090/medicalCase/52/treatments
+Accept: application/json
+Authorization: Bearer {{JWT_token}}
 
 ###
 POST http://localhost:9090/doctor/new/Medication
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0IiwiaWF0IjoxNzMzNjYxNDY1LCJleHAiOjE3MzM2NjUwNjUsImlzcyI6IlphZGFuaWUgUmVrcnV0YWN5am5lIFNlcnZpY2UifQ.M6L0Zjj_yVD4fKX3jfVZ83p7WGlfjYVchljaEtO0oyU
+Authorization: Bearer {{JWT_token}}
 
 {
   "name": "Tescior123",
   "startDate": "2025-07-10T10:00:00",
   "endDate": "2025-07-20T15:00:00",
   "details": "test test",
-  "medicalCaseId": 1,
-  "medicalDoctorId": 1,
+  "medicalCaseId": 52,
+  "medicalDoctorId": 102,
   "dosageForm": "1x1",
   "strength": "200mg",
   "unit": "tabletki"
-
-
 }
+
+###
+GET http://localhost:9090/medicalCase/52/medications
+Accept: application/json
+Authorization: Bearer {{JWT_token}}
+
+#actions dedicated for patient menagment
+###
+POST http://localhost:9090/patient/new
+Content-Type: application/json
+Authorization: Bearer {{JWT_token}}
+
+{
+  "socialSecurityNumber": 2115,
+  "firstName": "krystian",
+  "lastName": "test",
+  "endDate": "2003-07-11T10:00:00",
+  "age": 22,
+  "gender": "male"
+}
+###
+GET http://localhost:9090/patient/kE4WwRkDiE
+Accept: application/json
+Authorization: Bearer {{JWT_token}}
+
+###
+GET http://localhost:9090/doctor/patient/all
+Accept: application/json
+Authorization: Bearer {{JWT_token}}

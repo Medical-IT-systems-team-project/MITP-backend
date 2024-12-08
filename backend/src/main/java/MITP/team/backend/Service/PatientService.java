@@ -4,30 +4,33 @@ import MITP.team.backend.Exceptions.DataNotFoundException;
 import MITP.team.backend.Exceptions.DuplicatedPatientException;
 import MITP.team.backend.Model.Dto.PatientRequestDto;
 import MITP.team.backend.Model.Dto.PatientResponseDto;
+import MITP.team.backend.Model.Mapper.PatientMapper;
 import MITP.team.backend.Model.MedicalCase;
 import MITP.team.backend.Model.MedicalDoctor;
 import MITP.team.backend.Model.Patient;
 import MITP.team.backend.Repository.MedicalCaseRepository;
+import MITP.team.backend.Repository.MedicalDoctorRepository;
 import MITP.team.backend.Repository.PatientRepository;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-// TODO zrobic interfejs
 @AllArgsConstructor
 @Service
 @Slf4j
 public class PatientService implements IPatientService {
-  public final PatientRepository repo;
+  private final PatientRepository patientRepository;
   private final UniqueIdGenerator idGenerator;
-  public final MedicalCaseRepository medicalCaseRepository;
+  private final MedicalCaseRepository medicalCaseRepository;
+  private final MedicalDoctorRepository medicalDoctorRepository;
+  private final PatientMapper patientMapper;
 
   public String createNewPatient(PatientRequestDto patientRequestDto) {
-    repo.findByFirstNameAndLastName(patientRequestDto.firstName(), patientRequestDto.lastName())
+    patientRepository
+        .findByFirstNameAndLastName(patientRequestDto.firstName(), patientRequestDto.lastName())
         .ifPresent(
             patient -> {
               throw new DuplicatedPatientException("Patient already exists");
@@ -45,13 +48,14 @@ public class PatientService implements IPatientService {
             .accessId(accessId)
             .build();
 
-    Patient save = repo.save(patient);
+    Patient save = patientRepository.save(patient);
     return save.getAccessId();
   }
 
   public PatientResponseDto getPatientByAccessId(String accessId) {
     Patient patient =
-        repo.findByAccessId(accessId)
+        patientRepository
+            .findByAccessId(accessId)
             .orElseThrow(() -> new DataNotFoundException("Patient not found in system."));
 
     return PatientResponseDto.builder()
@@ -63,26 +67,27 @@ public class PatientService implements IPatientService {
         .build();
   }
 
-  public Set<Patient> getAllPatients(Authentication auth) {
+  public Set<PatientResponseDto> getAllPatients(Authentication auth) {
+    String username = (String) auth.getPrincipal();
     MedicalDoctor authenticatedMedicalDoctor =
-        Optional.ofNullable(auth)
-            .map(Authentication::getPrincipal)
-            .filter(MedicalDoctor.class::isInstance)
-            .map(MedicalDoctor.class::cast)
+        medicalDoctorRepository
+            .findByLogin(username)
             .orElseThrow(() -> new SecurityException("Unauthorized access"));
     log.info("Getting all patients for doctor {}", authenticatedMedicalDoctor.getId());
 
-    Set<Patient> allPatients = new HashSet<>();
+    Set<PatientResponseDto> allPatients = new HashSet<>();
 
     medicalCaseRepository
         .getAllMedicalCaseByAttendingDoctorId(authenticatedMedicalDoctor.getId())
         .stream()
         .map(MedicalCase::getPatient)
+        .map(patientMapper::mapToPatientResponseDto)
         .forEach(allPatients::add);
     medicalCaseRepository
         .getAllMedicalCaseByAllowedDoctorsId(authenticatedMedicalDoctor.getId())
         .stream()
         .map(MedicalCase::getPatient)
+        .map(patientMapper::mapToPatientResponseDto)
         .forEach(allPatients::add);
     return allPatients;
   }

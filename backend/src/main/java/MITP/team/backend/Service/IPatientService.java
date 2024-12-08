@@ -12,5 +12,5 @@ public interface IPatientService {
 
   PatientResponseDto getPatientByAccessId(String accessId);
 
-  Set<Patient> getAllPatients(Authentication auth);
+  Set<PatientResponseDto> getAllPatients(Authentication auth);
 }
