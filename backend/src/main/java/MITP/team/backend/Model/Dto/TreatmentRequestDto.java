@@ -7,11 +7,10 @@ import lombok.Builder;
 
 @Builder
 public record TreatmentRequestDto(
-    String treatment,
     String description,
     @FutureOrPresent LocalDateTime startDate,
     @FutureOrPresent LocalDateTime endDate,
-    @NotBlank String treatmentName,
+    @NotBlank String name,
     String details,
     Long medicalCaseId,
     Long medicalDoctorId) {}
