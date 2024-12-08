@@ -3,7 +3,7 @@ package MITP.team.backend.Controller;
 import MITP.team.backend.Model.Dto.PatientRequestDto;
 import MITP.team.backend.Model.Dto.PatientResponseDto;
 import MITP.team.backend.Model.Patient;
-import MITP.team.backend.Service.PatientService;
+import MITP.team.backend.Service.IPatientService;
 import lombok.AllArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/patient")
 public class PatientController {
 
-  private final PatientService patientService;
+  private final IPatientService patientService;
 
   @PostMapping("/new")
   public PatientResponseDto createNewPatient(

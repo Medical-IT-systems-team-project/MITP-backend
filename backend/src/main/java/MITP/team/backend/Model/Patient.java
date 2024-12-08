@@ -24,7 +24,7 @@ public class Patient {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "patient_id", nullable = false)
+  @Column(name = "id")
   private Long id;
 
   @Enumerated(EnumType.STRING)

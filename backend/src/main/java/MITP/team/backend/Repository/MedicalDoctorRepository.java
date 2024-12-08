@@ -5,8 +5,10 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+@Repository
 public interface MedicalDoctorRepository extends JpaRepository<MedicalDoctor, Long> {
   @Query("select u from MedicalDoctor u where u.login = ?1")
   Optional<MedicalDoctor> findByLogin(String login);
@@ -20,4 +22,6 @@ public interface MedicalDoctorRepository extends JpaRepository<MedicalDoctor, Lo
   @Modifying
   @Query("delete from MedicalDoctor u where u.login = ?1")
   void deleteByLogin(String login);
+
+
 }

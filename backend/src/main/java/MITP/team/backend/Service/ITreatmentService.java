@@ -1,8 +1,8 @@
 package MITP.team.backend.Service;
 
-import MITP.team.backend.Model.Dto.TreatmentDto;
+import MITP.team.backend.Model.Dto.TreatmentRequestDto;
 import jakarta.validation.Valid;
 
 public interface ITreatmentService {
-    void createNewTreatment(@Valid TreatmentDto treatmentDto);
+  void createNewTreatment(@Valid TreatmentRequestDto treatmentRequestDto);
 }

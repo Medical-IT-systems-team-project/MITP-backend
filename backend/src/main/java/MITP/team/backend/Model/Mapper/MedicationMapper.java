@@ -1,11 +1,11 @@
 package MITP.team.backend.Model.Mapper;
 
 import MITP.team.backend.Exceptions.MedicalDoctorNotFoundException;
-import MITP.team.backend.Model.Dto.TreatmentRequestDto;
-import MITP.team.backend.Model.Dto.TreatmentResponseDto;
+import MITP.team.backend.Model.Dto.MedicationRequestDto;
+import MITP.team.backend.Model.Dto.MedicationResponseDto;
 import MITP.team.backend.Model.MedicalCase;
 import MITP.team.backend.Model.MedicalDoctor;
-import MITP.team.backend.Model.Treatment;
+import MITP.team.backend.Model.Medication;
 import MITP.team.backend.Repository.MedicalCaseRepository;
 import MITP.team.backend.Repository.MedicalDoctorRepository;
 import lombok.NoArgsConstructor;
@@ -18,10 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Mapper(
     componentModel = "spring",
     uses = {MedicalDoctorRepository.class, MedicalCaseRepository.class})
-public abstract class TreatmentMapper {
-
+public abstract class MedicationMapper {
   protected MedicalDoctorRepository medicalDoctorRepository;
-  protected MedicalCaseRepository medicalCaseDataRepository;
+  protected MedicalCaseRepository medicalCaseRepository;
 
   @Autowired
   protected void setMedicalDoctorRepository(MedicalDoctorRepository medicalDoctorRepository) {
@@ -29,18 +28,18 @@ public abstract class TreatmentMapper {
   }
 
   @Autowired
-  protected void setMedicalCaseDataRepository(MedicalCaseRepository medicalCaseDataRepository) {
-    this.medicalCaseDataRepository = medicalCaseDataRepository;
+  protected void setMedicalCaseRepository(MedicalCaseRepository medicalCaseRepository) {
+    this.medicalCaseRepository = medicalCaseRepository;
   }
 
   @Mapping(
       source = "medicalDoctor",
       target = "medicalDoctorName",
-      qualifiedByName = "mapToMedicalDoctorName")
-  public abstract TreatmentResponseDto mapToTreatmentResponseDto(Treatment treatment);
+      qualifiedByName = "mapToMedicalDoctor")
+  public abstract MedicationResponseDto mapToMedicationResponseDto(Medication medication);
 
-  @Named("mapToMedicalDoctorName")
-  protected String mapToMedicalDoctorName(MedicalDoctor medicalDoctor) {
+  @Named("mapToMedicalDoctor")
+  protected String mapToMedicalDoctor(MedicalDoctor medicalDoctor) {
     return medicalDoctor.getFirstName() + " " + medicalDoctor.getLastName();
   }
 
@@ -49,7 +48,7 @@ public abstract class TreatmentMapper {
       source = "medicalDoctorId",
       target = "medicalDoctor",
       qualifiedByName = "mapToMedicalDoctor")
-  public abstract Treatment mapToTreatment(TreatmentRequestDto treatmentRequestDto);
+  public abstract Medication mapToMedication(MedicationRequestDto medicationRequestDto);
 
   @Named("mapToMedicalDoctor")
   protected MedicalDoctor mapToMedicalDoctor(Long medicalDoctorId) {
@@ -62,12 +61,12 @@ public abstract class TreatmentMapper {
   }
 
   @Named("mapToMedicalCase")
-  protected MedicalCase mapToMedicalCaseData(Long medicalCaseDataId) {
-    return medicalCaseDataRepository
-        .findById(medicalCaseDataId)
+  protected MedicalCase mapToMedicalCaseData(Long medicalCaseId) {
+    return medicalCaseRepository
+        .findById(medicalCaseId)
         .orElseThrow(
             () ->
                 new MedicalDoctorNotFoundException(
-                    "MedicalCaseData not found with id: " + medicalCaseDataId));
+                    "MedicalCaseData not found with id: " + medicalCaseId));
   }
 }

@@ -1,8 +1,8 @@
 package MITP.team.backend.Service;
 
-import MITP.team.backend.Model.Dto.MedicationsDto;
+import MITP.team.backend.Model.Dto.MedicationRequestDto;
 import jakarta.validation.Valid;
 
 public interface IMedicationService {
-    void createNewMedications(@Valid MedicationsDto medicationsDto);
+  void createNewMedications(@Valid MedicationRequestDto medicationRequestDto);
 }

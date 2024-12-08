@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import lombok.Builder;
 
 @Builder
-public record TreatmentDto(
+public record TreatmentRequestDto(
     String treatment,
     String description,
     @FutureOrPresent LocalDateTime startDate,

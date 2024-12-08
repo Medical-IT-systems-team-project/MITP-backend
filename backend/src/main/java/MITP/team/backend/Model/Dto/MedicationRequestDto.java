@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import lombok.Builder;
 
 @Builder
-public record MedicationsDto(
+public record MedicationRequestDto(
     String medName,
     LocalDateTime startDate,
     LocalDateTime endDate,

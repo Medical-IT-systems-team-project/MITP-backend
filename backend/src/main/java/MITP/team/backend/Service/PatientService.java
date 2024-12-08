@@ -9,20 +9,19 @@ import MITP.team.backend.Model.MedicalDoctor;
 import MITP.team.backend.Model.Patient;
 import MITP.team.backend.Repository.MedicalCaseRepository;
 import MITP.team.backend.Repository.PatientRepository;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
-
 // TODO zrobic interfejs
 @AllArgsConstructor
 @Service
 @Slf4j
-public class PatientService {
+public class PatientService implements IPatientService {
   public final PatientRepository repo;
   private final UniqueIdGenerator idGenerator;
   public final MedicalCaseRepository medicalCaseRepository;
@@ -66,23 +65,25 @@ public class PatientService {
 
   public Set<Patient> getAllPatients(Authentication auth) {
     MedicalDoctor authenticatedMedicalDoctor =
-            Optional.ofNullable(auth)
-                    .map(Authentication::getPrincipal)
-                    .filter(MedicalDoctor.class::isInstance)
-                    .map(MedicalDoctor.class::cast)
-                    .orElseThrow(() -> new SecurityException("Unauthorized access"));
+        Optional.ofNullable(auth)
+            .map(Authentication::getPrincipal)
+            .filter(MedicalDoctor.class::isInstance)
+            .map(MedicalDoctor.class::cast)
+            .orElseThrow(() -> new SecurityException("Unauthorized access"));
     log.info("Getting all patients for doctor {}", authenticatedMedicalDoctor.getId());
 
     Set<Patient> allPatients = new HashSet<>();
 
-    medicalCaseRepository.getAllMedicalCaseByAttendingDoctorId(authenticatedMedicalDoctor.getId())
-            .stream()
-            .map(MedicalCase::getPatient)
-            .forEach(allPatients::add);
-    medicalCaseRepository.getAllMedicalCaseByAllowedDoctorsId(authenticatedMedicalDoctor.getId())
-            .stream()
-            .map(MedicalCase::getPatient)
-            .forEach(allPatients::add);
+    medicalCaseRepository
+        .getAllMedicalCaseByAttendingDoctorId(authenticatedMedicalDoctor.getId())
+        .stream()
+        .map(MedicalCase::getPatient)
+        .forEach(allPatients::add);
+    medicalCaseRepository
+        .getAllMedicalCaseByAllowedDoctorsId(authenticatedMedicalDoctor.getId())
+        .stream()
+        .map(MedicalCase::getPatient)
+        .forEach(allPatients::add);
     return allPatients;
   }
 }
