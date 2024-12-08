@@ -15,9 +15,6 @@ public class Medication {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long Id;
 
-  @Column(name = "medication_name")
-  private String medicationName;
-
   @Column(name = "start_date", nullable = false)
   private LocalDateTime startDate;
 
