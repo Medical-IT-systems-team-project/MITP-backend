@@ -9,9 +9,8 @@ import java.time.LocalDateTime;
 public record PatientResponseDto(
         String firstName,
         String lastName,
-        MedicalStatus status,
         LocalDateTime birthDate,
-        Long SocialSecurityNumber,
+        String socialSecurityNumber,
         Integer age,
         String gender,
         String accessId,

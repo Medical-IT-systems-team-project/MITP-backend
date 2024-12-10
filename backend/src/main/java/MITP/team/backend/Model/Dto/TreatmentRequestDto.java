@@ -8,8 +8,10 @@ import lombok.Builder;
 @Builder
 public record TreatmentRequestDto(
     String description,
-    @FutureOrPresent LocalDateTime startDate,
-    @FutureOrPresent LocalDateTime endDate,
+    @FutureOrPresent
+    LocalDateTime startDate,
+    @FutureOrPresent
+    LocalDateTime endDate,
     @NotBlank String name,
     String details,
     Long medicalCaseId,
