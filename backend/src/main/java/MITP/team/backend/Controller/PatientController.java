@@ -4,6 +4,7 @@ import MITP.team.backend.Model.Dto.PatientRequestDto;
 import MITP.team.backend.Model.Dto.PatientResponseDto;
 import MITP.team.backend.Model.Patient;
 import MITP.team.backend.Service.IPatientService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -13,17 +14,15 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/patient")
 public class PatientController {
 
-  private final IPatientService patientService;
+    private final IPatientService patientService;
 
-  @PostMapping("/new")
-  public PatientResponseDto createNewPatient(
-      @Validated(Patient.CreateValidation.class) @RequestBody PatientRequestDto patientRequestDto) {
-    String accessId = patientService.createNewPatient(patientRequestDto);
-    return PatientResponseDto.builder().accessId(accessId).build();
-  }
+    @PostMapping("/new")
+    public String createNewPatient(@RequestBody @Valid PatientRequestDto patientRequestDto) {
+        return patientService.createNewPatient(patientRequestDto);
+    }
 
-  @GetMapping("/{accessId}")
-  public PatientResponseDto getPatientByAccessId(@PathVariable String accessId) {
-    return patientService.getPatientByAccessId(accessId);
-  }
+    @GetMapping("/{accessId}")
+    public PatientResponseDto getPatientByAccessId(@PathVariable String accessId) {
+        return patientService.getPatientByAccessId(accessId);
+    }
 }
