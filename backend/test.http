@@ -85,14 +85,13 @@ Content-Type: application/json
 Authorization: Bearer {{JWT_token}}
 
 {
-  "socialSecurityNumber": "51272111113",
+  "socialSecurityNumber": "31272111113",
   "firstName": "Filip",
   "lastName": "Testowy",
   "birthDate": "2023-12-23T10:00:00",
   "address": "Testowa 12",
-  "phoneNumber": "+48123456789",
+  "phoneNumber": "123456789",
   "email": "testowy@gmail.com",
-  "status": "PLANNED",
   "age": 23,
   "gender": "Female"
 }

@@ -16,20 +16,15 @@ public record PatientRequestDto(
         String socialSecurityNumber,
         @NotNull String firstName,
         @NotNull String lastName,
-        @NotNull
-        Integer age,
-        String gender,
+        @NotNull Integer age,
+        @NotBlank String gender,
+        @NotBlank String address,
         @NotBlank
-        String address,
-        @NotBlank
-        @Pattern(regexp = "^\\+?[0-9]{1,3}?[-.\\s]?\\(?[0-9]{1,4}?\\)?[-.\\s]?[0-9]{1,4}[-.\\s]?[0-9]{1,9}$",
-                message = "Niepoprawny format numeru telefonu")
+        @Pattern(regexp = "^[0-9]{9}$", message = "Niepoprawny format numeru telefonu")
         String phoneNumber,
         @NotBlank
-        @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
-                message = "Niepoprawny format email")
+        @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "Niepoprawny format email")
         String email,
-        MedicalStatus status,
         @PastOrPresent
         LocalDateTime birthDate) {
 }
