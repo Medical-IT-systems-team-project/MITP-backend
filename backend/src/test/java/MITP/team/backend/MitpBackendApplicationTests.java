@@ -259,17 +259,25 @@ class MitpBackendApplicationTests {
                                         .content(
                                                 """
                                                         {
-                                                                                      "socialSecurityNumber": 123456789,
+                                                        "socialSecurityNumber": 12345678911,
                                                         "firstName": "someName",
                                                         "lastName": "someLastName",
                                                         "age": 20,
-                                                        "gender": "MALE"
+                                                        "gender": "MALE",
+                                                        "birthDate": "2023-12-23T10:00:00",
+                                                        "address": "Testowa 12",
+                                                        "phoneNumber": "123456789",
+                                                        "email": "testowy@gmail.com"                                                  
                                                         }
                                                         """))
                         .andExpect(status().isOk())
                         .andReturn();
 
-        final String accessId = objectMapper.readTree(result.getResponse().getContentAsString()).get("accessId").asText();
+        String response = result.getResponse().getContentAsString();
+        if (!response.startsWith("\"")) {
+            response = "\"" + response + "\"";
+        }
+        final String accessId = objectMapper.readValue(response, String.class);
 
         // step 3 send POST request to /patient/new with token with the same data and status is 400 with
         // message "Patient already exist in system."
@@ -281,12 +289,15 @@ class MitpBackendApplicationTests {
                                 .content(
                                         """
                                                 {
-                                                                                "socialSecurityNumber": 123456789,
+                                                "socialSecurityNumber": 12345678911,
                                                 "firstName": "someName",
                                                 "lastName": "someLastName",
                                                 "age": 20,
-                                                "gender": "MALE"
-                                                
+                                                "gender": "MALE",
+                                                "birthDate": "2023-12-23T10:00:00",
+                                                "address": "Testowa 12",
+                                                "phoneNumber": "123456789",
+                                                "email": "testowy@gmail.com"                                                  
                                                 }
                                                 """))
                 .andExpect(status().isBadRequest());
