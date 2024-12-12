@@ -12,4 +12,5 @@ public interface IMedicationService {
   StatusResponseDto changeMedicationStatus(Long id, StatusRequestDto statusRequestDto);
 
   StatusResponseDto changeMedicationStatus(MedicationRequestMandatoryDataDto statusRequestDto);
+
 }

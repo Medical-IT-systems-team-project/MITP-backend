@@ -66,7 +66,9 @@ public class MedicationService implements IMedicationService {
         return StatusResponseDto.builder().status(savedMedication.getStatus().name()).build();
     }
 
-    private static void statusRequestValidate(StatusRequestDto statusRequestDto) {
+
+
+    public static void statusRequestValidate(StatusRequestDto statusRequestDto) {
         List<String> allStatuses = Arrays.stream(MedicalStatus.values()).map(Enum::name).toList();
         String statusName = statusRequestDto.status();
         if (!allStatuses.contains(statusName)) {

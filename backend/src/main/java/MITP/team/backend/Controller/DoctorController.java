@@ -40,14 +40,26 @@ public class DoctorController {
     }
 
     @PatchMapping("/medication/{Id}/changeStatus")
-    public ResponseEntity<?> changePatientStatus(@PathVariable Long Id, @RequestBody @Valid StatusRequestDto statusRequestDto) {
+    public ResponseEntity<?> changeMedicationStatus(@PathVariable Long Id, @RequestBody @Valid StatusRequestDto statusRequestDto) {
         StatusResponseDto statusResponseDto = medicationService.changeMedicationStatus(Id, statusRequestDto);
         return ResponseEntity.ok(statusResponseDto);
     }
 
     @PatchMapping("/medication/changeStatus")
-    public ResponseEntity<?> changePatientStatus(@RequestBody @Valid MedicationRequestMandatoryDataDto statusRequestDto) {
+    public ResponseEntity<?> changeMedicationStatus(@RequestBody @Valid MedicationRequestMandatoryDataDto statusRequestDto) {
         StatusResponseDto statusResponseDto = medicationService.changeMedicationStatus(statusRequestDto);
+        return ResponseEntity.ok(statusResponseDto);
+    }
+
+    @PatchMapping("/treatment/{Id}/changeStatus")
+    public ResponseEntity<?> changeTreatmentStatus(@PathVariable Long Id, @RequestBody @Valid StatusRequestDto statusRequestDto) {
+        StatusResponseDto statusResponseDto = treatmentService.changeTreatmentStatus(Id, statusRequestDto);
+        return ResponseEntity.ok(statusResponseDto);
+    }
+
+    @PatchMapping("/treatment/changeStatus")
+    public ResponseEntity<?> changeTreatmentStatus(@RequestBody @Valid TreatmentRequestMandatoryDataDto statusRequestDto) {
+        StatusResponseDto statusResponseDto = treatmentService.changeTreatmentStatus(statusRequestDto);
         return ResponseEntity.ok(statusResponseDto);
     }
 }
