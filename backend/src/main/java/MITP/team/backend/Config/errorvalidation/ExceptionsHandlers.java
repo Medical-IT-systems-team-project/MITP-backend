@@ -69,7 +69,7 @@ public class ExceptionsHandlers {
     @ResponseBody
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public DuplicateKeyExceptionDto handleMethodArgumentNotValidException(DataNotFoundException exception) {
-        final String notFound = "Not found in system.";
+        final String notFound = exception.getMessage();
         log.warn(notFound);
         return DuplicateKeyExceptionDto.builder()
                 .message(notFound)
