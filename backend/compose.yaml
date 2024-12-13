@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  postgres:
+  postgres-database:
     image: 'postgres:latest'
     environment:
       - 'POSTGRES_DB=mydatabase'
@@ -14,11 +14,11 @@ services:
     networks:
       - caretrack-network
 
-  myapp:
+  caretrack:
     build: .
     image: caretrack
     depends_on:
-      - postgres
+      - postgres-database
     ports:
       - '8080:8080'
     environment:
