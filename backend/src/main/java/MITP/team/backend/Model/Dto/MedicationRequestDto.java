@@ -1,5 +1,6 @@
 package MITP.team.backend.Model.Dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import lombok.Builder;
@@ -7,8 +8,8 @@ import lombok.Builder;
 @Builder
 public record MedicationRequestDto(
         String name,
-        LocalDateTime startDate,
-        LocalDateTime endDate,
+        LocalDate startDate,
+        LocalDate endDate,
         String details,
         Long medicalCaseId,
         Long medicalDoctorId,

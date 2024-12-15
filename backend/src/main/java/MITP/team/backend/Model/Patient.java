@@ -4,6 +4,8 @@ import MITP.team.backend.Model.Enum.MedicalStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -35,7 +37,7 @@ public class Patient {
 
   @Column(name = "birth_date")
   @PastOrPresent
-  private LocalDateTime birthDate;
+  private LocalDate birthDate;
 
   @Column(nullable = false, unique = true)
   private String socialSecurityNumber;

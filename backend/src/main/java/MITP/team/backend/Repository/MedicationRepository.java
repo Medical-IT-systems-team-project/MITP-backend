@@ -12,7 +12,4 @@ import java.util.List;
 public interface MedicationRepository extends JpaRepository<Medication, Long> {
     List<Medication> getAllMedicationsByMedicalCase(MedicalCase medicalCase);
 
-
-    List<Medication> findAllByNameAndStartDateAndEndDate(String name, LocalDateTime localDateTime, LocalDateTime localDateTime1);
-
 }

@@ -31,48 +31,9 @@ public class MedicationService implements IMedicationService {
 
     @Override
     public StatusResponseDto changeMedicationStatus(Long id, StatusRequestDto statusRequestDto) {
-        statusRequestValidate(statusRequestDto);
-
         Medication medication = medicationRepository.findById(id).orElseThrow(() -> new DataNotFoundException("Medication not found"));
-        String status = statusRequestDto.status();
-        MedicalStatus medicalStatus = MedicalStatus.valueOf(status);
-        medication.setStatus(medicalStatus);
+        medication.setStatus(statusRequestDto.status());
         Medication savedMedication = medicationRepository.save(medication);
         return StatusResponseDto.builder().status(savedMedication.getStatus().name()).build();
-    }
-
-    @Override
-    public StatusResponseDto changeMedicationStatus(MedicationRequestMandatoryDataDto requestMandatoryDataDto) {
-        statusRequestValidate(StatusRequestDto.builder().status(requestMandatoryDataDto.status()).build());
-
-        List<Medication> medications = medicationRepository.findAllByNameAndStartDateAndEndDate(
-                requestMandatoryDataDto.name(),
-                requestMandatoryDataDto.startDate(),
-                requestMandatoryDataDto.endDate()
-        );
-        if (medications.isEmpty()) {
-            throw new DataNotFoundException("Medication not found");
-        }
-        if(medications.size() > 1) {
-            throw new DataNotFoundException("Multiple medications found");
-        }
-
-        Medication medication = medications.get(0);
-        String status = requestMandatoryDataDto.status();
-        MedicalStatus medicalStatus = MedicalStatus.valueOf(status);
-        medication.setStatus(medicalStatus);
-        Medication savedMedication = medicationRepository.save(medication);
-
-        return StatusResponseDto.builder().status(savedMedication.getStatus().name()).build();
-    }
-
-
-
-    public static void statusRequestValidate(StatusRequestDto statusRequestDto) {
-        List<String> allStatuses = Arrays.stream(MedicalStatus.values()).map(Enum::name).toList();
-        String statusName = statusRequestDto.status();
-        if (!allStatuses.contains(statusName)) {
-            throw new DataNotFoundException("Status not found");
-        }
     }
 }

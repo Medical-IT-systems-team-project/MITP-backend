@@ -2,6 +2,7 @@ package MITP.team.backend.Config.errorvalidation;
 
 import MITP.team.backend.Exceptions.DataNotFoundException;
 import MITP.team.backend.Exceptions.DuplicatedPatientException;
+import MITP.team.backend.Exceptions.ServerInternalError;
 import MITP.team.backend.Exceptions.UserNotFoundException;
 import java.util.List;
 import lombok.extern.log4j.Log4j2;
@@ -85,5 +86,16 @@ public class ExceptionsHandlers {
         return DuplicateKeyExceptionDto.builder()
                 .message(PatientNotFound)
                 .build();
+    }
+
+    @ExceptionHandler(ServerInternalError.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public DuplicateKeyExceptionDto handleMethodArgumentNotValidException(ServerInternalError exception) {
+        final String internalError = "Internal server error.";
+        log.warn(internalError);
+//      TODO dokonczyc
+
+        return null;
     }
 }
