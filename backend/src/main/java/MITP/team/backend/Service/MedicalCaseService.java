@@ -53,7 +53,9 @@ public class MedicalCaseService implements IMedicalCaseService {
   @Override
   public List<TreatmentResponseDto> getTreatmentsById(Long Id) {
     MedicalCase currentPatientCase =
-        medicalCaseRepository.findById(Id).orElseThrow(() -> new MedicalCaseNotFoundException(Id));
+        medicalCaseRepository
+                .findById(Id)
+                .orElseThrow(() -> new MedicalCaseNotFoundException(Id));
     return treatmentRepository.getAllTreatmentsByMedicalCase(currentPatientCase).stream()
         .map(treatmentMapper::mapToTreatmentResponseDto)
         .toList();
@@ -62,7 +64,9 @@ public class MedicalCaseService implements IMedicalCaseService {
   @Override
   public List<MedicationResponseDto> getMedicationsById(Long Id) {
     MedicalCase currentPatientCase =
-        medicalCaseRepository.findById(Id).orElseThrow(() -> new MedicalCaseNotFoundException(Id));
+        medicalCaseRepository
+                .findById(Id)
+                .orElseThrow(() -> new MedicalCaseNotFoundException(Id));
     return medicationRepository.getAllMedicationsByMedicalCase(currentPatientCase).stream()
         .map(medicationMapper::mapToMedicationResponseDto)
         .toList();

@@ -1,5 +1,6 @@
 package MITP.team.backend.Model.Mapper;
 
+import MITP.team.backend.Exceptions.MedicalCaseNotFoundException;
 import MITP.team.backend.Exceptions.MedicalDoctorNotFoundException;
 import MITP.team.backend.Model.Dto.MedicationRequestDto;
 import MITP.team.backend.Model.Dto.MedicationResponseDto;
@@ -66,7 +67,7 @@ public abstract class MedicationMapper {
         .findById(medicalCaseId)
         .orElseThrow(
             () ->
-                new MedicalDoctorNotFoundException(
+                new MedicalCaseNotFoundException(
                     "MedicalCaseData not found with id: " + medicalCaseId));
   }
 }

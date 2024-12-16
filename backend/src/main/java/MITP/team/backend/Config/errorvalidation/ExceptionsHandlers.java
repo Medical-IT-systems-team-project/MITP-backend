@@ -104,6 +104,14 @@ public class ExceptionsHandlers {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Patient does not exist");
     }
 
+    @ExceptionHandler(MedicalCaseNotFoundException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<?> handleMedicalCaseNotFoundException(MedicalCaseNotFoundException exception) {
+        log.warn(exception.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("MedicalCase does not exist");
+    }
+
 
 
 }

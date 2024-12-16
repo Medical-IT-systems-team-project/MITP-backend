@@ -8,9 +8,9 @@ import lombok.Builder;
 @Builder
 public record MedicationRequestDto(
         String name,
-        @PastOrPresent
+        //@PastOrPresent
         LocalDateTime startDate,
-        @PastOrPresent
+        //@PastOrPresent
         LocalDateTime endDate,
         String details,
         Long medicalCaseId,
