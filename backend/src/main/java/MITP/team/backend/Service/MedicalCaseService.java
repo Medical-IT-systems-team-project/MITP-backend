@@ -1,6 +1,7 @@
 package MITP.team.backend.Service;
 
 import MITP.team.backend.Exceptions.MedicalCaseNotFoundException;
+import MITP.team.backend.Exceptions.PatientNotFoundException;
 import MITP.team.backend.Exceptions.UserNotFoundException;
 import MITP.team.backend.Model.*;
 import MITP.team.backend.Model.Dto.*;
@@ -40,7 +41,7 @@ public class MedicalCaseService implements IMedicalCaseService {
             .findByAccessId(uuid)
             .orElseThrow(
                 () ->
-                    new UserNotFoundException(
+                    new PatientNotFoundException(
                         "Patient with access ID " + uuid + " does not exist"));
 
     List<MedicalCase> allPatientsCases =

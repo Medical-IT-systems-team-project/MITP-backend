@@ -3,6 +3,7 @@ package MITP.team.backend.Config.errorvalidation;
 import MITP.team.backend.Exceptions.*;
 
 import java.util.List;
+
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -76,32 +77,33 @@ public class ExceptionsHandlers {
                 .build();
     }
 
-    @ExceptionHandler(UserNotFoundException.class)
-    @ResponseBody
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public DuplicateKeyExceptionDto handleMethodArgumentNotValidException(UserNotFoundException exception) {
-        final String PatientNotFound = "Patient not found in system.";
-        log.warn(PatientNotFound);
-        return DuplicateKeyExceptionDto.builder()
-                .message(PatientNotFound)
-                .build();
-    }
+//    @ExceptionHandler(UserNotFoundException.class)
+//    @ResponseBody
+//    @ResponseStatus(HttpStatus.NOT_FOUND)
+//    public DuplicateKeyExceptionDto handleMethodArgumentNotValidException(UserNotFoundException exception) {
+//        final String PatientNotFound = "Patient not found in system.";
+//        log.warn(PatientNotFound);
+//        return DuplicateKeyExceptionDto.builder()
+//                .message(PatientNotFound)
+//                .build();
+//    }
 
     @ExceptionHandler(MedicalDoctorNotFoundException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<?> handleMedicalDoctorNotFoundException(MedicalDoctorNotFoundException exception) {
-       log.warn(exception.getMessage());
-       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Doctor does not exist");
+        log.warn(exception.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Doctor does not exist");
     }
 
     @ExceptionHandler(PatientNotFoundException.class)
     @ResponseBody
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<?> handlePatientNotFoundException(PatientNotFoundException exception) {
-       log.warn(exception.getMessage());
-       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Patient does not exist");
+        log.warn(exception.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Patient does not exist");
     }
+
 
 
 }
