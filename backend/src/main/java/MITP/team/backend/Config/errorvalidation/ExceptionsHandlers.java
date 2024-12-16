@@ -1,13 +1,13 @@
 package MITP.team.backend.Config.errorvalidation;
 
-import MITP.team.backend.Exceptions.DataNotFoundException;
-import MITP.team.backend.Exceptions.DuplicatedPatientException;
-import MITP.team.backend.Exceptions.UserNotFoundException;
+import MITP.team.backend.Exceptions.*;
+
 import java.util.List;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -86,4 +86,22 @@ public class ExceptionsHandlers {
                 .message(PatientNotFound)
                 .build();
     }
+
+    @ExceptionHandler(MedicalDoctorNotFoundException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<?> handleMedicalDoctorNotFoundException(MedicalDoctorNotFoundException exception) {
+       log.warn(exception.getMessage());
+       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Doctor does not exist");
+    }
+
+    @ExceptionHandler(PatientNotFoundException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<?> handlePatientNotFoundException(PatientNotFoundException exception) {
+       log.warn(exception.getMessage());
+       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Patient does not exist");
+    }
+
+
 }

@@ -28,7 +28,7 @@ Authorization: Bearer {{JWT_token}}
   "admissionReason": "test",
   "admissionDate": "2025-07-10T10:00:00",
   "description": "testowe przyjecie",
-  "attendingDoctorId": 102
+  "attendingDoctorId": 1
 }
 
 ###
