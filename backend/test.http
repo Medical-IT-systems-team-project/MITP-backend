@@ -28,7 +28,7 @@ Authorization: Bearer {{JWT_token}}
   "admissionReason": "test",
   "admissionDate": "2025-07-10T10:00:00",
   "description": "testowe przyjecie",
-  "attendingDoctorId": 1
+  "attendingDoctorId": 10
 }
 
 ###
@@ -86,14 +86,14 @@ Authorization: Bearer {{JWT_token}}
 
 {
   "socialSecurityNumber": "31272111113",
-  "firstName": "Filip",
-  "lastName": "Testowy",
+  "firstName": "kamil",
+  "lastName": "gol",
   "birthDate": "2023-12-23T10:00:00",
-  "address": "Testowa 12",
+  "address": "lublin",
   "phoneNumber": "123456789",
-  "email": "testowy@gmail.com",
+  "email": "testowy@gmail57.com",
   "age": 23,
-  "gender": "Female"
+  "gender": "FEMALE"
 }
 ###
 GET http://localhost:9090/patient/kE4WwRkDiE

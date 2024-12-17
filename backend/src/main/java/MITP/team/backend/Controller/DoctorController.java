@@ -1,6 +1,9 @@
 package MITP.team.backend.Controller;
 
-import MITP.team.backend.Model.Dto.*;
+import MITP.team.backend.Model.Dto.MedicationRequestDto;
+import MITP.team.backend.Model.Dto.StatusRequestDto;
+import MITP.team.backend.Model.Dto.StatusResponseDto;
+import MITP.team.backend.Model.Dto.TreatmentRequestDto;
 import MITP.team.backend.Service.IMedicationService;
 import MITP.team.backend.Service.IPatientService;
 import MITP.team.backend.Service.ITreatmentService;
@@ -45,11 +48,6 @@ public class DoctorController {
         return ResponseEntity.ok(statusResponseDto);
     }
 
-    @PatchMapping("/medication/changeStatus")
-    public ResponseEntity<?> changeMedicationStatus(@RequestBody @Valid MedicationRequestMandatoryDataDto statusRequestDto) {
-        StatusResponseDto statusResponseDto = medicationService.changeMedicationStatus(statusRequestDto);
-        return ResponseEntity.ok(statusResponseDto);
-    }
 
     @PatchMapping("/treatment/{Id}/changeStatus")
     public ResponseEntity<?> changeTreatmentStatus(@PathVariable Long Id, @RequestBody @Valid StatusRequestDto statusRequestDto) {
@@ -57,9 +55,4 @@ public class DoctorController {
         return ResponseEntity.ok(statusResponseDto);
     }
 
-    @PatchMapping("/treatment/changeStatus")
-    public ResponseEntity<?> changeTreatmentStatus(@RequestBody @Valid TreatmentRequestMandatoryDataDto statusRequestDto) {
-        StatusResponseDto statusResponseDto = treatmentService.changeTreatmentStatus(statusRequestDto);
-        return ResponseEntity.ok(statusResponseDto);
-    }
 }
