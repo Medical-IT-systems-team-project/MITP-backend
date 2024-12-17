@@ -11,3 +11,22 @@ services:
       - '34250:5432'
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - caretrack-network
+
+  caretrack:
+    build: .
+    image: caretrack
+    depends_on:
+      - postgres-database
+    ports:
+      - '8080:8080'
+    environment:
+      - mail_password=${mail_password}
+      - JWT_SECRET_KEY =${JWT_SECRET_KEY}
+    networks:
+      - caretrack-network
+
+networks:
+  caretrack-network:
+    driver: bridge

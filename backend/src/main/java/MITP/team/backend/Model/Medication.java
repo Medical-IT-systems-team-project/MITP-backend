@@ -2,6 +2,8 @@ package MITP.team.backend.Model;
 
 import MITP.team.backend.Model.Enum.MedicalStatus;
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,10 +20,10 @@ public class Medication {
   private String name;
 
   @Column(name = "start_date", nullable = false)
-  private LocalDateTime startDate;
+  private LocalDate startDate;
 
   @Column(name = "end_date", nullable = false)
-  private LocalDateTime endDate;
+  private LocalDate endDate;
 
   private String dosageForm;
   private String strength;

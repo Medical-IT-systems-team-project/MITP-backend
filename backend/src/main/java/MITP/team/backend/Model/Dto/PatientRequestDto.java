@@ -4,6 +4,7 @@ import MITP.team.backend.Model.Enum.Gender;
 import jakarta.validation.constraints.*;
 import lombok.Builder;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Builder
@@ -25,5 +26,5 @@ public record PatientRequestDto(
         @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "Wrong mail format")
         String email,
         @PastOrPresent
-        LocalDateTime birthDate) {
+        LocalDate birthDate) {
 }

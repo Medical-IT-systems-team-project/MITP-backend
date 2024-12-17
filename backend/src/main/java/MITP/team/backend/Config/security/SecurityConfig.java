@@ -4,6 +4,7 @@ import MITP.team.backend.Service.LoginAndRegisterService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -52,6 +53,17 @@ public class SecurityConfig {
                         .requestMatchers("/v3/api-docs/**").permitAll()
                         .requestMatchers("/swagger-ui/**").permitAll()
                         .requestMatchers("/swagger-ui.html").permitAll()
+                        //medicalCase
+                        .requestMatchers("/medicalCase/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/medicalCase/{Id}/summary").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/medicalCase/{Id}/treatments").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/medicalCase/{Id}/medications").permitAll()
+                        //patient
+                        .requestMatchers(HttpMethod.POST, "/patient/new").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/patient/{accessId}").authenticated()
+                        //doctor
+                        .requestMatchers(HttpMethod.PATCH, "/doctor/treatment/status").permitAll()
+                        .requestMatchers(HttpMethod.PATCH, "/doctor/medication/status").permitAll()
                         //rest
                         .anyRequest().authenticated()
                 )

@@ -1,17 +1,15 @@
 package MITP.team.backend.Model.Dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import jakarta.validation.constraints.PastOrPresent;
 import lombok.Builder;
 
 @Builder
 public record MedicationRequestDto(
         String name,
-        //@PastOrPresent
-        LocalDateTime startDate,
-        //@PastOrPresent
-        LocalDateTime endDate,
+        LocalDate startDate,
+        LocalDate endDate,
         String details,
         Long medicalCaseId,
         Long medicalDoctorId,
