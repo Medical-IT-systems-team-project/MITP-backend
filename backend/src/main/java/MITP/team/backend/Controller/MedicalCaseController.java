@@ -1,13 +1,17 @@
 package MITP.team.backend.Controller;
 
-import MITP.team.backend.Model.Dto.*;
+import MITP.team.backend.Model.Dto.MedicalCaseRequestDto;
+import MITP.team.backend.Model.Dto.MedicalCaseResponseDto;
+import MITP.team.backend.Model.Dto.MedicationResponseDto;
+import MITP.team.backend.Model.Dto.TreatmentResponseDto;
 import MITP.team.backend.Service.IMedicalCaseService;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @AllArgsConstructor
 @RestController
@@ -16,10 +20,10 @@ public class MedicalCaseController {
 
   private final IMedicalCaseService medicalDataService;
 
-  @GetMapping("/{Id}/summary")
+  @GetMapping("/{accessId}/summary")
   public ResponseEntity<List<MedicalCaseResponseDto>> getMedicalDataByAccessID(
-      @PathVariable String Id) {
-    List<MedicalCaseResponseDto> medicalDataById = medicalDataService.getMedicalDataByAccessId(Id);
+          @PathVariable String accessId) {
+    List<MedicalCaseResponseDto> medicalDataById = medicalDataService.getMedicalDataByAccessId(accessId);
     return ResponseEntity.ok(medicalDataById);
   }
 

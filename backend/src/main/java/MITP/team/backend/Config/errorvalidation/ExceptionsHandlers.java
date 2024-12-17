@@ -1,9 +1,6 @@
 package MITP.team.backend.Config.errorvalidation;
 
-import MITP.team.backend.Exceptions.DataNotFoundException;
-import MITP.team.backend.Exceptions.DuplicatedPatientException;
-import MITP.team.backend.Exceptions.MedicalDoctorNotFoundException;
-import MITP.team.backend.Exceptions.PatientNotFoundException;
+import MITP.team.backend.Exceptions.*;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -47,7 +44,7 @@ public class ExceptionsHandlers {
     @ExceptionHandler(DuplicatedPatientException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public DuplicateKeyExceptionDto handleMethodArgumentNotValidException(DuplicatedPatientException exception) {
+    public DuplicateKeyExceptionDto handleMethodArgumentNotValidException() {
         final String loginNotFound = "Patient already exist in system.";
         log.warn(loginNotFound);
         return DuplicateKeyExceptionDto.builder()
@@ -76,12 +73,20 @@ public class ExceptionsHandlers {
 
     @ExceptionHandler(PatientNotFoundException.class)
     @ResponseBody
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<?> handlePatientNotFoundException(PatientNotFoundException exception) {
         log.warn(exception.getMessage());
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Patient does not exist");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Patient does not exist");
 
 
+    }
+
+    @ExceptionHandler(MedicalCaseNotFoundException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<?> handleMedicalCaseNotFoundException(MedicalCaseNotFoundException exception) {
+        log.warn(exception.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Medical case does not exist");
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
