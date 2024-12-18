@@ -24,7 +24,7 @@ Content-Type: application/json
 Authorization: Bearer {{JWT_token}}
 
 {
-  "patientId": 41,
+  "patientId": 1,
   "admissionReason": "test",
   "admissionDate": "2025-07-10T10:00:00",
   "description": "testowe przyjecie",
@@ -32,7 +32,7 @@ Authorization: Bearer {{JWT_token}}
 }
 
 ###
-GET http://localhost:9090/medicalCase/eJM9Es8l2p/summary
+GET http://localhost:9090/medicalCase/kE4WwRkDiE/summary
 Content-Type: application/json
 Authorization: Bearer {{JWT_token}}
 
@@ -52,7 +52,7 @@ Authorization: Bearer {{JWT_token}}
 }
 
 ###
-GET http://localhost:9090/medicalCase/0/treatments
+GET http://localhost:9090/medicalCase/52/treatments
 Accept: application/json
 Authorization: Bearer {{JWT_token}}
 
@@ -85,15 +85,15 @@ Content-Type: application/json
 Authorization: Bearer {{JWT_token}}
 
 {
-  "socialSecurityNumber": "30272111113",
-  "firstName": "",
-  "lastName": "gol",
+  "socialSecurityNumber": "31272111113",
+  "firstName": "Filip",
+  "lastName": "Testowy",
   "birthDate": "2023-12-23T10:00:00",
-  "address": "lublin",
+  "address": "Testowa 12",
   "phoneNumber": "123456789",
-  "email": "testowy@gmail57.com",
+  "email": "testowy@gmail.com",
   "age": 23,
-  "gender": "FEMALE"
+  "gender": "Female"
 }
 ###
 GET http://localhost:9090/patient/kE4WwRkDiE
@@ -109,3 +109,9 @@ Authorization: Bearer {{JWT_token}}
 PATCH http://localhost:9090/medicalCase/52?force=true
 Accept: application/json
 Authorization: Bearer {{JWT_token}}
+
+###
+GET http://localhost:9090/doctor/medicalCases
+Accept: application/json
+Authorization: Bearer {{JWT_token}}
+

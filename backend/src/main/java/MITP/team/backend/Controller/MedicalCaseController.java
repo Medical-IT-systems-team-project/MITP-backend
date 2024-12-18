@@ -1,9 +1,6 @@
 package MITP.team.backend.Controller;
 
-import MITP.team.backend.Model.Dto.MedicalCaseRequestDto;
-import MITP.team.backend.Model.Dto.MedicalCaseResponseDto;
-import MITP.team.backend.Model.Dto.MedicationResponseDto;
-import MITP.team.backend.Model.Dto.TreatmentResponseDto;
+import MITP.team.backend.Model.Dto.*;
 import MITP.team.backend.Service.IMedicalCaseService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

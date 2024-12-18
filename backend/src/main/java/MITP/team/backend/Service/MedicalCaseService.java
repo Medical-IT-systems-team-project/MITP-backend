@@ -2,10 +2,7 @@ package MITP.team.backend.Service;
 
 import MITP.team.backend.Exceptions.MedicalCaseNotFoundException;
 import MITP.team.backend.Exceptions.PatientNotFoundException;
-import MITP.team.backend.Model.Dto.MedicalCaseRequestDto;
-import MITP.team.backend.Model.Dto.MedicalCaseResponseDto;
-import MITP.team.backend.Model.Dto.MedicationResponseDto;
-import MITP.team.backend.Model.Dto.TreatmentResponseDto;
+import MITP.team.backend.Model.Dto.*;
 import MITP.team.backend.Model.Enum.MedicalCaseStatus;
 import MITP.team.backend.Model.Enum.MedicalStatus;
 import MITP.team.backend.Model.Mapper.MedicalCaseMapper;
@@ -125,4 +122,6 @@ public class MedicalCaseService implements IMedicalCaseService {
 
     return incompleteItems;
   }
+
+
 }
