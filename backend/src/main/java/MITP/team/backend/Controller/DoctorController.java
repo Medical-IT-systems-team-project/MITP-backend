@@ -2,7 +2,6 @@ package MITP.team.backend.Controller;
 
 import MITP.team.backend.Model.Dto.MedicationRequestDto;
 import MITP.team.backend.Model.Dto.StatusRequestDto;
-import MITP.team.backend.Model.Dto.StatusResponseDto;
 import MITP.team.backend.Model.Dto.TreatmentRequestDto;
 import MITP.team.backend.Service.IMedicationService;
 import MITP.team.backend.Service.IPatientService;
@@ -30,7 +29,7 @@ public class DoctorController {
         return ResponseEntity.status(HttpStatus.CREATED).body("New treatment added");
     }
 
-    @PostMapping("/new/Medication")
+    @PostMapping("/new/medication")
     public ResponseEntity<?> createNewMedication(
             @Valid @RequestBody MedicationRequestDto medicationRequestDto) {
         medicationService.createNewMedication(medicationRequestDto);
@@ -42,17 +41,15 @@ public class DoctorController {
         return ResponseEntity.ok().body(patientService.getAllPatients(auth));
     }
 
-    @PatchMapping("/medication/{Id}/changeStatus")
+    @PatchMapping("/medication/{Id}/status")
     public ResponseEntity<?> changeMedicationStatus(@PathVariable Long Id, @RequestBody @Valid StatusRequestDto statusRequestDto) {
-        StatusResponseDto statusResponseDto = medicationService.changeMedicationStatus(Id, statusRequestDto);
-        return ResponseEntity.ok(statusResponseDto);
+        medicationService.changeMedicationStatus(Id, statusRequestDto);
+        return ResponseEntity.ok("Medication status changed");
     }
 
-
-    @PatchMapping("/treatment/{Id}/changeStatus")
+    @PatchMapping("/treatment/{Id}/status")
     public ResponseEntity<?> changeTreatmentStatus(@PathVariable Long Id, @RequestBody @Valid StatusRequestDto statusRequestDto) {
-        StatusResponseDto statusResponseDto = treatmentService.changeTreatmentStatus(Id, statusRequestDto);
-        return ResponseEntity.ok(statusResponseDto);
+        treatmentService.changeTreatmentStatus(Id, statusRequestDto);
+        return ResponseEntity.ok("Treatment status changed");
     }
-
 }

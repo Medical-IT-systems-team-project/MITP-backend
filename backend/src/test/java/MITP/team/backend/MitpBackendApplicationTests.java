@@ -20,7 +20,6 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import java.util.List;
 import java.util.regex.Pattern;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -93,8 +92,6 @@ class MitpBackendApplicationTests {
                 .andReturn();
 
         final ApiValidationErrorResponseDto apiValidationErrorResponseDto = objectMapper.readValue(result5.getResponse().getContentAsString(), ApiValidationErrorResponseDto.class);
-        final List<String> errors = apiValidationErrorResponseDto.errors();
-
 //        assertAll(
 //                () -> assertTrue(errors.contains("login cannot be null")),
 //                () -> assertTrue(errors.contains("login cannot be empty")),
@@ -268,7 +265,7 @@ class MitpBackendApplicationTests {
                                                         "birthDate": "2023-12-23T10:00:00",
                                                         "address": "Testowa 12",
                                                         "phoneNumber": "123456789",
-                                                        "email": "testowy@gmail.com"                                                  
+                                                        "email": "testowy@gmail.com"
                                                         }
                                                         """))
                         .andExpect(status().isOk())
@@ -298,7 +295,7 @@ class MitpBackendApplicationTests {
                                                 "birthDate": "2023-12-23T10:00:00",
                                                 "address": "Testowa 12",
                                                 "phoneNumber": "123456789",
-                                                "email": "testowy@gmail.com"                                                  
+                                                "email": "testowy@gmail.com"
                                                 }
                                                 """))
                 .andExpect(status().isBadRequest());

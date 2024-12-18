@@ -68,7 +68,7 @@ public abstract class TreatmentMapper {
         .findById(medicalCaseDataId)
         .orElseThrow(
             () ->
-                new MedicalCaseNotFoundException(
+                    new MedicalCaseNotFoundException(
                     "MedicalCaseData not found with id: " + medicalCaseDataId));
   }
 }
