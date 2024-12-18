@@ -48,8 +48,8 @@ public class Patient {
 
   public interface UpdateValidation {}
 
-  private String email; // TODO validate REGEX
-  private String phoneNumber; // TODO validate REGEX
+  private String email;
+  private String phoneNumber;
   private String address;
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "patient")

@@ -1,7 +1,7 @@
 package MITP.team.backend.Service;
 
-import MITP.team.backend.Exceptions.DataNotFoundException;
 import MITP.team.backend.Exceptions.DuplicatedPatientException;
+import MITP.team.backend.Exceptions.PatientNotFoundException;
 import MITP.team.backend.Model.Dto.PatientRequestDto;
 import MITP.team.backend.Model.Dto.PatientResponseDto;
 import MITP.team.backend.Model.Mapper.PatientMapper;
@@ -50,7 +50,7 @@ public class PatientService implements IPatientService {
         Patient patient =
                 patientRepository
                         .findByAccessId(accessId)
-                        .orElseThrow(() -> new DataNotFoundException("Patient not found in system."));
+                        .orElseThrow(PatientNotFoundException::new);
 
         return patientMapper.mapToPatientResponseDto(patient);
     }

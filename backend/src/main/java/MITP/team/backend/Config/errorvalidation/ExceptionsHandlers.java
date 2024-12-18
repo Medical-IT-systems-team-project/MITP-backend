@@ -1,6 +1,7 @@
 package MITP.team.backend.Config.errorvalidation;
 
-import MITP.team.backend.Exceptions.*;
+import MITP.team.backend.Exceptions.DataNotFoundException;
+import MITP.team.backend.Exceptions.TreatmentNotFoundException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -41,52 +42,12 @@ public class ExceptionsHandlers {
                 .build();
     }
 
-    @ExceptionHandler(DuplicatedPatientException.class)
-    @ResponseBody
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public DuplicateKeyExceptionDto handleMethodArgumentNotValidException() {
-        final String loginNotFound = "Patient already exist in system.";
-        log.warn(loginNotFound);
-        return DuplicateKeyExceptionDto.builder()
-                .message(loginNotFound)
-                .build();
-    }
-
-    @ExceptionHandler(DataNotFoundException.class)
+    @ExceptionHandler(TreatmentNotFoundException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public DuplicateKeyExceptionDto handleMethodArgumentNotValidException(DataNotFoundException exception) {
-        final String notFound = exception.getMessage();
-        log.warn(notFound);
-        return DuplicateKeyExceptionDto.builder()
-                .message(notFound)
-                .build();
-    }
-
-    @ExceptionHandler(MedicalDoctorNotFoundException.class)
-    @ResponseBody
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<?> handleMedicalDoctorNotFoundException(MedicalDoctorNotFoundException exception) {
+    public ResponseEntity<?> handleTreatmentNotFoundException(TreatmentNotFoundException exception) {
         log.warn(exception.getMessage());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Doctor does not exist");
-    }
-
-    @ExceptionHandler(PatientNotFoundException.class)
-    @ResponseBody
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<?> handlePatientNotFoundException(PatientNotFoundException exception) {
-        log.warn(exception.getMessage());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Patient does not exist");
-
-
-    }
-
-    @ExceptionHandler(MedicalCaseNotFoundException.class)
-    @ResponseBody
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<?> handleMedicalCaseNotFoundException(MedicalCaseNotFoundException exception) {
-        log.warn(exception.getMessage());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Medical case does not exist");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Treatment does not exist");
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -95,11 +56,19 @@ public class ExceptionsHandlers {
     public Map<String, String> handleValidationErrors(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
 
-        System.out.println(ex.getBindingResult().getFieldErrors());
-
         ex.getBindingResult().getFieldErrors().forEach(error ->
                 errors.put(error.getField(), error.getDefaultMessage())
         );
         return errors;
+    }
+
+    @ExceptionHandler(DataNotFoundException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Map<String, String> handleNotFoundExceptions(DataNotFoundException exception) {
+        log.warn(exception.getMessage());
+        Map<String, String> errorMap = new HashMap<>();
+        errorMap.put(exception.getFieldName(), exception.getMessage());
+        return errorMap;
     }
 }

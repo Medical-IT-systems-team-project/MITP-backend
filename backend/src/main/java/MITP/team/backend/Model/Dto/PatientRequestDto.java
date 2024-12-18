@@ -14,16 +14,13 @@ public record PatientRequestDto(
         @NotBlank String firstName,
         @NotBlank String lastName,
         @NotNull
-        @Min(value = 0, message = "Age cannot be less than 0")
-        Integer age,
+        @Min(value = 0, message = "Age cannot be less than 0") Integer age,
         @NotNull Gender gender,
         @NotBlank String address,
         @NotBlank
         @Pattern(regexp = "^[0-9]{9}$", message = "Wrong phone number format")
         String phoneNumber,
-        @NotBlank
-        @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "Wrong mail format")
+        @NotBlank @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "Wrong mail format")
         String email,
-        @PastOrPresent
-        LocalDate birthDate) {
+        @NotNull @PastOrPresent LocalDate birthDate) {
 }
