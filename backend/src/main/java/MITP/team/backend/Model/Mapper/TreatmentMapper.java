@@ -17,8 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @NoArgsConstructor
 @Mapper(
-    componentModel = "spring",
-    uses = {MedicalDoctorRepository.class, MedicalCaseRepository.class})
+        componentModel = "spring",
+        uses = {MedicalDoctorRepository.class, MedicalCaseRepository.class})
 public abstract class TreatmentMapper {
 
   protected MedicalDoctorRepository medicalDoctorRepository;
@@ -35,9 +35,9 @@ public abstract class TreatmentMapper {
   }
 
   @Mapping(
-      source = "medicalDoctor",
-      target = "medicalDoctorName",
-      qualifiedByName = "mapToMedicalDoctorName")
+          source = "medicalDoctor",
+          target = "medicalDoctorName",
+          qualifiedByName = "mapToMedicalDoctorName")
   public abstract TreatmentResponseDto mapToTreatmentResponseDto(Treatment treatment);
 
   @Named("mapToMedicalDoctorName")
@@ -47,28 +47,24 @@ public abstract class TreatmentMapper {
 
   @Mapping(source = "medicalCaseId", target = "medicalCase", qualifiedByName = "mapToMedicalCase")
   @Mapping(
-      source = "medicalDoctorId",
-      target = "medicalDoctor",
-      qualifiedByName = "mapToMedicalDoctor")
+          source = "medicalDoctorId",
+          target = "medicalDoctor",
+          qualifiedByName = "mapToMedicalDoctor")
   public abstract Treatment mapToTreatment(TreatmentRequestDto treatmentRequestDto);
 
   @Named("mapToMedicalDoctor")
   protected MedicalDoctor mapToMedicalDoctor(Long medicalDoctorId) {
     return medicalDoctorRepository
-        .findById(medicalDoctorId)
-        .orElseThrow(
-            () ->
-                new MedicalDoctorNotFoundException(
-                    "MedicalDoctor not found with id: " + medicalDoctorId));
+            .findById(medicalDoctorId)
+            .orElseThrow(
+                    MedicalDoctorNotFoundException::new);
   }
 
   @Named("mapToMedicalCase")
   protected MedicalCase mapToMedicalCaseData(Long medicalCaseDataId) {
     return medicalCaseDataRepository
-        .findById(medicalCaseDataId)
-        .orElseThrow(
-            () ->
-                    new MedicalCaseNotFoundException(
-                    "MedicalCaseData not found with id: " + medicalCaseDataId));
+            .findById(medicalCaseDataId)
+            .orElseThrow(
+                    MedicalCaseNotFoundException::new);
   }
 }

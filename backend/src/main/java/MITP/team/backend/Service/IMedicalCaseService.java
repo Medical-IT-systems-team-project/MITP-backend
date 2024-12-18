@@ -1,9 +1,12 @@
 package MITP.team.backend.Service;
 
-import MITP.team.backend.Model.Dto.*;
+import MITP.team.backend.Model.Dto.MedicalCaseRequestDto;
+import MITP.team.backend.Model.Dto.MedicalCaseResponseDto;
+import MITP.team.backend.Model.Dto.MedicationResponseDto;
+import MITP.team.backend.Model.Dto.TreatmentResponseDto;
+import org.springframework.security.core.Authentication;
 
 import java.util.List;
-import org.springframework.security.core.Authentication;
 
 public interface IMedicalCaseService {
   List<MedicalCaseResponseDto> getMedicalDataByAccessId(String id);
@@ -18,4 +21,5 @@ public interface IMedicalCaseService {
   void closeCase(Long id);
 
   List<Object> getIncompleteList(Long id);
+
 }

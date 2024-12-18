@@ -60,7 +60,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/medicalCase/{Id}/medications").permitAll()
                         //patient
                         .requestMatchers(HttpMethod.POST, "/patient/new").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/patient/{accessId}").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/patient/{accessId}").permitAll()
                         //doctor
                         .requestMatchers(HttpMethod.PATCH, "/doctor/treatment/status").permitAll()
                         .requestMatchers(HttpMethod.PATCH, "/doctor/medication/status").permitAll()

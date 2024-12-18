@@ -45,8 +45,7 @@ public class MedicalCaseService implements IMedicalCaseService {
         patientRepository
             .findByAccessId(uuid)
             .orElseThrow(
-                () ->
-                        new PatientNotFoundException("test"));
+                    PatientNotFoundException::new);
 
     List<MedicalCase> allPatientsCases =
         medicalCaseRepository.getMedicalCaseByPatientId(patient.getId());
@@ -57,7 +56,7 @@ public class MedicalCaseService implements IMedicalCaseService {
   @Override
   public List<TreatmentResponseDto> getTreatmentsById(Long Id) {
     MedicalCase currentPatientCase =
-        medicalCaseRepository.findById(Id).orElseThrow(() -> new MedicalCaseNotFoundException(Id));
+            medicalCaseRepository.findById(Id).orElseThrow(MedicalCaseNotFoundException::new);
     return treatmentRepository.getAllTreatmentsByMedicalCase(currentPatientCase).stream()
         .map(treatmentMapper::mapToTreatmentResponseDto)
         .toList();
@@ -66,7 +65,7 @@ public class MedicalCaseService implements IMedicalCaseService {
   @Override
   public List<MedicationResponseDto> getMedicationsById(Long Id) {
     MedicalCase currentPatientCase =
-        medicalCaseRepository.findById(Id).orElseThrow(() -> new MedicalCaseNotFoundException(Id));
+            medicalCaseRepository.findById(Id).orElseThrow(MedicalCaseNotFoundException::new);
     return medicationRepository.getAllMedicationsByMedicalCase(currentPatientCase).stream()
         .map(medicationMapper::mapToMedicationResponseDto)
         .toList();
@@ -93,7 +92,7 @@ public class MedicalCaseService implements IMedicalCaseService {
   @Override
   public void closeCase(Long Id) {
     MedicalCase medicalCaseToClose =
-        medicalCaseRepository.findById(Id).orElseThrow(() -> new MedicalCaseNotFoundException(Id));
+            medicalCaseRepository.findById(Id).orElseThrow(MedicalCaseNotFoundException::new);
     medicalCaseToClose.setStatus(MedicalCaseStatus.COMPLETED);
     medicalCaseRepository.save(medicalCaseToClose);
   }
@@ -101,7 +100,7 @@ public class MedicalCaseService implements IMedicalCaseService {
   @Override
   public List<Object> getIncompleteList(Long id) {
     MedicalCase medicalCaseToClose =
-        medicalCaseRepository.findById(id).orElseThrow(() -> new MedicalCaseNotFoundException(id));
+            medicalCaseRepository.findById(id).orElseThrow(MedicalCaseNotFoundException::new);
 
     List<Object> incompleteItems = new ArrayList<>();
 
@@ -125,4 +124,6 @@ public class MedicalCaseService implements IMedicalCaseService {
 
     return incompleteItems;
   }
+
+
 }

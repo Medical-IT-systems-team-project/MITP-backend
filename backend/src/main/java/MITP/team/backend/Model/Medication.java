@@ -2,11 +2,10 @@ package MITP.team.backend.Model;
 
 import MITP.team.backend.Model.Enum.MedicalStatus;
 import jakarta.persistence.*;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.time.LocalDate;
 
 @Setter
 @Getter

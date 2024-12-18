@@ -1,11 +1,12 @@
 package MITP.team.backend.Exceptions;
 
-public class MedicalCaseNotFoundException extends RuntimeException {
-  public MedicalCaseNotFoundException(String message) {
-    super(message);
+public class MedicalCaseNotFoundException extends DataNotFoundException {
+  public MedicalCaseNotFoundException() {
+    super("medicalCase");
   }
 
-  public MedicalCaseNotFoundException(Long id) {
-    super("Medical case with id: " + id + " not found");
+  @Override
+  public String getMessage() {
+    return "Medical case not found";
   }
 }

@@ -56,9 +56,7 @@ public abstract class MedicationMapper {
     return medicalDoctorRepository
         .findById(medicalDoctorId)
         .orElseThrow(
-            () ->
-                new MedicalDoctorNotFoundException(
-                    "MedicalDoctor not found with id: " + medicalDoctorId));
+                MedicalDoctorNotFoundException::new);
   }
 
   @Named("mapToMedicalCase")
@@ -66,8 +64,6 @@ public abstract class MedicationMapper {
     return medicalCaseRepository
         .findById(medicalCaseId)
         .orElseThrow(
-            () ->
-                    new MedicalCaseNotFoundException(
-                    "MedicalCaseData not found with id: " + medicalCaseId));
+                MedicalCaseNotFoundException::new);
   }
 }

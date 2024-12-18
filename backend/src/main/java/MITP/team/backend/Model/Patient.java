@@ -1,16 +1,13 @@
 package MITP.team.backend.Model;
 
-import MITP.team.backend.Model.Enum.MedicalStatus;
+import MITP.team.backend.Model.Enum.PatientStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
-
 import jakarta.validation.constraints.PastOrPresent;
 import lombok.*;
+
+import java.time.LocalDate;
+import java.util.List;
 
 
 @Getter
@@ -33,7 +30,7 @@ public class Patient {
   private Long id;
 
   @Enumerated(EnumType.STRING)
-  private MedicalStatus status;
+  private PatientStatus status;
 
   @Column(name = "birth_date")
   @PastOrPresent
@@ -51,8 +48,8 @@ public class Patient {
 
   public interface UpdateValidation {}
 
-  private String email; // TODO validate REGEX
-  private String phoneNumber; // TODO validate REGEX
+  private String email;
+  private String phoneNumber;
   private String address;
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "patient")

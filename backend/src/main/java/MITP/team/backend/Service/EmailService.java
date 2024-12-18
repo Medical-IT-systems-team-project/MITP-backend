@@ -22,7 +22,7 @@ public class EmailService implements IEmailService {
   public void sendSummaryEmail(Long id) {
 
     MedicalCase medicalCaseCloseRequest =
-        medicalCaseRepository.findById(id).orElseThrow(() -> new MedicalCaseNotFoundException(id));
+            medicalCaseRepository.findById(id).orElseThrow(MedicalCaseNotFoundException::new);
     emailSender.send(emailMessageBuilder.buildCloseCaseEmail(medicalCaseCloseRequest));
   }
 }

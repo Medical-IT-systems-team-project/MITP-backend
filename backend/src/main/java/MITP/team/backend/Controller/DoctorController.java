@@ -3,6 +3,7 @@ package MITP.team.backend.Controller;
 import MITP.team.backend.Model.Dto.MedicationRequestDto;
 import MITP.team.backend.Model.Dto.StatusRequestDto;
 import MITP.team.backend.Model.Dto.TreatmentRequestDto;
+import MITP.team.backend.Service.DoctorService;
 import MITP.team.backend.Service.IMedicationService;
 import MITP.team.backend.Service.IPatientService;
 import MITP.team.backend.Service.ITreatmentService;
@@ -21,8 +22,9 @@ public class DoctorController {
     private final ITreatmentService treatmentService;
     private final IMedicationService medicationService;
     private final IPatientService patientService;
+    private final DoctorService doctorService;
 
-    @PostMapping("/new/Treatment")
+    @PostMapping("/new/treatment")
     public ResponseEntity<?> createNewTreatment(
             @Valid @RequestBody TreatmentRequestDto treatmentRequestDto) {
         treatmentService.createNewTreatment(treatmentRequestDto);
@@ -47,9 +49,14 @@ public class DoctorController {
         return ResponseEntity.ok("Medication status changed");
     }
 
+    @GetMapping("/medical-case/all")
+    public ResponseEntity<?> getMedicalCases(Authentication auth) {
+        return ResponseEntity.ok().body(doctorService.getMedicalCases(auth));
+    }
+
     @PatchMapping("/treatment/{Id}/status")
     public ResponseEntity<?> changeTreatmentStatus(@PathVariable Long Id, @RequestBody @Valid StatusRequestDto statusRequestDto) {
-         treatmentService.changeTreatmentStatus(Id, statusRequestDto);
+        treatmentService.changeTreatmentStatus(Id, statusRequestDto);
         return ResponseEntity.ok("Treatment status changed");
     }
 }
