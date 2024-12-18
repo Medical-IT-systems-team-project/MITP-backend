@@ -1,30 +1,28 @@
 package MITP.team.backend.Model.Dto;
 
-import MITP.team.backend.Model.Enum.MedicalStatus;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
-import jakarta.validation.constraints.Pattern;
+import MITP.team.backend.Model.Enum.Gender;
+import jakarta.validation.constraints.*;
 import lombok.Builder;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Builder
 public record PatientRequestDto(
         @NotNull
-        @Pattern(regexp = "^[0-9]{11}$", message = "PESEL musi byc 11 cyfrowy")
+        @Pattern(regexp = "^[0-9]{11}$", message = "SSN must have 11 digits")
         String socialSecurityNumber,
-        @NotNull String firstName,
-        @NotNull String lastName,
-        @NotNull Integer age,
-        @NotBlank String gender,
+        @NotBlank String firstName,
+        @NotBlank String lastName,
+        @NotNull
+        @Min(value = 0, message = "Age cannot be less than 0")
+        Integer age,
+        @NotNull Gender gender,
         @NotBlank String address,
         @NotBlank
-        @Pattern(regexp = "^[0-9]{9}$", message = "Niepoprawny format numeru telefonu")
+        @Pattern(regexp = "^[0-9]{9}$", message = "Wrong phone number format")
         String phoneNumber,
         @NotBlank
-        @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "Niepoprawny format email")
+        @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "Wrong mail format")
         String email,
         @PastOrPresent
         LocalDate birthDate) {

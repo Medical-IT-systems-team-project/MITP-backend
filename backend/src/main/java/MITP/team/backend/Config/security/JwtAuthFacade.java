@@ -4,7 +4,6 @@ import MITP.team.backend.Config.security.dto.JwtResponseDto;
 import MITP.team.backend.Config.security.dto.TokenRequestDto;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import java.time.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,6 +11,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
+
+import java.time.*;
 
 @Log4j2
 @Component
@@ -41,7 +42,7 @@ public class JwtAuthFacade {
     ZonedDateTime localTime = LocalDateTime.now(clock).atZone(ZoneId.of("Europe/Warsaw"));
     Instant now = localTime.toInstant();
         Instant expireAt = now.plus(Duration.ofHours(properties.hours()));
-        String issuer = "Zadanie Rekrutacyjne Service";
+        String issuer = "CareTrack Service";
 
         return JWT.create()
                 .withSubject(user.getUsername())

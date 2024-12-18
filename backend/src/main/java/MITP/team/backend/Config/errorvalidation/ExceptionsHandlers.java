@@ -1,20 +1,19 @@
 package MITP.team.backend.Config.errorvalidation;
 
-import MITP.team.backend.Exceptions.DataNotFoundException;
-import MITP.team.backend.Exceptions.DuplicatedPatientException;
-import MITP.team.backend.Exceptions.ServerInternalError;
-import MITP.team.backend.Exceptions.UserNotFoundException;
-import java.util.List;
+import MITP.team.backend.Exceptions.*;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Log4j2
 @ControllerAdvice
@@ -42,23 +41,10 @@ public class ExceptionsHandlers {
                 .build();
     }
 
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseBody
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiValidationErrorResponseDto handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
-        final List<String> errors = exception.getBindingResult().getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).toList();
-        log.warn("Validation error{}", errors);
-        return ApiValidationErrorResponseDto.builder()
-                .errors(errors)
-                .status(HttpStatus.BAD_REQUEST)
-                .build();
-    }
-
     @ExceptionHandler(DuplicatedPatientException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public DuplicateKeyExceptionDto handleMethodArgumentNotValidException(DuplicatedPatientException exception) {
+    public DuplicateKeyExceptionDto handleMethodArgumentNotValidException() {
         final String loginNotFound = "Patient already exist in system.";
         log.warn(loginNotFound);
         return DuplicateKeyExceptionDto.builder()
@@ -77,25 +63,43 @@ public class ExceptionsHandlers {
                 .build();
     }
 
-    @ExceptionHandler(UserNotFoundException.class)
+    @ExceptionHandler(MedicalDoctorNotFoundException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public DuplicateKeyExceptionDto handleMethodArgumentNotValidException(UserNotFoundException exception) {
-        final String PatientNotFound = "Patient not found in system.";
-        log.warn(PatientNotFound);
-        return DuplicateKeyExceptionDto.builder()
-                .message(PatientNotFound)
-                .build();
+    public ResponseEntity<?> handleMedicalDoctorNotFoundException(MedicalDoctorNotFoundException exception) {
+        log.warn(exception.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Doctor does not exist");
     }
 
-    @ExceptionHandler(ServerInternalError.class)
+    @ExceptionHandler(PatientNotFoundException.class)
     @ResponseBody
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public DuplicateKeyExceptionDto handleMethodArgumentNotValidException(ServerInternalError exception) {
-        final String internalError = "Internal server error.";
-        log.warn(internalError);
-//      TODO dokonczyc
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<?> handlePatientNotFoundException(PatientNotFoundException exception) {
+        log.warn(exception.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Patient does not exist");
 
-        return null;
+
+    }
+
+    @ExceptionHandler(MedicalCaseNotFoundException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<?> handleMedicalCaseNotFoundException(MedicalCaseNotFoundException exception) {
+        log.warn(exception.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Medical case does not exist");
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> handleValidationErrors(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+
+        System.out.println(ex.getBindingResult().getFieldErrors());
+
+        ex.getBindingResult().getFieldErrors().forEach(error ->
+                errors.put(error.getField(), error.getDefaultMessage())
+        );
+        return errors;
     }
 }

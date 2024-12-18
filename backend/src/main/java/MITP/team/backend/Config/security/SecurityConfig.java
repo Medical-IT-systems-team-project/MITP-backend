@@ -22,17 +22,17 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @AllArgsConstructor
 public class SecurityConfig {
-  private final LoginAndRegisterService loginAndRegisterService;
+    private final LoginAndRegisterService loginAndRegisterService;
     private final JwtAuthTokenFilter jwtAuthTokenFilter;
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authentcationConfiguration) throws Exception {
-        return authentcationConfiguration.getAuthenticationManager();
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
     }
 
     @Bean
     public UserDetailsService userDetailsService() {
-    return new LoginUserDetailsService(loginAndRegisterService);
+        return new LoginUserDetailsService(loginAndRegisterService);
     }
 
     @Bean

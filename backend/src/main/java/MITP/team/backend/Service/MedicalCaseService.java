@@ -1,23 +1,29 @@
 package MITP.team.backend.Service;
 
 import MITP.team.backend.Exceptions.MedicalCaseNotFoundException;
-import MITP.team.backend.Exceptions.UserNotFoundException;
-import MITP.team.backend.Model.*;
-import MITP.team.backend.Model.Dto.*;
+import MITP.team.backend.Exceptions.PatientNotFoundException;
+import MITP.team.backend.Model.Dto.MedicalCaseRequestDto;
+import MITP.team.backend.Model.Dto.MedicalCaseResponseDto;
+import MITP.team.backend.Model.Dto.MedicationResponseDto;
+import MITP.team.backend.Model.Dto.TreatmentResponseDto;
 import MITP.team.backend.Model.Enum.MedicalCaseStatus;
 import MITP.team.backend.Model.Enum.MedicalStatus;
 import MITP.team.backend.Model.Mapper.MedicalCaseMapper;
 import MITP.team.backend.Model.Mapper.MedicationMapper;
 import MITP.team.backend.Model.Mapper.TreatmentMapper;
+import MITP.team.backend.Model.MedicalCase;
+import MITP.team.backend.Model.MedicalDoctor;
+import MITP.team.backend.Model.Patient;
 import MITP.team.backend.Repository.*;
 import jakarta.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 @AllArgsConstructor
 @Service
@@ -40,8 +46,7 @@ public class MedicalCaseService implements IMedicalCaseService {
             .findByAccessId(uuid)
             .orElseThrow(
                 () ->
-                    new UserNotFoundException(
-                        "Patient with access ID " + uuid + " does not exist"));
+                        new PatientNotFoundException("test"));
 
     List<MedicalCase> allPatientsCases =
         medicalCaseRepository.getMedicalCaseByPatientId(patient.getId());
