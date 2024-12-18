@@ -1,6 +1,6 @@
 package MITP.team.backend.Model;
 
-import MITP.team.backend.Model.Enum.MedicalStatus;
+import MITP.team.backend.Model.Enum.PatientStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PastOrPresent;
@@ -30,7 +30,7 @@ public class Patient {
   private Long id;
 
   @Enumerated(EnumType.STRING)
-  private MedicalStatus status;
+  private PatientStatus status;
 
   @Column(name = "birth_date")
   @PastOrPresent

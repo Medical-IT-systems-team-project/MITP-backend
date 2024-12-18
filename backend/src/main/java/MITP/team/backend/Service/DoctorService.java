@@ -7,24 +7,23 @@ import MITP.team.backend.Model.MedicalCase;
 import MITP.team.backend.Model.MedicalDoctor;
 import MITP.team.backend.Repository.MedicalCaseRepository;
 import MITP.team.backend.Repository.MedicalDoctorRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+
 @Service
+@AllArgsConstructor
 public class DoctorService implements IDoctorService {
+
     private final MedicalCaseRepository medicalCaseRepository;
     private final MedicalCaseMapper medicalCaseMapper;
-    private MedicalDoctorRepository doctorRepository;
+    private final MedicalDoctorRepository doctorRepository;
 
-    public DoctorService(MedicalCaseRepository medicalCaseRepository, MedicalCaseMapper medicalCaseMapper) {
-        this.medicalCaseRepository = medicalCaseRepository;
-        this.medicalCaseMapper = medicalCaseMapper;
-    }
 
     @Override
     public void addPatient(PatientRequestDto patientRequestDto) {

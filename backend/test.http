@@ -9,6 +9,7 @@ Content-Type: application/json
   "password": "test"
 }
 
+
 ###
 POST http://localhost:9090/login
 Content-Type: application/json
@@ -18,67 +19,7 @@ Content-Type: application/json
   "password": "test"
 }
 
-###
-POST http://localhost:9090/medicalCase/newCase
-Content-Type: application/json
-Authorization: Bearer {{JWT_token}}
 
-{
-  "patientId": 1,
-  "admissionReason": "test",
-  "admissionDate": "2022-07-10T10:00:00",
-  "description": "testowe przyjecie",
-  "attendingDoctorId": 2
-}
-
-###
-GET http://localhost:9090/medicalCase/eJM9Es8l2p/summary
-Content-Type: application/json
-Authorization: Bearer {{JWT_token}}
-
-###
-POST http://localhost:9090/doctor/new/Treatment
-Content-Type: application/json
-Authorization: Bearer {{JWT_token}}
-
-{
-  "description": "test test",
-  "startDate": "2020-07-10T10:00:00",
-  "endDate": "2025-07-20T15:00:00",
-  "name": "Test",
-  "details": "test test",
-  "medicalCaseId": 52,
-  "medicalDoctorId": 102
-}
-
-###
-GET http://localhost:9090/medicalCase/0/treatments
-Accept: application/json
-Authorization: Bearer {{JWT_token}}
-
-###
-POST http://localhost:9090/doctor/new/medication
-Content-Type: application/json
-Authorization: Bearer {{JWT_token}}
-
-{
-  "name": "Tescior123",
-  "startDate": "2026-07-10",
-  "endDate": "2025-07-20",
-  "details": "xd",
-  "medicalCaseId": 11,
-  "medicalDoctorId": 1,
-  "dosageForm": "1x1",
-  "strength": "200mg",
-  "unit": "tabletki"
-}
-
-###
-GET http://localhost:9090/medicalCase/52/medications
-Accept: application/json
-Authorization: Bearer {{JWT_token}}
-
-#actions dedicated for patient menagment
 ###
 POST http://localhost:9090/patient/new
 Content-Type: application/json
@@ -95,17 +36,111 @@ Authorization: Bearer {{JWT_token}}
   "age": 23,
   "gender": "FEMALE"
 }
+
+
 ###
-GET http://localhost:9090/patient/kE4WwRkDiE
+POST http://localhost:9090/medical-case/new
+Content-Type: application/json
+Authorization: Bearer {{JWT_token}}
+
+{
+  "patientId": 1,
+  "admissionReason": "testowe pod wieczor",
+  "admissionDate": "2026-07-10T10:00:00",
+  "description": "test",
+  "attendingDoctorId": 1
+}
+
+
+###
+POST http://localhost:9090/doctor/new/treatment
+Content-Type: application/json
+Authorization: Bearer {{JWT_token}}
+
+{
+  "description": "test test",
+  "startDate": "2025-07-10T10:00:00",
+  "endDate": "2025-07-20T15:00:00",
+  "name": "Test",
+  "details": "test test",
+  "medicalCaseId": 103,
+  "medicalDoctorId": 1
+}
+
+###
+PATCH http://localhost:9090/doctor/treatment/1/status
+Content-Type: application/json
+Authorization: Bearer {{JWT_token}}
+
+{
+  "status": "CANCELLED"
+}
+
+
+###
+POST http://localhost:9090/doctor/new/medication
+Content-Type: application/json
+Authorization: Bearer {{JWT_token}}
+
+{
+  "name": "Tescior123",
+  "startDate": "2026-07-10",
+  "endDate": "2025-07-20",
+  "details": "xd",
+  "medicalCaseId": 103,
+  "medicalDoctorId": 1,
+  "dosageForm": "1x1",
+  "strength": "200mg",
+  "unit": "tabletki"
+}
+
+###
+PATCH http://localhost:9090/doctor/medication/10/status
+Content-Type: application/json
+Authorization: Bearer {{JWT_token}}
+
+{
+  "status": "CANCELLED"
+}
+
+
+###
+GET http://localhost:9090/medical-case/113dpTaKev/summary
+Content-Type: application/json
+Authorization: Bearer {{JWT_token}}
+
+
+###
+GET http://localhost:9090/medical-case/103/treatment/all
 Accept: application/json
 Authorization: Bearer {{JWT_token}}
+
+
+###
+GET http://localhost:9090/medical-case/103/medication/all
+Accept: application/json
+Authorization: Bearer {{JWT_token}}
+
+
+###
+GET http://localhost:9090/patient/113dpTaKev
+Accept: application/json
+Authorization: Bearer {{JWT_token}}
+
+
+###
+PATCH http://localhost:9090/medical-case/103
+Accept: application/json
+Authorization: Bearer {{JWT_token}}
+
 
 ###
 GET http://localhost:9090/doctor/patient/all
 Accept: application/json
 Authorization: Bearer {{JWT_token}}
 
+
 ###
-PATCH http://localhost:9090/medicalCase/52?force=true
+GET http://localhost:9090/doctor/medical-case/all
 Accept: application/json
 Authorization: Bearer {{JWT_token}}

@@ -24,7 +24,7 @@ public class DoctorController {
     private final IPatientService patientService;
     private final DoctorService doctorService;
 
-    @PostMapping("/new/Treatment")
+    @PostMapping("/new/treatment")
     public ResponseEntity<?> createNewTreatment(
             @Valid @RequestBody TreatmentRequestDto treatmentRequestDto) {
         treatmentService.createNewTreatment(treatmentRequestDto);
@@ -48,7 +48,8 @@ public class DoctorController {
         medicationService.changeMedicationStatus(Id, statusRequestDto);
         return ResponseEntity.ok("Medication status changed");
     }
-    @GetMapping("/medicalCases")
+
+    @GetMapping("/medical-case/all")
     public ResponseEntity<?> getMedicalCases(Authentication auth) {
         return ResponseEntity.ok().body(doctorService.getMedicalCases(auth));
     }
