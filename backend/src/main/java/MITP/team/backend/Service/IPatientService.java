@@ -1,7 +1,6 @@
 package MITP.team.backend.Service;
 
 import MITP.team.backend.Model.Dto.EmailRequestDto;
-import MITP.team.backend.Model.Dto.EmailResponseDto;
 import MITP.team.backend.Model.Dto.PatientRequestDto;
 import MITP.team.backend.Model.Dto.PatientResponseDto;
 import org.springframework.security.core.Authentication;
@@ -16,5 +15,5 @@ public interface IPatientService {
 
     Set<PatientResponseDto> getAllPatients(Authentication auth);
 
-    EmailResponseDto getNewAccessId(EmailRequestDto email);
+    void getNewAccessId(EmailRequestDto email);
 }

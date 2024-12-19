@@ -27,12 +27,12 @@ Authorization: Bearer {{JWT_token}}
 
 {
   "socialSecurityNumber": "35655111113",
-  "firstName": "Krystian",
-  "lastName": "Wasil",
+  "firstName": "Kamil",
+  "lastName": "Golawski",
   "birthDate": "2003-01-17T10:00:00",
   "address": "Lublin",
   "phoneNumber": "123456789",
-  "email": "wasilkrystian78@gmail.com",
+  "email": "test@gmail.com",
   "age": 21,
   "gender": "MALE"
 }
@@ -151,5 +151,5 @@ Content-Type: application/json
 Authorization: Bearer {{JWT_token}}
 
 {
-  "email": "wasilkrystian78@gmail.com"
+  "email": "test@gmail.com"
 }
