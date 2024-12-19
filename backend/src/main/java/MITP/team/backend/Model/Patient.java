@@ -1,5 +1,6 @@
 package MITP.team.backend.Model;
 
+import MITP.team.backend.Model.Enum.MedicalStatus;
 import MITP.team.backend.Model.Enum.PatientStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -18,10 +19,10 @@ import java.util.List;
 @NoArgsConstructor
 public class Patient {
 
-  @NotBlank(groups = {CreateValidation.class, UpdateValidation.class})
+  @NotBlank
   private String firstName;
 
-  @NotBlank(groups = {CreateValidation.class, UpdateValidation.class})
+  @NotBlank
   private String lastName;
 
   @Id
@@ -29,8 +30,8 @@ public class Patient {
   @Column(name = "id")
   private Long id;
 
-  @Enumerated(EnumType.STRING)
-  private PatientStatus status;
+//  @Enumerated(EnumType.STRING)
+//  private PatientStatus status;
 
   @Column(name = "birth_date")
   @PastOrPresent
@@ -48,8 +49,8 @@ public class Patient {
 
   public interface UpdateValidation {}
 
-  private String email;
-  private String phoneNumber;
+  private String email; // TODO validate REGEX
+  private String phoneNumber; // TODO validate REGEX
   private String address;
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "patient")
