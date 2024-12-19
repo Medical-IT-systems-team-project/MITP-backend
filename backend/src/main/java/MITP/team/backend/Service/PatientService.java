@@ -1,7 +1,11 @@
 package MITP.team.backend.Service;
 
+import MITP.team.backend.Component.EmailMessageBuilder;
+import MITP.team.backend.Exceptions.DataNotFoundException;
 import MITP.team.backend.Exceptions.DuplicatedPatientException;
 import MITP.team.backend.Exceptions.PatientNotFoundException;
+import MITP.team.backend.Model.Dto.EmailRequestDto;
+import MITP.team.backend.Model.Dto.EmailResponseDto;
 import MITP.team.backend.Model.Dto.PatientRequestDto;
 import MITP.team.backend.Model.Dto.PatientResponseDto;
 import MITP.team.backend.Model.Enum.PatientStatus;
@@ -29,6 +33,8 @@ public class PatientService implements IPatientService {
     private final MedicalCaseRepository medicalCaseRepository;
     private final MedicalDoctorRepository medicalDoctorRepository;
     private final PatientMapper patientMapper;
+    private final EmailMessageBuilder emailMessageBuilder;
+    private final EmailService emailService;
 
     public String createNewPatient(PatientRequestDto patientRequestDto) {
         patientRepository
@@ -42,7 +48,7 @@ public class PatientService implements IPatientService {
 
         Patient patient = patientMapper.mapToPatient(patientRequestDto);
         patient.setAccessId(accessId);
-        patient.setStatus(PatientStatus.IN_HOSPITAL);
+        //patient.setStatus(PatientStatus.IN_HOSPITAL);
         Patient save = patientRepository.save(patient);
         return save.getAccessId();
     }
@@ -51,7 +57,7 @@ public class PatientService implements IPatientService {
         Patient patient =
                 patientRepository
                         .findByAccessId(accessId)
-                        .orElseThrow(PatientNotFoundException::new);
+                        .orElseThrow(() -> new DataNotFoundException("Patient not found in system."));
 
         return patientMapper.mapToPatientResponseDto(patient);
     }
@@ -80,4 +86,20 @@ public class PatientService implements IPatientService {
                 .forEach(allPatients::add);
         return allPatients;
     }
+
+    public EmailResponseDto getNewAccessId(EmailRequestDto emailRequestDto) {
+        Patient patient = patientRepository
+                .findByEmail(emailRequestDto.email())
+                .orElseThrow(() -> new DataNotFoundException("Email not found: " + emailRequestDto.email()));
+        String newAccessId = idGenerator.generateUniqueId();
+        patient.setAccessId(newAccessId);
+        patientRepository.save(patient);
+
+        //email z wymiana
+        emailService.sendRestartEmail(emailRequestDto.email(), newAccessId);
+
+        return EmailResponseDto.builder()
+                .message("New accessId has been sent to your email").build();
+    }
+
 }
