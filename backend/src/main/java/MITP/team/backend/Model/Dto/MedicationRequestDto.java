@@ -1,18 +1,21 @@
 package MITP.team.backend.Model.Dto;
 
-import java.time.LocalDateTime;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
-import lombok.Builder;
+import java.time.LocalDate;
 
-@Builder
+
 public record MedicationRequestDto(
-        String name,
-        LocalDateTime startDate,
-        LocalDateTime endDate,
-        String details,
+        @NotBlank String name,
+        @NotNull @FutureOrPresent LocalDate startDate,
+        @NotNull @Future LocalDate endDate,
+        @NotBlank String details,
+        @NotBlank String dosageForm,
+        @NotBlank String strength,
+        @NotBlank String unit,
         Long medicalCaseId,
-        Long medicalDoctorId,
-        String dosageForm,
-        String strength,
-        String unit) {
+        Long medicalDoctorId) {
 }

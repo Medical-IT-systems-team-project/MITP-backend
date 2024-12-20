@@ -25,6 +25,17 @@ public class EmailMessageBuilder {
 
     return message;
   }
+  //resetowanie hasła
+  public SimpleMailMessage buildRestartEmail(String email, String accessId) {
+    SimpleMailMessage message = new SimpleMailMessage();
+
+    message.setFrom(mailAddress);
+    message.setTo(email);
+    message.setSubject("New AccessId");
+    message.setText("Your new accessId is: " + accessId);
+
+    return message;
+  }
 
   private String createSubject(MedicalCase medicalCaseCloseRequest) {
     return String.format(
@@ -118,4 +129,6 @@ public class EmailMessageBuilder {
 
     return content.toString();
   }
+
+
 }

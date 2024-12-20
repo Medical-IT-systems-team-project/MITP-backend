@@ -1,12 +1,11 @@
 package MITP.team.backend.Service;
 
-import MITP.team.backend.Exceptions.DataNotFoundException;
 import MITP.team.backend.Exceptions.DuplicatedPatientException;
+import MITP.team.backend.Exceptions.PatientNotFoundException;
+import MITP.team.backend.Model.Dto.EmailRequestDto;
 import MITP.team.backend.Model.Dto.PatientRequestDto;
 import MITP.team.backend.Model.Dto.PatientResponseDto;
-import MITP.team.backend.Model.Dto.StatusRequestDto;
-import MITP.team.backend.Model.Dto.StatusResponseDto;
-import MITP.team.backend.Model.Enum.MedicalStatus;
+import MITP.team.backend.Model.Enum.PatientStatus;
 import MITP.team.backend.Model.Mapper.PatientMapper;
 import MITP.team.backend.Model.MedicalCase;
 import MITP.team.backend.Model.MedicalDoctor;
@@ -14,16 +13,13 @@ import MITP.team.backend.Model.Patient;
 import MITP.team.backend.Repository.MedicalCaseRepository;
 import MITP.team.backend.Repository.MedicalDoctorRepository;
 import MITP.team.backend.Repository.PatientRepository;
-
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @AllArgsConstructor
 @Service
@@ -34,6 +30,7 @@ public class PatientService implements IPatientService {
     private final MedicalCaseRepository medicalCaseRepository;
     private final MedicalDoctorRepository medicalDoctorRepository;
     private final PatientMapper patientMapper;
+    private final EmailService emailService;
 
     public String createNewPatient(PatientRequestDto patientRequestDto) {
         patientRepository
@@ -47,7 +44,7 @@ public class PatientService implements IPatientService {
 
         Patient patient = patientMapper.mapToPatient(patientRequestDto);
         patient.setAccessId(accessId);
-
+        patient.setStatus(PatientStatus.IN_HOSPITAL);
         Patient save = patientRepository.save(patient);
         return save.getAccessId();
     }
@@ -56,7 +53,7 @@ public class PatientService implements IPatientService {
         Patient patient =
                 patientRepository
                         .findByAccessId(accessId)
-                        .orElseThrow(() -> new DataNotFoundException("Patient not found in system."));
+                        .orElseThrow(PatientNotFoundException::new);
 
         return patientMapper.mapToPatientResponseDto(patient);
     }
@@ -86,24 +83,14 @@ public class PatientService implements IPatientService {
         return allPatients;
     }
 
-    @Override
-    public StatusResponseDto changePatientStatus(Long id, StatusRequestDto statusRequestDto) {
-        Patient patient =
-                patientRepository
-                        .findById(id)
-                        .orElseThrow(() -> new DataNotFoundException("Patient not found in system."));
-
-        List<MedicalStatus> list = Arrays.asList(MedicalStatus.values());
-        for (MedicalStatus status : list) {
-            if (statusRequestDto.status().equals(status.name())) {
-                patient.setStatus(status);
-                patientRepository.save(patient);
-                return StatusResponseDto.builder().status(status.name()).build();
-            }
-        }
-
-
-
-        return StatusResponseDto.builder().build();
+    public void getNewAccessId(EmailRequestDto emailRequestDto) {
+        Patient patient = patientRepository
+                .findByEmail(emailRequestDto.email())
+                .orElseThrow(PatientNotFoundException::new);
+        String newAccessId = idGenerator.generateUniqueId();
+        patient.setAccessId(newAccessId);
+        patientRepository.save(patient);
+        emailService.sendRestartEmail(emailRequestDto.email(), newAccessId);
     }
+
 }

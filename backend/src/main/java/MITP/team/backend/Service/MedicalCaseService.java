@@ -1,23 +1,26 @@
 package MITP.team.backend.Service;
 
 import MITP.team.backend.Exceptions.MedicalCaseNotFoundException;
-import MITP.team.backend.Exceptions.UserNotFoundException;
-import MITP.team.backend.Model.*;
+import MITP.team.backend.Exceptions.PatientNotFoundException;
 import MITP.team.backend.Model.Dto.*;
 import MITP.team.backend.Model.Enum.MedicalCaseStatus;
 import MITP.team.backend.Model.Enum.MedicalStatus;
 import MITP.team.backend.Model.Mapper.MedicalCaseMapper;
 import MITP.team.backend.Model.Mapper.MedicationMapper;
 import MITP.team.backend.Model.Mapper.TreatmentMapper;
+import MITP.team.backend.Model.MedicalCase;
+import MITP.team.backend.Model.MedicalDoctor;
+import MITP.team.backend.Model.Patient;
 import MITP.team.backend.Repository.*;
 import jakarta.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 @AllArgsConstructor
 @Service
@@ -39,9 +42,7 @@ public class MedicalCaseService implements IMedicalCaseService {
         patientRepository
             .findByAccessId(uuid)
             .orElseThrow(
-                () ->
-                    new UserNotFoundException(
-                        "Patient with access ID " + uuid + " does not exist"));
+                    PatientNotFoundException::new);
 
     List<MedicalCase> allPatientsCases =
         medicalCaseRepository.getMedicalCaseByPatientId(patient.getId());
@@ -52,7 +53,7 @@ public class MedicalCaseService implements IMedicalCaseService {
   @Override
   public List<TreatmentResponseDto> getTreatmentsById(Long Id) {
     MedicalCase currentPatientCase =
-        medicalCaseRepository.findById(Id).orElseThrow(() -> new MedicalCaseNotFoundException(Id));
+            medicalCaseRepository.findById(Id).orElseThrow(MedicalCaseNotFoundException::new);
     return treatmentRepository.getAllTreatmentsByMedicalCase(currentPatientCase).stream()
         .map(treatmentMapper::mapToTreatmentResponseDto)
         .toList();
@@ -61,7 +62,7 @@ public class MedicalCaseService implements IMedicalCaseService {
   @Override
   public List<MedicationResponseDto> getMedicationsById(Long Id) {
     MedicalCase currentPatientCase =
-        medicalCaseRepository.findById(Id).orElseThrow(() -> new MedicalCaseNotFoundException(Id));
+            medicalCaseRepository.findById(Id).orElseThrow(MedicalCaseNotFoundException::new);
     return medicationRepository.getAllMedicationsByMedicalCase(currentPatientCase).stream()
         .map(medicationMapper::mapToMedicationResponseDto)
         .toList();
@@ -88,7 +89,7 @@ public class MedicalCaseService implements IMedicalCaseService {
   @Override
   public void closeCase(Long Id) {
     MedicalCase medicalCaseToClose =
-        medicalCaseRepository.findById(Id).orElseThrow(() -> new MedicalCaseNotFoundException(Id));
+            medicalCaseRepository.findById(Id).orElseThrow(MedicalCaseNotFoundException::new);
     medicalCaseToClose.setStatus(MedicalCaseStatus.COMPLETED);
     medicalCaseRepository.save(medicalCaseToClose);
   }
@@ -96,7 +97,7 @@ public class MedicalCaseService implements IMedicalCaseService {
   @Override
   public List<Object> getIncompleteList(Long id) {
     MedicalCase medicalCaseToClose =
-        medicalCaseRepository.findById(id).orElseThrow(() -> new MedicalCaseNotFoundException(id));
+            medicalCaseRepository.findById(id).orElseThrow(MedicalCaseNotFoundException::new);
 
     List<Object> incompleteItems = new ArrayList<>();
 
@@ -120,4 +121,6 @@ public class MedicalCaseService implements IMedicalCaseService {
 
     return incompleteItems;
   }
+
+
 }

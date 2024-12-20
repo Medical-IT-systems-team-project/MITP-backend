@@ -22,4 +22,6 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
 
 
     Optional<Object> findBySocialSecurityNumber(String socialSecurityNumber);
+
+    Optional<Patient> findByEmail(String email);
 }

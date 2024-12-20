@@ -1,11 +1,12 @@
 package MITP.team.backend.Model;
 
 import jakarta.persistence.*;
-import java.util.Collection;
-import java.util.List;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 @Builder
 @Entity
@@ -19,7 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class MedicalDoctor implements UserDetails {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "medical_doctor_id", nullable = false)
   private Long id;
 

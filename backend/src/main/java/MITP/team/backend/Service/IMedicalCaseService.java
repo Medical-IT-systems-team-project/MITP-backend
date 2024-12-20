@@ -18,4 +18,5 @@ public interface IMedicalCaseService {
   void closeCase(Long id);
 
   List<Object> getIncompleteList(Long id);
+
 }

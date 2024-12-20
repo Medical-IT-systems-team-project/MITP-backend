@@ -1,5 +1,7 @@
+version: '3.8'
+
 services:
-  postgres:
+  postgres-database:
     image: 'postgres:latest'
     environment:
       - 'POSTGRES_DB=mydatabase'

@@ -2,9 +2,9 @@ package MITP.team.backend.Config.security;
 
 import MITP.team.backend.Config.security.dto.JwtResponseDto;
 import MITP.team.backend.Config.security.dto.TokenRequestDto;
+import MITP.team.backend.Repository.MedicalDoctorRepository;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import java.time.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,6 +12,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
+
+import java.time.*;
 
 @Log4j2
 @Component
@@ -21,6 +23,7 @@ public class JwtAuthFacade {
     private final AuthenticationManager authenticatorManager;
     private final Clock clock;
     private final JwtConfigProperties properties;
+    private final MedicalDoctorRepository medicalDoctorRepository;
 
     public JwtResponseDto authenticateAndGenerateToken(TokenRequestDto tokenRequestDto){
         Authentication authenticate = authenticatorManager.authenticate(
@@ -29,10 +32,8 @@ public class JwtAuthFacade {
         final User principal = (User) authenticate.getPrincipal();
         String token = createToken(principal);
         String login = principal.getUsername();
-        return JwtResponseDto.builder()
-                .token(token)
-                .login(login)
-                .build();
+        Long id = medicalDoctorRepository.findByLogin(login).get().getId();
+        return new JwtResponseDto(login, token, id);
     }
 
     private String createToken(final User user) {
@@ -41,7 +42,7 @@ public class JwtAuthFacade {
     ZonedDateTime localTime = LocalDateTime.now(clock).atZone(ZoneId.of("Europe/Warsaw"));
     Instant now = localTime.toInstant();
         Instant expireAt = now.plus(Duration.ofHours(properties.hours()));
-        String issuer = "Zadanie Rekrutacyjne Service";
+        String issuer = "CareTrack Service";
 
         return JWT.create()
                 .withSubject(user.getUsername())

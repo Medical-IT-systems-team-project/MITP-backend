@@ -1,19 +1,20 @@
 package MITP.team.backend.Config.errorvalidation;
 
 import MITP.team.backend.Exceptions.DataNotFoundException;
-import MITP.team.backend.Exceptions.DuplicatedPatientException;
-import MITP.team.backend.Exceptions.UserNotFoundException;
-import java.util.List;
+import MITP.team.backend.Exceptions.TreatmentNotFoundException;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Log4j2
 @ControllerAdvice
@@ -41,49 +42,33 @@ public class ExceptionsHandlers {
                 .build();
     }
 
+    @ExceptionHandler(TreatmentNotFoundException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<?> handleTreatmentNotFoundException(TreatmentNotFoundException exception) {
+        log.warn(exception.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Treatment does not exist");
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiValidationErrorResponseDto handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
-        final List<String> errors = exception.getBindingResult().getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).toList();
-        log.warn("Validation error{}", errors);
-        return ApiValidationErrorResponseDto.builder()
-                .errors(errors)
-                .status(HttpStatus.BAD_REQUEST)
-                .build();
-    }
+    public Map<String, String> handleValidationErrors(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
 
-    @ExceptionHandler(DuplicatedPatientException.class)
-    @ResponseBody
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public DuplicateKeyExceptionDto handleMethodArgumentNotValidException(DuplicatedPatientException exception) {
-        final String loginNotFound = "Patient already exist in system.";
-        log.warn(loginNotFound);
-        return DuplicateKeyExceptionDto.builder()
-                .message(loginNotFound)
-                .build();
+        ex.getBindingResult().getFieldErrors().forEach(error ->
+                errors.put(error.getField(), error.getDefaultMessage())
+        );
+        return errors;
     }
 
     @ExceptionHandler(DataNotFoundException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public DuplicateKeyExceptionDto handleMethodArgumentNotValidException(DataNotFoundException exception) {
-        final String notFound = exception.getMessage();
-        log.warn(notFound);
-        return DuplicateKeyExceptionDto.builder()
-                .message(notFound)
-                .build();
-    }
-
-    @ExceptionHandler(UserNotFoundException.class)
-    @ResponseBody
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public DuplicateKeyExceptionDto handleMethodArgumentNotValidException(UserNotFoundException exception) {
-        final String PatientNotFound = "Patient not found in system.";
-        log.warn(PatientNotFound);
-        return DuplicateKeyExceptionDto.builder()
-                .message(PatientNotFound)
-                .build();
+    public Map<String, String> handleNotFoundExceptions(DataNotFoundException exception) {
+        log.warn(exception.getMessage());
+        Map<String, String> errorMap = new HashMap<>();
+        errorMap.put(exception.getFieldName(), exception.getMessage());
+        return errorMap;
     }
 }
