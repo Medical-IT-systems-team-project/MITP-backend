@@ -4,28 +4,11 @@
 
 Style   : MobApp CSS
 Version : 1.0
-Author  : Surjith S M
-URI     : https://surjithctly.in/
 
-Copyright © All rights Reserved 
+URI     : https://surjithctly.in/
 
 */
 
-
-/*------------------------
-[TABLE OF CONTENTS]
-    
-1. GLOBAL STYLES
-2. NAVBAR
-3. HERO
-4. TABS
-5. TESTIMONIALS
-6. IMAGE GALLERY
-7. PRICING
-8. CALL TO ACTION
-9. FOOTER
-
-------------------------*/
 
 
 /* GLOBAL
@@ -37,7 +20,7 @@ body {
 }
 
 a {
-    color: #e38cb7;
+    color: #26a2fa;
 }
 
 a:hover,
@@ -55,13 +38,13 @@ h1 {
 h2 {
     font-size: 45px;
     font-weight: 300;
-    color: #633991;
+    color: #1c1112;
     letter-spacing: -1px;
     margin-bottom: 1rem;
 }
 
 h3 {
-    color: #633991;
+    color: #1c1112;
     font-size: 33px;
     font-weight: 500;
 }
@@ -69,27 +52,27 @@ h3 {
 h4 {
     font-size: 20px;
     font-weight: 500;
-    color: #633991;
+    color: #1c1112;
 }
 
 h5 {
     font-size: 28px;
     font-weight: 300;
-    color: #633991;
+    color: #1c1112;
     margin-bottom: 0.7rem;
 }
 
 p {
-    color: #959094;
+    color: #1c1112;
 }
 
 p.lead {
-    color: #e38cb7;
+    color: #1c1112;
     margin-bottom: 2rem;
 }
 
 .text-primary {
-    color: #e38cb7 !important;
+    color: #1c1112;
 }
 
 .light-font {
@@ -105,7 +88,7 @@ p.lead {
 }
 
 .btn-outline-light:hover {
-    color: #d6619c;
+    color: #26a2fa;
 }
 
 .btn-primary {
@@ -137,7 +120,7 @@ p.lead {
     box-shadow: 0px 9px 32px 0px rgba(0, 0, 0, 0.26);
     font-size: 14px;
     font-weight: 500;
-    color: #633991;
+    color: #1c1112;
     margin: 0.5rem;
     padding: 0.7rem 1.6rem;
     line-height: 1.8;
@@ -163,7 +146,7 @@ p.lead {
 }
 
 .section-title small {
-    color: #998a9b;
+    color: #26a2fa;
 }
 
 @media (max-width:767px) {
@@ -187,9 +170,9 @@ p.lead {
 .nav-menu.is-scrolling,
 .nav-menu.menu-is-open {
     background-color: rgb(74, 13, 143);
-    background: -moz-linear-gradient(135deg, rgb(74, 13, 143) 0%, rgb(250, 42, 143) 100%);
-    background: -webkit-linear-gradient(135deg, rgb(74, 13, 143) 0%, rgb(250, 42, 143) 100%);
-    background: linear-gradient(135deg, rgb(74, 13, 143) 0%, rgb(250, 42, 143) 100%);
+    background: -moz-linear-gradient(135deg, rgb(153, 21, 54) 0%, rgb(254, 132, 149) 100%);
+    background: -webkit-linear-gradient(135deg, rgb(153, 21, 54) 0%, rgb(254, 132, 149) 100%);
+    background: linear-gradient(135deg, rgb(153, 21, 54) 0%, rgb(254, 132, 149) 100%);
     -webkit-box-shadow: 0px 5px 23px 0px rgba(0, 0, 0, 0.1);
     -moz-box-shadow: 0px 5px 23px 0px rgba(0, 0, 0, 0.1);
     box-shadow: 0px 5px 23px 0px rgba(0, 0, 0, 0.1);
@@ -240,16 +223,16 @@ header {
 }
 
 .bg-gradient {
-    background-image: -moz-linear-gradient( 135deg, rgba(60, 8, 118, 0.8) 0%, rgba(250, 0, 118, 0.8) 100%);
-    background-image: -webkit-linear-gradient( 135deg, rgba(60, 8, 118, 0.8) 0%, rgba(250, 0, 118, 0.8) 100%);
-    background-image: -ms-linear-gradient( 135deg, rgba(60, 8, 118, 0.8) 0%, rgba(250, 0, 118, 0.8) 100%);
-    background-image: linear-gradient( 135deg, rgba(60, 8, 118, 0.8) 0%, rgba(250, 0, 118, 0.8) 100%);
+    background-image: -moz-linear-gradient(135deg, rgb(153, 21, 54) 0%, rgb(254, 132, 149) 100%);
+    background-image: -webkit-linear-gradient(135deg, rgb(153, 21, 54) 0%, rgb(254, 132, 149) 100%);
+    background-image: -ms-linear-gradient(135deg, rgb(153, 21, 54) 0%, rgb(254, 132, 149) 100%);
+    background-image: linear-gradient(135deg, rgb(153, 21, 54) 0%, rgb(254, 132, 149) 100%);
 }
 
 .tagline {
     font-size: 23px;
     font-weight: 300;
-    color: #ffb8f6;
+    color: #1c1112;
     max-width: 800px;
     margin: 0 auto;
 }
@@ -275,44 +258,16 @@ header {
     }
 }
 
-
 /* FEATURES
 ----------------------*/
-
-.gradient-fill:before {
-    color: #fc73b4;
-    background: -moz-linear-gradient(top, #9477b4 0%, #fc73b4 100%);
-    background: -webkit-linear-gradient(top, #9477b4 0%, #fc73b4 100%);
-    background: linear-gradient(to bottom, #9477b4 0%, #fc73b4 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.card.features {
-    border: 0;
-    border-radius: 3px;
-    box-shadow: 0px 5px 7px 0px rgba(0, 0, 0, 0.04);
-    transition: all 0.3s ease;
-}
-
-@media (max-width:991px) {
-    .card.features {
-        margin-bottom: 2rem;
-    }
-    [class^="col-"]:last-child .card.features {
-        margin-bottom: 0;
-    }
-}
-
 .card.features:before {
     content: "";
     position: absolute;
     width: 3px;
     color: #fc73b4;
-    background: -moz-linear-gradient(top, #9477b4 0%, #fc73b4 100%);
-    background: -webkit-linear-gradient(top, #9477b4 0%, #fc73b4 100%);
-    background: linear-gradient(to bottom, #9477b4 0%, #fc73b4 100%);
+    background: -moz-linear-gradient(to bottom, #991536 0%, #26a2fa 100%);
+    background: -webkit-linear-gradient(to bottom, #991536 0%, #26a2fa 100%);
+    background: linear-gradient(to bottom, #991536 0%, #26a2fa 100%);
     top: 0;
     bottom: 0;
     left: 0;
@@ -346,7 +301,7 @@ header {
     border-radius: 50%;
     margin-bottom: 1.5rem;
     background-color: #FFF;
-    color: #f5378e;
+    color: #991536;
     font-size: 48px;
     text-align: center;
     line-height: 80px;
@@ -364,10 +319,10 @@ header {
 }
 
 .ui-steps li:hover .circle-icon {
-    background-image: -moz-linear-gradient( 122deg, #e6388e 0%, #fb378e 100%);
-    background-image: -webkit-linear-gradient( 122deg, #e6388e 0%, #fb378e 100%);
-    background-image: -ms-linear-gradient( 122deg, #e6388e 0%, #fb378e 100%);
-    background-image: linear-gradient( 122deg, #e6388e 0%, #fb378e 100%);
+    background-image: -moz-linear-gradient(122deg, #991536 0%, #991536 100%);
+    background-image: -webkit-linear-gradient(122deg, #991536 0%, #991536 100%);
+    background-image: -ms-linear-gradient(122deg, #991536 0%, #991536 100%);
+    background-image: linear-gradient(122deg, #991536 0%, #991536 100%);
     box-shadow: 0px 9px 32px 0px rgba(0, 0, 0, 0.09);
     color: #FFF;
 }
@@ -399,7 +354,7 @@ header {
     border-bottom-right-radius: 3px;
     border-bottom-left-radius: 3px;
     background-color: #FFF;
-    box-shadow: 0px 5px 7px 0px rgba(0, 0, 0, 0.04);
+    box-shadow: 0px 5px 7px 0px #991536;
     padding: 3rem;
 }
 
@@ -427,15 +382,15 @@ header {
     padding: 1rem 1rem;
     border-color: #faf6fb #faf6fb #FFF;
     font-size: 19px;
-    color: #b5a4c8;
-    background: #f5eff7;
+    color: #991536;
+    background: #ffe3e7;
 }
 
 .nav-tabs .nav-link.active {
     background: #FFF;
     border-top-width: 3px;
-    border-color: #ce75b4 #faf6fb #FFF;
-    color: #633991;
+    border-color: #991536 #faf6fb #FFF;
+    color: #1c1112;
 }
 
 
@@ -485,7 +440,6 @@ header {
 }
 
 .owl-theme .owl-dots .owl-dot span {
-    background: #e7d9eb;
     width: 35px;
     height: 8px;
     border-radius: 10px;
@@ -493,11 +447,11 @@ header {
 }
 
 .owl-theme .owl-dots .owl-dot:hover span {
-    background: #ff487e;
+    background: #991536;
 }
 
 .owl-theme .owl-dots .owl-dot.active span {
-    background: #ff487e;
+    background: #991536;
     box-shadow: 0px 9px 32px 0px rgba(0, 0, 0, 0.07);
 }
 
@@ -509,104 +463,13 @@ header {
     box-shadow: 0px 9px 32px 0px rgba(0, 0, 0, 0.07);
     transform: scale(0.8);
     transition: all 0.3s ease-in;
+    background: transparent;
+
 }
 
 .img-gallery .owl-item.center {
     transform: scale(1);
 }
-
-
-/*  PRICING
-----------------------*/
-
-@media (max-width:992px) {
-    .card-deck {
-        -ms-flex-direction: column;
-        flex-direction: column;
-    }
-    .card-deck .card {
-        margin-bottom: 15px;
-    }
-}
-
-.card.pricing {
-    border: 1px solid #f1eef1;
-}
-
-.card.pricing.popular {
-    border-top-width: 3px;
-    border-color: #ce75b4 #faf6fb #FFF;
-    box-shadow: 0px 12px 59px 0px rgba(36, 7, 31, 0.11);
-    color: #633991;
-}
-
-.card.pricing .card-head {
-    text-align: center;
-    padding: 40px 0 20px;
-}
-
-.card.pricing .card-head .price {
-    display: block;
-    font-size: 45px;
-    font-weight: 300;
-    color: #633991;
-}
-
-.card.pricing .card-head .price sub {
-    bottom: 0;
-    font-size: 55%;
-}
-
-.card.pricing .list-group-item {
-    border: 0;
-    text-align: center;
-    color: #959094;
-    padding: 1.05rem 1.25rem;
-}
-
-.card.pricing .list-group-item del {
-    color: #d9d3d8;
-}
-
-.card.pricing .card-body {
-    padding: 1.75rem;
-}
-
-
-/*  CALL TO ACTION
-----------------------*/
-
-.call-to-action {
-    text-align: center;
-    color: #FFF;
-    margin: 3rem 0;
-}
-
-.call-to-action .box-icon {
-    margin-left: auto;
-    margin-right: auto;
-    border-radius: 5px;
-    transform: scale(0.85);
-    margin-bottom: 2.5rem;
-}
-
-.call-to-action h2 {
-    color: #FFF;
-}
-
-.call-to-action .tagline {
-    font-size: 16px;
-    font-weight: 300;
-    color: #ffb8f6;
-    max-width: 650px;
-    margin: 0 auto;
-}
-
-.btn-light img {
-    margin-right: 0.4rem;
-    vertical-align: text-bottom;
-}
-
 
 /*  FOOTER
 ----------------------*/
@@ -631,7 +494,7 @@ header {
 
 .social-icons a:hover {
     text-decoration: none;
-    color: #e38cb7;
+    color: #991536
 }
 
 @media (max-width:991px) {
