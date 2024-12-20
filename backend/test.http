@@ -5,7 +5,7 @@ POST http://localhost:9090/register
 Content-Type: application/json
 
 {
-  "login": "test",
+  "login": "test6",
   "password": "test"
 }
 
