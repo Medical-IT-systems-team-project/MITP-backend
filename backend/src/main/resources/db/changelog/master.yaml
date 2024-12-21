@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - preConditions:
+      - runningAs:
+          username: myuser
+
+  - changeSet:
+      id: 1
+      author: kgolawski
+      runAlways: true
+      changes:
+        - sql:
+            sql: CREATE SCHEMA IF NOT EXISTS projekt_med;
+
+  - include:
+      file: db/changelog/db.changelog-1.0-schema.yaml
+  - include:
+      file: db/changelog/db.changelog-1.1-data.yaml
