@@ -16,3 +16,13 @@ databaseChangeLog:
 
   - include:
       file: db/changelog/db.changelog-1.1-data.yaml
+  - include:
+      file: db/changelog/medication-changelog.xml
+
+  - changeSet:
+      id: 2
+      author: kgolawski
+      changes:
+        - sql:
+            sql: UPDATE projekt_med.medication
+              SET frequency = '1x1';

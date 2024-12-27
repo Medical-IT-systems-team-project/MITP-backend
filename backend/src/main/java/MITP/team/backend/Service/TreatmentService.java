@@ -1,6 +1,6 @@
 package MITP.team.backend.Service;
 
-import MITP.team.backend.Exceptions.DataNotFoundException;
+import MITP.team.backend.Exceptions.InvalidStatusTransitionException;
 import MITP.team.backend.Exceptions.TreatmentNotFoundException;
 import MITP.team.backend.Model.Dto.StatusRequestDto;
 import MITP.team.backend.Model.Dto.TreatmentRequestDto;
@@ -32,7 +32,7 @@ public class TreatmentService implements ITreatmentService {
     public void changeTreatmentStatus(Long id, StatusRequestDto statusRequestDto) {
         Treatment treatment = treatmentRepository.findById(id).orElseThrow(TreatmentNotFoundException::new);
         if (treatment.getStatus().equals(statusRequestDto.status())) {
-            throw new DataNotFoundException("Status is already " + treatment.getStatus());
+            throw new InvalidStatusTransitionException("Status is already " + statusRequestDto.status());
         }
         treatment.setStatus(statusRequestDto.status());
         treatmentRepository.save(treatment);

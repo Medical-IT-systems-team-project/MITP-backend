@@ -58,6 +58,7 @@ public abstract class MedicalCaseMapper {
       qualifiedByName = "mapToAttendingDoctor")
   @Mapping(target = "medications", source = "medications", qualifiedByName = "mapToMedication")
   @Mapping(target = "treatments", source = "treatments", qualifiedByName = "mapToTreatment")
+  @Mapping(target = "patientName", source = "patient", qualifiedByName = "mapToPatientName")
   @Mapping(
       target = "allowedDoctors",
       source = "allowedDoctors",
@@ -111,5 +112,10 @@ public abstract class MedicalCaseMapper {
         .findById(attendingDoctorId)
         .orElseThrow(
                 MedicalDoctorNotFoundException::new);
+  }
+
+  @Named("mapToPatientName")
+  public String mapToPatientName(Patient patient) {
+    return patient.getFirstName() + " " + patient.getLastName();
   }
 }

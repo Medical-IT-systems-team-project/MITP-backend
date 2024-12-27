@@ -2,7 +2,10 @@ package MITP.team.backend.Service;
 
 import MITP.team.backend.Exceptions.MedicalCaseNotFoundException;
 import MITP.team.backend.Exceptions.PatientNotFoundException;
-import MITP.team.backend.Model.Dto.*;
+import MITP.team.backend.Model.Dto.MedicalCaseRequestDto;
+import MITP.team.backend.Model.Dto.MedicalCaseResponseDto;
+import MITP.team.backend.Model.Dto.MedicationResponseDto;
+import MITP.team.backend.Model.Dto.TreatmentResponseDto;
 import MITP.team.backend.Model.Enum.MedicalCaseStatus;
 import MITP.team.backend.Model.Enum.MedicalStatus;
 import MITP.team.backend.Model.Mapper.MedicalCaseMapper;
@@ -37,7 +40,21 @@ public class MedicalCaseService implements IMedicalCaseService {
   private final MedicationMapper medicationMapper;
 
   @Override
-  public List<MedicalCaseResponseDto> getMedicalDataByAccessId(String uuid) {
+  public MedicalCaseResponseDto getCurrentMedicalDataByAccessId(String uuid) {
+    Patient patient =
+            patientRepository
+                    .findByAccessId(uuid)
+                    .orElseThrow(
+                            PatientNotFoundException::new);
+
+    MedicalCase currentPatientCase =
+            medicalCaseRepository.getMedicalCaseByPatientIdAndStatus(patient.getId(), MedicalCaseStatus.ONGOING);
+
+    return medicalCaseMapper.mapToMedicalDataResponseDto(currentPatientCase);
+  }
+
+  @Override
+  public List<MedicalCaseResponseDto> getAllMedicalDataByAccessId(String uuid) {
     Patient patient =
         patientRepository
             .findByAccessId(uuid)

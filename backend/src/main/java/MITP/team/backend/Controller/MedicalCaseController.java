@@ -20,43 +20,48 @@ import java.util.List;
 @RequestMapping("/medical-case")
 public class MedicalCaseController {
 
-  private final IMedicalCaseService medicalDataService;
+    private final IMedicalCaseService medicalDataService;
 
-  @GetMapping("/{accessId}/summary")
-  public ResponseEntity<List<MedicalCaseResponseDto>> getMedicalDataByAccessID(
-          @PathVariable String accessId) {
-    List<MedicalCaseResponseDto> medicalDataById = medicalDataService.getMedicalDataByAccessId(accessId);
-    return ResponseEntity.ok(medicalDataById);
-  }
-
-  @GetMapping("/{Id}/treatment/all")
-  public ResponseEntity<List<TreatmentResponseDto>> getTreatmentsById(@PathVariable Long Id) {
-    List<TreatmentResponseDto> treatments = medicalDataService.getTreatmentsById(Id);
-    return ResponseEntity.ok(treatments);
-  }
-
-  @GetMapping("/{Id}/medication/all")
-  public ResponseEntity<List<MedicationResponseDto>> getMedicationsById(
-      @PathVariable Long Id) {
-    List<MedicationResponseDto> medications = medicalDataService.getMedicationsById(Id);
-    return ResponseEntity.ok(medications);
-  }
-
-  @PostMapping("/new")
-  public ResponseEntity<String> addNewCase(
-          @Valid @RequestBody MedicalCaseRequestDto medicalDataCaseRequestDto, Authentication authentication) {
-    medicalDataService.createNewCase(medicalDataCaseRequestDto, authentication);
-    return ResponseEntity.status(HttpStatus.CREATED).body("New case added");
-  }
-
-  @PatchMapping("/{Id}")
-  public ResponseEntity<?> closeCase(@PathVariable Long Id, @RequestParam(defaultValue = "false") Boolean force) {
-    List<Object> incompleteItems = medicalDataService.getIncompleteList(Id);
-
-    if (!incompleteItems.isEmpty() && !force) {
-      return ResponseEntity.status(HttpStatus.CONFLICT).body(incompleteItems);
+    @GetMapping("/{accessId}/summary")
+    public ResponseEntity<MedicalCaseResponseDto> getSummaryMedicalDataByAccessID(
+            @PathVariable String accessId) {
+        return ResponseEntity.ok(medicalDataService.getCurrentMedicalDataByAccessId(accessId));
     }
-    medicalDataService.closeCase(Id);
-    return ResponseEntity.ok("Case closed");
-  }
+
+    @GetMapping("/{accessId}/history")
+    public ResponseEntity<List<MedicalCaseResponseDto>> getHistoryMedicalDataByAccessID(
+            @PathVariable String accessId) {
+        return ResponseEntity.ok(medicalDataService.getAllMedicalDataByAccessId(accessId));
+    }
+
+    @GetMapping("/{Id}/treatment/all")
+    public ResponseEntity<List<TreatmentResponseDto>> getTreatmentsById(@PathVariable Long Id) {
+        List<TreatmentResponseDto> treatments = medicalDataService.getTreatmentsById(Id);
+        return ResponseEntity.ok(treatments);
+    }
+
+    @GetMapping("/{Id}/medication/all")
+    public ResponseEntity<List<MedicationResponseDto>> getMedicationsById(
+            @PathVariable Long Id) {
+        List<MedicationResponseDto> medications = medicalDataService.getMedicationsById(Id);
+        return ResponseEntity.ok(medications);
+    }
+
+    @PostMapping("/new")
+    public ResponseEntity<String> addNewCase(
+            @Valid @RequestBody MedicalCaseRequestDto medicalDataCaseRequestDto, Authentication authentication) {
+        medicalDataService.createNewCase(medicalDataCaseRequestDto, authentication);
+        return ResponseEntity.status(HttpStatus.CREATED).body("New case added");
+    }
+
+    @PatchMapping("/{Id}")
+    public ResponseEntity<?> closeCase(@PathVariable Long Id, @RequestParam(defaultValue = "false") Boolean force) {
+        List<Object> incompleteItems = medicalDataService.getIncompleteList(Id);
+
+        if (!incompleteItems.isEmpty() && !force) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(incompleteItems);
+        }
+        medicalDataService.closeCase(Id);
+        return ResponseEntity.ok("Case closed");
+    }
 }

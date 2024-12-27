@@ -5,7 +5,7 @@ POST http://localhost:9090/register
 Content-Type: application/json
 
 {
-  "login": "test6",
+  "login": "test",
   "password": "test"
 }
 
@@ -15,8 +15,8 @@ POST http://localhost:9090/login
 Content-Type: application/json
 
 {
-  "login": "test",
-  "password": "test"
+  "login": "asmith",
+  "password": "somePassword"
 }
 
 
@@ -87,9 +87,10 @@ Authorization: Bearer {{JWT_token}}
   "startDate": "2026-07-10",
   "endDate": "2025-07-20",
   "details": "xd",
-  "medicalCaseId": 103,
+  "medicalCaseId": 1,
   "medicalDoctorId": 1,
-  "dosageForm": "1x1",
+  "dosage": "1x1",
+  "frequency": "1x1",
   "strength": "200mg",
   "unit": "tabletki"
 }
@@ -105,7 +106,12 @@ Authorization: Bearer {{JWT_token}}
 
 
 ###
-GET http://localhost:9090/medical-case/113dpTaKev/summary
+GET http://localhost:9090/medical-case/A12345/summary
+Content-Type: application/json
+Authorization: Bearer {{JWT_token}}
+
+###
+GET http://localhost:9090/medical-case/A12345/history
 Content-Type: application/json
 Authorization: Bearer {{JWT_token}}
 
@@ -117,7 +123,7 @@ Authorization: Bearer {{JWT_token}}
 
 
 ###
-GET http://localhost:9090/medical-case/103/medication/all
+GET http://localhost:9090/medical-case/1/medication/all
 Accept: application/json
 Authorization: Bearer {{JWT_token}}
 

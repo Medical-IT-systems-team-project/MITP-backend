@@ -24,7 +24,8 @@ public class Medication {
   @Column(name = "end_date", nullable = false)
   private LocalDate endDate;
 
-  private String dosageForm;
+  private String dosage;
+  private String frequency;
   private String strength;
   private String unit;
 

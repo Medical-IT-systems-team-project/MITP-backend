@@ -1,12 +1,17 @@
 package MITP.team.backend.Service;
 
-import MITP.team.backend.Model.Dto.*;
-
-import java.util.List;
+import MITP.team.backend.Model.Dto.MedicalCaseRequestDto;
+import MITP.team.backend.Model.Dto.MedicalCaseResponseDto;
+import MITP.team.backend.Model.Dto.MedicationResponseDto;
+import MITP.team.backend.Model.Dto.TreatmentResponseDto;
 import org.springframework.security.core.Authentication;
 
+import java.util.List;
+
 public interface IMedicalCaseService {
-  List<MedicalCaseResponseDto> getMedicalDataByAccessId(String id);
+  List<MedicalCaseResponseDto> getAllMedicalDataByAccessId(String id);
+
+  MedicalCaseResponseDto getCurrentMedicalDataByAccessId(String id);
 
   List<TreatmentResponseDto> getTreatmentsById(Long id);
 

@@ -1,6 +1,7 @@
 package MITP.team.backend.Config.errorvalidation;
 
 import MITP.team.backend.Exceptions.DataNotFoundException;
+import MITP.team.backend.Exceptions.InvalidStatusTransitionException;
 import MITP.team.backend.Exceptions.TreatmentNotFoundException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -70,5 +71,13 @@ public class ExceptionsHandlers {
         Map<String, String> errorMap = new HashMap<>();
         errorMap.put(exception.getFieldName(), exception.getMessage());
         return errorMap;
+    }
+
+    @ExceptionHandler(InvalidStatusTransitionException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ResponseEntity<?> handleInvalidStatusTransitionException(InvalidStatusTransitionException exception) {
+        log.warn(exception.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());
     }
 }

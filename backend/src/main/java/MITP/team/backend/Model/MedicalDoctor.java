@@ -36,10 +36,10 @@ public class MedicalDoctor implements UserDetails {
   @Column(name = "last_name")
   private String lastName;
 
-  private String email; // TODO validate REGEX
+  private String email;
 
   @Column(name = "phone_number")
-  private String phoneNumber; // TODO validate REGEX w setterach
+  private String phoneNumber;
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "attendingDoctor")
   private List<MedicalCase> medicalCaseData;
