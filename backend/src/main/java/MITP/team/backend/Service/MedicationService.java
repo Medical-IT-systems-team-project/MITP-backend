@@ -1,5 +1,6 @@
 package MITP.team.backend.Service;
 
+import MITP.team.backend.Exceptions.DataNotFoundException;
 import MITP.team.backend.Exceptions.MedicationNotFoundException;
 import MITP.team.backend.Exceptions.ServerInternalError;
 import MITP.team.backend.Model.Dto.MedicationRequestDto;
@@ -32,6 +33,9 @@ public class MedicationService implements IMedicationService {
     @Override
     public void changeMedicationStatus(Long id, StatusRequestDto statusRequestDto) {
         Medication medication = medicationRepository.findById(id).orElseThrow(MedicationNotFoundException::new);
+        if (medication.getStatus().equals(statusRequestDto.status())) {
+            throw new DataNotFoundException("Status is already " + medication.getStatus());
+        }
         medication.setStatus(statusRequestDto.status());
         medicationRepository.save(medication);
     }

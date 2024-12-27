@@ -1,12 +1,12 @@
 package MITP.team.backend.Controller;
 
+import MITP.team.backend.Model.Dto.EmailRequestDto;
 import MITP.team.backend.Model.Dto.PatientRequestDto;
 import MITP.team.backend.Model.Dto.PatientResponseDto;
-import MITP.team.backend.Model.Patient;
 import MITP.team.backend.Service.IPatientService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
@@ -24,5 +24,11 @@ public class PatientController {
     @GetMapping("/{accessId}")
     public PatientResponseDto getPatientByAccessId(@PathVariable String accessId) {
         return patientService.getPatientByAccessId(accessId);
+    }
+
+    @PostMapping("/restart")
+    public ResponseEntity<String> getNewAccessId(@RequestBody @Valid EmailRequestDto emailRequestDto) {
+        patientService.getNewAccessId(emailRequestDto);
+        return ResponseEntity.ok("New access id sent to your email");
     }
 }

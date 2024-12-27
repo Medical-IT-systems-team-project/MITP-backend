@@ -15,8 +15,8 @@ POST http://localhost:9090/login
 Content-Type: application/json
 
 {
-  "login": "test",
-  "password": "test"
+  "login": "asmith",
+  "password": "somePassword"
 }
 
 

@@ -24,12 +24,13 @@ public class Medication {
   @Column(name = "end_date", nullable = false)
   private LocalDate endDate;
 
-  private String dosageForm;
+  private String dosage;
+  private String frequency;
   private String strength;
   private String unit;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "medical_case_data_id")
+  @JoinColumn(name = "medical_case_id")
   private MedicalCase medicalCase;
 
   @ManyToOne(fetch = FetchType.LAZY)

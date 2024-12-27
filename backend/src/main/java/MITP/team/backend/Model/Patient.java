@@ -18,10 +18,10 @@ import java.util.List;
 @NoArgsConstructor
 public class Patient {
 
-  @NotBlank(groups = {CreateValidation.class, UpdateValidation.class})
+  @NotBlank
   private String firstName;
 
-  @NotBlank(groups = {CreateValidation.class, UpdateValidation.class})
+  @NotBlank
   private String lastName;
 
   @Id
@@ -40,13 +40,8 @@ public class Patient {
   private String socialSecurityNumber;
 
   private Integer age;
-
-  public interface CreateValidation {}
-
   private String gender;
   private String accessId;
-
-  public interface UpdateValidation {}
 
   private String email;
   private String phoneNumber;

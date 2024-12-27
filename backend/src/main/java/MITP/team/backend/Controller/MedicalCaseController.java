@@ -23,10 +23,15 @@ public class MedicalCaseController {
   private final IMedicalCaseService medicalDataService;
 
   @GetMapping("/{accessId}/summary")
-  public ResponseEntity<List<MedicalCaseResponseDto>> getMedicalDataByAccessID(
+  public ResponseEntity<MedicalCaseResponseDto> getSummaryMedicalDataByAccessID(
           @PathVariable String accessId) {
-    List<MedicalCaseResponseDto> medicalDataById = medicalDataService.getMedicalDataByAccessId(accessId);
-    return ResponseEntity.ok(medicalDataById);
+    return ResponseEntity.ok(medicalDataService.getCurrentMedicalDataByAccessId(accessId));
+  }
+
+  @GetMapping("/{accessId}/history")
+  public ResponseEntity<List<MedicalCaseResponseDto>> getHistoryMedicalDataByAccessID(
+          @PathVariable String accessId) {
+    return ResponseEntity.ok(medicalDataService.getAllMedicalDataByAccessId(accessId));
   }
 
   @GetMapping("/{Id}/treatment/all")
@@ -37,7 +42,7 @@ public class MedicalCaseController {
 
   @GetMapping("/{Id}/medication/all")
   public ResponseEntity<List<MedicationResponseDto>> getMedicationsById(
-      @PathVariable Long Id) {
+          @PathVariable Long Id) {
     List<MedicationResponseDto> medications = medicalDataService.getMedicationsById(Id);
     return ResponseEntity.ok(medications);
   }

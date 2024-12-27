@@ -1,14 +1,11 @@
 package MITP.team.backend.Repository;
 
 import MITP.team.backend.Model.Patient;
-
-import java.util.Optional;
-
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 @Repository
 public interface PatientRepository extends JpaRepository<Patient, Long> {
@@ -22,4 +19,6 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
 
 
     Optional<Object> findBySocialSecurityNumber(String socialSecurityNumber);
+
+    Optional<Patient> findByEmail(String email);
 }

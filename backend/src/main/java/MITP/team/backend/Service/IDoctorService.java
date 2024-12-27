@@ -8,6 +8,5 @@ import java.util.Set;
 
 public interface IDoctorService {
     void addPatient(PatientRequestDto patientRequestDto);
-
     Set<MedicalCaseResponseDto> getMedicalCases(Authentication authentication);
 }

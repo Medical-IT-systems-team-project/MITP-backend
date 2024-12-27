@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - preConditions:
+      - runningAs:
+          username: myuser
+
+  - changeSet:
+      id: 1
+      author: kgolawski
+      runAlways: true
+      changes:
+        - sql:
+            sql: CREATE SCHEMA IF NOT EXISTS projekt_med;
+
+  - include:
+      file: db/changelog/init-changelog.xml
+
+  - include:
+      file: db/changelog/db.changelog-1.1-data.yaml
+  - include:
+      file: db/changelog/medication-changelog.xml
+
+  - changeSet:
+      id: 2
+      author: kgolawski
+      changes:
+        - sql:
+            sql: UPDATE projekt_med.medication
+              SET frequency = '1x1';

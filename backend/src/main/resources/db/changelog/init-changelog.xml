@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.27.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1735289885812-1" author="kamilgolawski">
+        <createTable tableName="medical_case" schemaName="projekt_med">
+            <column autoIncrement="true" name="medical_case_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_medical_case"/>
+            </column>
+            <column name="status" type="VARCHAR(255)"/>
+            <column name="admission_reason" type="VARCHAR(255)"/>
+            <column name="admission_date" type="DATETIME"/>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="created_by_doctor_id" type="BIGINT"/>
+            <column name="attending_doctor_id" type="BIGINT"/>
+            <column name="patient_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1735289885812-2" author="kamilgolawski">
+        <createTable tableName="medical_case_allowed_doctors" schemaName="projekt_med">
+            <column name="medical_case_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="medical_doctor_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1735289885812-3" author="kamilgolawski">
+        <createTable tableName="medical_doctor" schemaName="projekt_med">
+            <column autoIncrement="true" name="medical_doctor_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_medical_doctor"/>
+            </column>
+            <column name="login" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="VARCHAR(255)"/>
+            <column name="last_name" type="VARCHAR(255)"/>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="phone_number" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1735289885812-4" author="kamilgolawski">
+        <createTable tableName="medication" schemaName="projekt_med">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_medication"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="start_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="end_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dosage_form" type="VARCHAR(255)"/>
+            <column name="strength" type="VARCHAR(255)"/>
+            <column name="unit" type="VARCHAR(255)"/>
+            <column name="medical_case_id" type="BIGINT"/>
+            <column name="medical_doctor_id" type="BIGINT"/>
+            <column name="status" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1735289885812-5" author="kamilgolawski">
+        <createTable tableName="patient" schemaName="projekt_med">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_patient"/>
+            </column>
+            <column name="first_name" type="VARCHAR(255)"/>
+            <column name="last_name" type="VARCHAR(255)"/>
+            <column name="status" type="VARCHAR(255)"/>
+            <column name="birth_date" type="DATE"/>
+            <column name="social_security_number" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="age" type="INT"/>
+            <column name="gender" type="VARCHAR(255)"/>
+            <column name="access_id" type="VARCHAR(255)"/>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="phone_number" type="VARCHAR(255)"/>
+            <column name="address" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1735289885812-6" author="kamilgolawski">
+        <createTable tableName="treatment" schemaName="projekt_med">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_treatment"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="start_date" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="end_date" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="details" type="VARCHAR(255)"/>
+            <column name="medical_case_id" type="BIGINT"/>
+            <column name="medical_doctor_id" type="BIGINT"/>
+            <column name="status" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1735289885812-7" author="kamilgolawski">
+        <addUniqueConstraint columnNames="login" constraintName="uc_medical_doctor_login" tableName="medical_doctor"/>
+    </changeSet>
+    <changeSet id="1735289885812-8" author="kamilgolawski">
+        <addUniqueConstraint columnNames="social_security_number" constraintName="uc_patient_socialsecuritynumber"
+                             tableName="patient"/>
+    </changeSet>
+    <changeSet id="1735289885812-10" author="kamilgolawski">
+        <addForeignKeyConstraint baseColumnNames="attending_doctor_id" baseTableName="medical_case"
+                                 constraintName="FK_MEDICAL_CASE_ON_ATTENDING_DOCTOR"
+                                 referencedColumnNames="medical_doctor_id" referencedTableName="medical_doctor"/>
+    </changeSet>
+    <changeSet id="1735289885812-11" author="kamilgolawski">
+        <addForeignKeyConstraint baseColumnNames="created_by_doctor_id" baseTableName="medical_case"
+                                 constraintName="FK_MEDICAL_CASE_ON_CREATED_BY_DOCTOR"
+                                 referencedColumnNames="medical_doctor_id" referencedTableName="medical_doctor"/>
+    </changeSet>
+    <changeSet id="1735289885812-12" author="kamilgolawski">
+        <addForeignKeyConstraint baseColumnNames="patient_id" baseTableName="medical_case"
+                                 constraintName="FK_MEDICAL_CASE_ON_PATIENT" referencedColumnNames="id"
+                                 referencedTableName="patient"/>
+    </changeSet>
+    <changeSet id="1735289885812-13" author="kamilgolawski">
+        <addForeignKeyConstraint baseColumnNames="medical_case_id" baseTableName="medication"
+                                 constraintName="FK_MEDICATION_ON_MEDICAL_CASE"
+                                 referencedColumnNames="medical_case_id" referencedTableName="medical_case"/>
+    </changeSet>
+    <changeSet id="1735289885812-14" author="kamilgolawski">
+        <addForeignKeyConstraint baseColumnNames="medical_doctor_id" baseTableName="medication"
+                                 constraintName="FK_MEDICATION_ON_MEDICAL_DOCTOR"
+                                 referencedColumnNames="medical_doctor_id" referencedTableName="medical_doctor"/>
+    </changeSet>
+    <changeSet id="1735289885812-15" author="kamilgolawski">
+        <addForeignKeyConstraint baseColumnNames="medical_case_id" baseTableName="treatment"
+                                 constraintName="FK_TREATMENT_ON_MEDICAL_CASE" referencedColumnNames="medical_case_id"
+                                 referencedTableName="medical_case"/>
+    </changeSet>
+    <changeSet id="1735289885812-16" author="kamilgolawski">
+        <addForeignKeyConstraint baseColumnNames="medical_doctor_id" baseTableName="treatment"
+                                 constraintName="FK_TREATMENT_ON_MEDICAL_DOCTOR"
+                                 referencedColumnNames="medical_doctor_id" referencedTableName="medical_doctor"/>
+    </changeSet>
+    <changeSet id="1735289885812-17" author="kamilgolawski">
+        <addForeignKeyConstraint baseColumnNames="medical_case_id" baseTableName="medical_case_allowed_doctors"
+                                 constraintName="fk_medcasalldoc_on_medical_case"
+                                 referencedColumnNames="medical_case_id" referencedTableName="medical_case"/>
+    </changeSet>
+    <changeSet id="1735289885812-18" author="kamilgolawski">
+        <addForeignKeyConstraint baseColumnNames="medical_doctor_id" baseTableName="medical_case_allowed_doctors"
+                                 constraintName="fk_medcasalldoc_on_medical_doctor"
+                                 referencedColumnNames="medical_doctor_id" referencedTableName="medical_doctor"/>
+    </changeSet>
+
+</databaseChangeLog>

@@ -16,6 +16,7 @@ public record MedicationRequestDto(
         @NotBlank String dosageForm,
         @NotBlank String strength,
         @NotBlank String unit,
+        @NotBlank String frequency,
         Long medicalCaseId,
         Long medicalDoctorId) {
 }

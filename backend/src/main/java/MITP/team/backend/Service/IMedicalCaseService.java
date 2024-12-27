@@ -9,7 +9,9 @@ import org.springframework.security.core.Authentication;
 import java.util.List;
 
 public interface IMedicalCaseService {
-  List<MedicalCaseResponseDto> getMedicalDataByAccessId(String id);
+  List<MedicalCaseResponseDto> getAllMedicalDataByAccessId(String id);
+
+  MedicalCaseResponseDto getCurrentMedicalDataByAccessId(String id);
 
   List<TreatmentResponseDto> getTreatmentsById(Long id);
 

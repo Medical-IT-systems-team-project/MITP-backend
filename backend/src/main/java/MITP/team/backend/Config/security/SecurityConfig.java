@@ -56,6 +56,7 @@ public class SecurityConfig {
                         //medicalCase
                         .requestMatchers("/medicalCase/**").authenticated()
                         .requestMatchers(HttpMethod.GET, "/medicalCase/{Id}/summary").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/medicalCase/{Id}/history").permitAll()
                         .requestMatchers(HttpMethod.GET, "/medicalCase/{Id}/treatments").permitAll()
                         .requestMatchers(HttpMethod.GET, "/medicalCase/{Id}/medications").permitAll()
                         //patient
