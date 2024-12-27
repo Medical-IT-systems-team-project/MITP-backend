@@ -29,7 +29,7 @@ public class Medication {
   private String unit;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "medical_case_data_id")
+  @JoinColumn(name = "medical_case_id")
   private MedicalCase medicalCase;
 
   @ManyToOne(fetch = FetchType.LAZY)

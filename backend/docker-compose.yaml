@@ -9,3 +9,5 @@ services:
       - 'POSTGRES_PASSWORD=secret'
     ports:
       - '34250:5432'
+    volumes:
+      - ./src/main/resources/db/schema-init.sql:/docker-entrypoint-initdb.d/schema-init.sql
