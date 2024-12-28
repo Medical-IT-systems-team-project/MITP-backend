@@ -1,11 +1,12 @@
 package MITP.team.backend.Model;
 
 import jakarta.persistence.*;
-import java.util.Collection;
-import java.util.List;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 @Builder
 @Entity
@@ -19,7 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class MedicalDoctor implements UserDetails {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "medical_doctor_id", nullable = false)
   private Long id;
 
@@ -35,10 +36,10 @@ public class MedicalDoctor implements UserDetails {
   @Column(name = "last_name")
   private String lastName;
 
-  private String email; // TODO validate REGEX
+  private String email;
 
   @Column(name = "phone_number")
-  private String phoneNumber; // TODO validate REGEX w setterach
+  private String phoneNumber;
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "attendingDoctor")
   private List<MedicalCase> medicalCaseData;

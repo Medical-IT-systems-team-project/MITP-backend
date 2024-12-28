@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002-insert-test-data
+      author: ppirog
+      changes:
+        - sqlFile:
+            path: db/testdata/test-data.sql
+            splitStatements: true
+            stripComments: true

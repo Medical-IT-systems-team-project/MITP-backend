@@ -1,6 +1,12 @@
 package MITP.team.backend.Exceptions;
 
-public class MedicalDoctorNotFoundException extends RuntimeException {
-    public MedicalDoctorNotFoundException(String s) {
+public class MedicalDoctorNotFoundException extends DataNotFoundException {
+    public MedicalDoctorNotFoundException() {
+        super("medicalDoctor");
+    }
+
+    @Override
+    public String getMessage() {
+        return "Medical doctor not found";
     }
 }

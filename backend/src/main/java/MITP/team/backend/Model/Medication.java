@@ -2,9 +2,10 @@ package MITP.team.backend.Model;
 
 import MITP.team.backend.Model.Enum.MedicalStatus;
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.time.LocalDate;
 
 @Setter
 @Getter
@@ -18,17 +19,18 @@ public class Medication {
   private String name;
 
   @Column(name = "start_date", nullable = false)
-  private LocalDateTime startDate;
+  private LocalDate startDate;
 
   @Column(name = "end_date", nullable = false)
-  private LocalDateTime endDate;
+  private LocalDate endDate;
 
-  private String dosageForm;
+  private String dosage;
+  private String frequency;
   private String strength;
   private String unit;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "medical_case_data_id")
+  @JoinColumn(name = "medical_case_id")
   private MedicalCase medicalCase;
 
   @ManyToOne(fetch = FetchType.LAZY)

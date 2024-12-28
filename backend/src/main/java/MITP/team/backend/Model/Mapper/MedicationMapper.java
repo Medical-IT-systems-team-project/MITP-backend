@@ -1,5 +1,6 @@
 package MITP.team.backend.Model.Mapper;
 
+import MITP.team.backend.Exceptions.MedicalCaseNotFoundException;
 import MITP.team.backend.Exceptions.MedicalDoctorNotFoundException;
 import MITP.team.backend.Model.Dto.MedicationRequestDto;
 import MITP.team.backend.Model.Dto.MedicationResponseDto;
@@ -55,9 +56,7 @@ public abstract class MedicationMapper {
     return medicalDoctorRepository
         .findById(medicalDoctorId)
         .orElseThrow(
-            () ->
-                new MedicalDoctorNotFoundException(
-                    "MedicalDoctor not found with id: " + medicalDoctorId));
+                MedicalDoctorNotFoundException::new);
   }
 
   @Named("mapToMedicalCase")
@@ -65,8 +64,6 @@ public abstract class MedicationMapper {
     return medicalCaseRepository
         .findById(medicalCaseId)
         .orElseThrow(
-            () ->
-                new MedicalDoctorNotFoundException(
-                    "MedicalCaseData not found with id: " + medicalCaseId));
+                MedicalCaseNotFoundException::new);
   }
 }

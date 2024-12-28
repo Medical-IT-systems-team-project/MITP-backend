@@ -2,19 +2,20 @@ package MITP.team.backend.Model.Mapper;
 
 import MITP.team.backend.Exceptions.MedicalDoctorNotFoundException;
 import MITP.team.backend.Exceptions.PatientNotFoundException;
-import MITP.team.backend.Model.*;
 import MITP.team.backend.Model.Dto.MedicalCaseRequestDto;
 import MITP.team.backend.Model.Dto.MedicalCaseResponseDto;
 import MITP.team.backend.Model.Dto.MedicationResponseDto;
 import MITP.team.backend.Model.Dto.TreatmentResponseDto;
+import MITP.team.backend.Model.*;
 import MITP.team.backend.Repository.MedicalDoctorRepository;
 import MITP.team.backend.Repository.PatientRepository;
-import java.util.List;
 import lombok.NoArgsConstructor;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 @NoArgsConstructor
 @Mapper(
@@ -57,6 +58,7 @@ public abstract class MedicalCaseMapper {
       qualifiedByName = "mapToAttendingDoctor")
   @Mapping(target = "medications", source = "medications", qualifiedByName = "mapToMedication")
   @Mapping(target = "treatments", source = "treatments", qualifiedByName = "mapToTreatment")
+  @Mapping(target = "patientName", source = "patient", qualifiedByName = "mapToPatientName")
   @Mapping(
       target = "allowedDoctors",
       source = "allowedDoctors",
@@ -101,7 +103,7 @@ public abstract class MedicalCaseMapper {
   protected Patient mapToPatient(Long patientId) {
     return patientRepository
         .findById(patientId)
-        .orElseThrow(() -> new PatientNotFoundException("Patient not found with id: " + patientId));
+            .orElseThrow(PatientNotFoundException::new);
   }
 
   @Named("mapToAttendingDoctor")
@@ -109,8 +111,11 @@ public abstract class MedicalCaseMapper {
     return medicalDoctorRepository
         .findById(attendingDoctorId)
         .orElseThrow(
-            () ->
-                new MedicalDoctorNotFoundException(
-                    "MedicalDoctor not found with id: " + attendingDoctorId));
+                MedicalDoctorNotFoundException::new);
+  }
+
+  @Named("mapToPatientName")
+  public String mapToPatientName(Patient patient) {
+    return patient.getFirstName() + " " + patient.getLastName();
   }
 }

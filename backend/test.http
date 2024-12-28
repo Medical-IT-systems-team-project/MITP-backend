@@ -9,35 +9,51 @@ Content-Type: application/json
   "password": "test"
 }
 
+
 ###
 POST http://localhost:9090/login
 Content-Type: application/json
 
 {
-  "login": "test",
-  "password": "test"
+  "login": "asmith",
+  "password": "somePassword"
 }
 
+
 ###
-POST http://localhost:9090/medicalCase/newCase
+POST http://localhost:9090/patient/new
 Content-Type: application/json
 Authorization: Bearer {{JWT_token}}
 
 {
-  "patientId": 3,
-  "admissionReason": "test",
-  "admissionDate": "2025-07-10T10:00:00",
-  "description": "testowe przyjecie",
-  "attendingDoctorId": 102
+  "socialSecurityNumber": "35655111113",
+  "firstName": "Kamil",
+  "lastName": "Golawski",
+  "birthDate": "2003-01-17T10:00:00",
+  "address": "Lublin",
+  "phoneNumber": "123456789",
+  "email": "test@gmail.com",
+  "age": 21,
+  "gender": "MALE"
 }
 
+
 ###
-GET http://localhost:9090/medicalCase/kE4WwRkDiE/summary
+POST http://localhost:9090/medical-case/new
 Content-Type: application/json
 Authorization: Bearer {{JWT_token}}
 
+{
+  "patientId": 1,
+  "admissionReason": "testowe pod wieczor",
+  "admissionDate": "2026-07-10T10:00:00",
+  "description": "test",
+  "attendingDoctorId": 1
+}
+
+
 ###
-POST http://localhost:9090/doctor/new/Treatment
+POST http://localhost:9090/doctor/new/treatment
 Content-Type: application/json
 Authorization: Bearer {{JWT_token}}
 
@@ -47,62 +63,99 @@ Authorization: Bearer {{JWT_token}}
   "endDate": "2025-07-20T15:00:00",
   "name": "Test",
   "details": "test test",
-  "medicalCaseId": 52,
-  "medicalDoctorId": 102
+  "medicalCaseId": 103,
+  "medicalDoctorId": 1
 }
 
 ###
-GET http://localhost:9090/medicalCase/52/treatments
-Accept: application/json
+PATCH http://localhost:9090/doctor/treatment/1/status
+Content-Type: application/json
 Authorization: Bearer {{JWT_token}}
 
+{
+  "status": "CANCELLED"
+}
+
+
 ###
-POST http://localhost:9090/doctor/new/Medication
+POST http://localhost:9090/doctor/new/medication
 Content-Type: application/json
 Authorization: Bearer {{JWT_token}}
 
 {
   "name": "Tescior123",
-  "startDate": "2025-07-10T10:00:00",
-  "endDate": "2025-07-20T15:00:00",
-  "details": "test test",
-  "medicalCaseId": 52,
-  "medicalDoctorId": 102,
-  "dosageForm": "1x1",
+  "startDate": "2026-07-10",
+  "endDate": "2025-07-20",
+  "details": "xd",
+  "medicalCaseId": 1,
+  "medicalDoctorId": 1,
+  "dosage": "1x1",
+  "frequency": "1x1",
   "strength": "200mg",
   "unit": "tabletki"
 }
 
 ###
-GET http://localhost:9090/medicalCase/52/medications
-Accept: application/json
-Authorization: Bearer {{JWT_token}}
-
-#actions dedicated for patient menagment
-###
-POST http://localhost:9090/patient/new
+PATCH http://localhost:9090/doctor/medication/10/status
 Content-Type: application/json
 Authorization: Bearer {{JWT_token}}
 
 {
-  "socialSecurityNumber": 2115,
-  "firstName": "krystian",
-  "lastName": "test",
-  "endDate": "2003-07-11T10:00:00",
-  "age": 22,
-  "gender": "male"
+  "status": "CANCELLED"
 }
+
+
 ###
-GET http://localhost:9090/patient/kE4WwRkDiE
+GET http://localhost:9090/medical-case/A12345/summary
+Content-Type: application/json
+Authorization: Bearer {{JWT_token}}
+
+###
+GET http://localhost:9090/medical-case/A12345/history
+Content-Type: application/json
+Authorization: Bearer {{JWT_token}}
+
+
+###
+GET http://localhost:9090/medical-case/103/treatment/all
 Accept: application/json
 Authorization: Bearer {{JWT_token}}
+
+
+###
+GET http://localhost:9090/medical-case/1/medication/all
+Accept: application/json
+Authorization: Bearer {{JWT_token}}
+
+
+###
+GET http://localhost:9090/patient/QSv9M3gU4n
+Accept: application/json
+Authorization: Bearer {{JWT_token}}
+
+
+###
+PATCH http://localhost:9090/medical-case/103
+Accept: application/json
+Authorization: Bearer {{JWT_token}}
+
 
 ###
 GET http://localhost:9090/doctor/patient/all
 Accept: application/json
 Authorization: Bearer {{JWT_token}}
 
+
 ###
-PATCH http://localhost:9090/medicalCase/52?force=true
+GET http://localhost:9090/doctor/medical-case/all
 Accept: application/json
 Authorization: Bearer {{JWT_token}}
+
+###
+POST http://localhost:9090/patient/restart
+Content-Type: application/json
+Authorization: Bearer {{JWT_token}}
+
+{
+  "email": "test@gmail.com"
+}

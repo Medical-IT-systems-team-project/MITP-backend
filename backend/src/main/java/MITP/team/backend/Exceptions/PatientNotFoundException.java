@@ -1,6 +1,12 @@
 package MITP.team.backend.Exceptions;
 
-// TODO obsluga tego wyjatku
-public class PatientNotFoundException extends RuntimeException {
-  public PatientNotFoundException(String s) {}
+public class PatientNotFoundException extends DataNotFoundException {
+    public PatientNotFoundException() {
+        super("patient");
+    }
+
+    @Override
+    public String getMessage() {
+        return "Patient not found";
+    }
 }
