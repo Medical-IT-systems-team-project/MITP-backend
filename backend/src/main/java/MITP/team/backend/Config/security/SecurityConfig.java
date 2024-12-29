@@ -55,11 +55,11 @@ public class SecurityConfig {
                         .requestMatchers("/swagger-ui/**").permitAll()
                         .requestMatchers("/swagger-ui.html").permitAll()
                         //medicalCase
-                        .requestMatchers("/medicalCase/**").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/medicalCase/{Id}/summary").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/medicalCase/{Id}/history").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/medicalCase/{Id}/treatments").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/medicalCase/{Id}/medications").permitAll()
+                        .requestMatchers("/medical-case/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/medical-case/{Id}/summary").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/medical-case/{Id}/history").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/medical-case/{Id}/treatment/all").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/medical-case/{Id}/medication/all").permitAll()
                         //patient
                         .requestMatchers(HttpMethod.POST, "/patient/new").permitAll()
                         .requestMatchers(HttpMethod.GET, "/patient/{accessId}").permitAll()

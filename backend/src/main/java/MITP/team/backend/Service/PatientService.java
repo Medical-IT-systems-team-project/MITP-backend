@@ -19,7 +19,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -32,6 +34,7 @@ public class PatientService implements IPatientService {
     private final PatientMapper patientMapper;
     private final EmailService emailService;
 
+    @Override
     public String createNewPatient(PatientRequestDto patientRequestDto) {
         patientRepository
                 .findBySocialSecurityNumber(patientRequestDto.socialSecurityNumber())
@@ -49,15 +52,15 @@ public class PatientService implements IPatientService {
         return save.getAccessId();
     }
 
+    @Override
     public PatientResponseDto getPatientByAccessId(String accessId) {
         Patient patient =
-                patientRepository
-                        .findByAccessId(accessId)
-                        .orElseThrow(PatientNotFoundException::new);
+                patientRepository.findByAccessId(accessId).orElseThrow(PatientNotFoundException::new);
 
         return patientMapper.mapToPatientResponseDto(patient);
     }
 
+    @Override
     public Set<PatientResponseDto> getAllPatients(Authentication auth) {
         String username = (String) auth.getPrincipal();
         MedicalDoctor authenticatedMedicalDoctor =
@@ -83,14 +86,23 @@ public class PatientService implements IPatientService {
         return allPatients;
     }
 
+    @Override
     public void getNewAccessId(EmailRequestDto emailRequestDto) {
-        Patient patient = patientRepository
-                .findByEmail(emailRequestDto.email())
-                .orElseThrow(PatientNotFoundException::new);
+        Patient patient =
+                patientRepository
+                        .findByEmail(emailRequestDto.email())
+                        .orElseThrow(PatientNotFoundException::new);
         String newAccessId = idGenerator.generateUniqueId();
         patient.setAccessId(newAccessId);
         patientRepository.save(patient);
         emailService.sendRestartEmail(emailRequestDto.email(), newAccessId);
     }
 
+    @Override
+    public List<PatientResponseDto> getUnassignedPatients() {
+        List<Patient> patients = patientRepository.findPatientsWithNoMedicalCaseOrCompletedCases();
+        return patients.stream()
+                .map(patientMapper::mapToPatientResponseDto)
+                .collect(Collectors.toList());
+    }
 }
