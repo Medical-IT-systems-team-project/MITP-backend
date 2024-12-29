@@ -1,7 +1,6 @@
 package MITP.team.backend.Service;
 
 import MITP.team.backend.Model.Dto.MedicalCaseResponseDto;
-import MITP.team.backend.Model.Dto.PatientRequestDto;
 import MITP.team.backend.Model.Mapper.MedicalCaseMapper;
 import MITP.team.backend.Model.MedicalCase;
 import MITP.team.backend.Model.MedicalDoctor;
@@ -25,10 +24,6 @@ public class DoctorService implements IDoctorService {
     private final MedicalDoctorRepository doctorRepository;
 
 
-    @Override
-    public void addPatient(PatientRequestDto patientRequestDto) {
-
-    }
 
     @Override
     public Set<MedicalCaseResponseDto> getMedicalCases(Authentication auth) {

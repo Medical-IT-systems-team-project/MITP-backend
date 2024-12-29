@@ -6,13 +6,15 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public record MedicalCaseResponseDto(
-    MedicalCaseStatus status,
-    String admissionReason,
-    LocalDateTime admissionDate,
-    String description,
-    String createdBy,
-    String attendingDoctor,
-    String patientName,
-    List<MedicationResponseDto> medications,
-    List<TreatmentResponseDto> treatments,
-    List<String> allowedDoctors) {}
+        Long id,
+        MedicalCaseStatus status,
+        String admissionReason,
+        LocalDateTime admissionDate,
+        String description,
+        String createdBy,
+        String attendingDoctor,
+        String patientName,
+        List<MedicationResponseDto> medications,
+        List<TreatmentResponseDto> treatments,
+        List<String> allowedDoctors) {
+}
