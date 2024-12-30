@@ -1,12 +1,10 @@
 package MITP.team.backend.Model.Dto;
 
-import lombok.Builder;
-
 import java.time.LocalDate;
 
 
-@Builder
 public record PatientResponseDto(
+        Long id,
         String firstName,
         String lastName,
         LocalDate birthDate,

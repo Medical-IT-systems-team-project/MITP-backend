@@ -1,15 +1,15 @@
-package MITP.team.backend.Component;
+package MITP.team.backend.Utils;
 
 import MITP.team.backend.Model.MedicalCase;
 import MITP.team.backend.Model.Medication;
 import MITP.team.backend.Model.Treatment;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.time.format.DateTimeFormatter;
 
-@Component
+@Service
 public class EmailMessageBuilder {
 
     @Value("${spring.mail.username}")
@@ -27,7 +27,6 @@ public class EmailMessageBuilder {
         return message;
     }
 
-    //resetowanie hasła
     public SimpleMailMessage buildRestartEmail(String email, String accessId) {
         SimpleMailMessage message = new SimpleMailMessage();
 

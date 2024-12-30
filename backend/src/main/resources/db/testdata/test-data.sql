@@ -14,18 +14,18 @@ INSERT INTO projekt_med.patient (access_id, address, age, birth_date, email, fir
                                  phone_number, social_security_number, status)
 VALUES ('A123451234', '123 Main St, Springfield', 35, '1989-05-15 00:00:00', 'john.doe@gmail.com', 'John', 'Male',
         'Doe',
-        '555-234-567', '98716514321', 'IN_HOSPITAL'),
+        '555234567', '98716514321', 'IN_HOSPITAL'),
        ('B678901234', '456 Elm St, Metropolis', 28, '1995-08-23 00:00:00', 'jane.smith@yahoo.com', 'Jane', 'Female',
-        'Smith', '555-987-654', '12314516789', 'IN_HOSPITAL'),
+        'Smith', '555987654', '12314516789', 'IN_HOSPITAL'),
        ('C112231234', '789 Oak St, Gotham', 42, '1981-03-12 00:00:00', 'peter.parker@marvel.com', 'Peter', 'Male',
         'Parker',
-        '555-456-789', '11112213333', 'IN_HOSPITAL'),
+        '555456789', '11112213333', 'IN_HOSPITAL'),
        ('D445561234', '321 Pine St, Smallville', 30, '1993-10-30 00:00:00', 'clark.kent@dailyplanet.com', 'Clark',
         'Male',
-        'Kent', '555-321-654', '22213314444', 'DISCHARGED'),
+        'Kent', '555321654', '22213314444', 'DISCHARGED'),
        ('E778891234', '654 Maple St, Star City', 55, '1968-01-25 00:00:00', 'diana.prince@amazon.com', 'Diana',
         'Female',
-        'Prince', '555-654-321', '33314415555', 'DISCHARGED');
+        'Prince', '555654321', '33314415555', 'DISCHARGED');
 
 
 INSERT INTO projekt_med.medical_case (admission_date, admission_reason, description, status,

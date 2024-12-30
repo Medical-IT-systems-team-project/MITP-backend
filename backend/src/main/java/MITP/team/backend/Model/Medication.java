@@ -1,7 +1,8 @@
 package MITP.team.backend.Model;
 
-import MITP.team.backend.Model.Enum.MedicalStatus;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,32 +12,17 @@ import java.time.LocalDate;
 @Getter
 @Entity
 @Table(name = "medication")
-public class Medication {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long Id;
+public class Medication extends MedicalItem {
 
-  private String name;
+    @Column(name = "start_date", nullable = false)
+    private LocalDate startDate;
 
-  @Column(name = "start_date", nullable = false)
-  private LocalDate startDate;
+    @Column(name = "end_date", nullable = false)
+    private LocalDate endDate;
 
-  @Column(name = "end_date", nullable = false)
-  private LocalDate endDate;
+    private String dosage;
+    private String frequency;
+    private String strength;
+    private String unit;
 
-  private String dosage;
-  private String frequency;
-  private String strength;
-  private String unit;
-
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "medical_case_id")
-  private MedicalCase medicalCase;
-
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "medical_doctor_id")
-  private MedicalDoctor medicalDoctor;
-
-  @Enumerated(EnumType.STRING)
-  private MedicalStatus status;
 }

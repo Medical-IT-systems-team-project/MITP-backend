@@ -1,7 +1,7 @@
 ###
 Wypisane wszystkie endpointy (podstawowe htttp do manualego testowania)
 ###
-POST http://localhost:9090/register
+POST http://localhost:8080/register
 Content-Type: application/json
 
 {
@@ -11,7 +11,7 @@ Content-Type: application/json
 
 
 ###
-POST http://localhost:9090/login
+POST http://localhost:8080/login
 Content-Type: application/json
 
 {
@@ -21,7 +21,7 @@ Content-Type: application/json
 
 
 ###
-POST http://localhost:9090/patient/new
+POST http://localhost:8080/patient/new
 Content-Type: application/json
 Authorization: Bearer {{JWT_token}}
 
@@ -39,7 +39,7 @@ Authorization: Bearer {{JWT_token}}
 
 
 ###
-POST http://localhost:9090/medical-case/new
+POST http://localhost:8080/medical-case/new
 Content-Type: application/json
 Authorization: Bearer {{JWT_token}}
 
@@ -53,7 +53,7 @@ Authorization: Bearer {{JWT_token}}
 
 
 ###
-POST http://localhost:9090/doctor/new/treatment
+POST http://localhost:8080/doctor/treatment/new
 Content-Type: application/json
 Authorization: Bearer {{JWT_token}}
 
@@ -63,12 +63,12 @@ Authorization: Bearer {{JWT_token}}
   "endDate": "2025-07-20T15:00:00",
   "name": "Test",
   "details": "test test",
-  "medicalCaseId": 103,
+  "medicalCaseId": 1,
   "medicalDoctorId": 1
 }
 
 ###
-PATCH http://localhost:9090/doctor/treatment/1/status
+PATCH http://localhost:8080/doctor/treatment/1/status
 Content-Type: application/json
 Authorization: Bearer {{JWT_token}}
 
@@ -78,7 +78,7 @@ Authorization: Bearer {{JWT_token}}
 
 
 ###
-POST http://localhost:9090/doctor/new/medication
+POST http://localhost:8080/doctor/new/medication
 Content-Type: application/json
 Authorization: Bearer {{JWT_token}}
 
@@ -96,7 +96,7 @@ Authorization: Bearer {{JWT_token}}
 }
 
 ###
-PATCH http://localhost:9090/doctor/medication/10/status
+PATCH http://localhost:8080/doctor/medication/10/status
 Content-Type: application/json
 Authorization: Bearer {{JWT_token}}
 
@@ -106,56 +106,60 @@ Authorization: Bearer {{JWT_token}}
 
 
 ###
-GET http://localhost:9090/medical-case/A12345/summary
+GET http://localhost:8080/medical-case/A12345/summary
 Content-Type: application/json
 Authorization: Bearer {{JWT_token}}
 
 ###
-GET http://localhost:9090/medical-case/A12345/history
+GET http://localhost:8080/medical-case/A12345/history
 Content-Type: application/json
 Authorization: Bearer {{JWT_token}}
 
 
 ###
-GET http://localhost:9090/medical-case/103/treatment/all
+GET http://localhost:8080/medical-case/103/treatment/all
 Accept: application/json
 Authorization: Bearer {{JWT_token}}
 
 
 ###
-GET http://localhost:9090/medical-case/1/medication/all
+GET http://localhost:8080/medical-case/1/medication/all
 Accept: application/json
 Authorization: Bearer {{JWT_token}}
 
 
 ###
-GET http://localhost:9090/patient/QSv9M3gU4n
+GET http://localhost:8080/patient/QSv9M3gU4n
 Accept: application/json
 Authorization: Bearer {{JWT_token}}
 
 
 ###
-PATCH http://localhost:9090/medical-case/103
+PATCH http://localhost:8080/medical-case/103
 Accept: application/json
 Authorization: Bearer {{JWT_token}}
 
 
 ###
-GET http://localhost:9090/doctor/patient/all
+GET http://localhost:8080/doctor/patient/all
 Accept: application/json
 Authorization: Bearer {{JWT_token}}
 
 
 ###
-GET http://localhost:9090/doctor/medical-case/all
+GET http://localhost:8080/doctor/medical-case/all
 Accept: application/json
 Authorization: Bearer {{JWT_token}}
 
 ###
-POST http://localhost:9090/patient/restart
+POST http://localhost:8080/patient/restart
 Content-Type: application/json
 Authorization: Bearer {{JWT_token}}
 
 {
   "email": "test@gmail.com"
 }
+
+###
+PATCH http://localhost:8080/medical-case/1?force=true
+Authorization: Bearer {{JWT_token}}
