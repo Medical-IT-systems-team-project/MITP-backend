@@ -3,6 +3,7 @@ package MITP.team.backend.Service;
 import MITP.team.backend.Exceptions.DataNotFoundException;
 import MITP.team.backend.Model.Dto.ImportedPatientDto;
 import MITP.team.backend.Model.Dto.MedicalCaseResponseDto;
+import MITP.team.backend.Model.Enum.MedicalCaseStatus;
 import MITP.team.backend.Model.Mapper.MedicalCaseMapper;
 import MITP.team.backend.Model.MedicalCase;
 import MITP.team.backend.Model.MedicalDoctor;
@@ -54,6 +55,8 @@ public class DoctorService implements IDoctorService {
                 .orElseThrow(() -> new DataNotFoundException("Doctor not found"));
 
         List<MedicalCase> medicalCases = medicalCaseRepository.getAllMedicalCaseByPatientId(patient.getId());
+
+        medicalCases = medicalCases.stream().filter(medicalCase -> medicalCase.getStatus().equals(MedicalCaseStatus.ONGOING)).toList();
 
         for (MedicalCase medicalCase : medicalCases) {
             if(medicalCase.getAllowedDoctors().stream().noneMatch(d -> d.getId().equals(doctor.getId()))){
