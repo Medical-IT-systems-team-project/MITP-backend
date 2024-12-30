@@ -1,8 +1,5 @@
-package MITP.team.backend.Config.errorvalidation;
+package MITP.team.backend.Exceptions;
 
-import MITP.team.backend.Exceptions.DataNotFoundException;
-import MITP.team.backend.Exceptions.InvalidStatusTransitionException;
-import MITP.team.backend.Exceptions.TreatmentNotFoundException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -27,9 +24,7 @@ public class ExceptionsHandlers {
     public DuplicateKeyExceptionDto handleDataIntegrityViolationException() {
         final String loginAlreadyExists = "Login already exists";
         log.warn(loginAlreadyExists);
-        return DuplicateKeyExceptionDto.builder()
-                .message(loginAlreadyExists)
-                .build();
+        return new DuplicateKeyExceptionDto(loginAlreadyExists);
     }
 
     @ExceptionHandler(UsernameNotFoundException.class)
@@ -38,9 +33,8 @@ public class ExceptionsHandlers {
     public UsernameNotFoundExceptionDto handleUsernameNotFoundException() {
         final String loginNotFound = "Login not found";
         log.warn(loginNotFound);
-        return UsernameNotFoundExceptionDto.builder()
-                .message(loginNotFound)
-                .build();
+        return new UsernameNotFoundExceptionDto(loginNotFound);
+
     }
 
     @ExceptionHandler(TreatmentNotFoundException.class)
@@ -79,5 +73,13 @@ public class ExceptionsHandlers {
     public ResponseEntity<?> handleInvalidStatusTransitionException(InvalidStatusTransitionException exception) {
         log.warn(exception.getMessage());
         return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());
+    }
+
+    @ExceptionHandler(DuplicatedPatientException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ResponseEntity<?> handleDuplicatedPatientException(DuplicatedPatientException exception) {
+        log.warn(exception.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("Patient already exists");
     }
 }

@@ -4,6 +4,8 @@ import MITP.team.backend.Model.Dto.MedicalCaseRequestDto;
 import MITP.team.backend.Model.Dto.MedicalCaseResponseDto;
 import MITP.team.backend.Model.Dto.MedicationResponseDto;
 import MITP.team.backend.Model.Dto.TreatmentResponseDto;
+import MITP.team.backend.Model.MedicalItem;
+import MITP.team.backend.Service.EmailService;
 import MITP.team.backend.Service.IMedicalCaseService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -21,6 +23,7 @@ import java.util.List;
 public class MedicalCaseController {
 
     private final IMedicalCaseService medicalDataService;
+    private final EmailService emailService;
 
     @GetMapping("/{accessId}/summary")
     public ResponseEntity<MedicalCaseResponseDto> getSummaryMedicalDataByAccessID(
@@ -56,12 +59,16 @@ public class MedicalCaseController {
 
     @PatchMapping("/{Id}")
     public ResponseEntity<?> closeCase(@PathVariable Long Id, @RequestParam(defaultValue = "false") Boolean force) {
-        List<Object> incompleteItems = medicalDataService.getIncompleteList(Id);
+        List<MedicalItem> incompleteItems = medicalDataService.getIncompleteList(Id);
 
         if (!incompleteItems.isEmpty() && !force) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(incompleteItems);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Case has incomplete treatments or medications");
+        }
+        if (force) {
+            medicalDataService.changeStatusToCanceled(incompleteItems);
         }
         medicalDataService.closeCase(Id);
+        emailService.sendSummaryEmail(Id);
         return ResponseEntity.ok("Case closed");
     }
 }

@@ -2,11 +2,9 @@ package MITP.team.backend.Model.Dto;
 
 import MITP.team.backend.Model.Enum.Gender;
 import jakarta.validation.constraints.*;
-import lombok.Builder;
 
 import java.time.LocalDate;
 
-@Builder
 public record PatientRequestDto(
         @NotNull
         @Pattern(regexp = "^[0-9]{11}$", message = "SSN must have 11 digits")

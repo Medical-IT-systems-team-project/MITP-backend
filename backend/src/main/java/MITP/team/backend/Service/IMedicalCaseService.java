@@ -4,6 +4,7 @@ import MITP.team.backend.Model.Dto.MedicalCaseRequestDto;
 import MITP.team.backend.Model.Dto.MedicalCaseResponseDto;
 import MITP.team.backend.Model.Dto.MedicationResponseDto;
 import MITP.team.backend.Model.Dto.TreatmentResponseDto;
+import MITP.team.backend.Model.MedicalItem;
 import org.springframework.security.core.Authentication;
 
 import java.util.List;
@@ -22,6 +23,8 @@ public interface IMedicalCaseService {
 
   void closeCase(Long id);
 
-  List<Object> getIncompleteList(Long id);
+  List<MedicalItem> getIncompleteList(Long id);
+
+  void changeStatusToCanceled(List<MedicalItem> incompleteItems);
 
 }

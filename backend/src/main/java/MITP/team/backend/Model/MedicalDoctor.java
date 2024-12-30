@@ -8,86 +8,89 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-@Builder
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@RequiredArgsConstructor(staticName = "of")
 @Table(
-    name = "medical_doctor",
-    indexes = {@Index(name = "idx_login", columnList = "login")})
+        name = "medical_doctor",
+        indexes = {@Index(name = "idx_login", columnList = "login")})
 public class MedicalDoctor implements UserDetails {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "medical_doctor_id", nullable = false)
-  private Long id;
 
-  @Column(nullable = false, unique = true)
-  private String login;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "medical_doctor_id", nullable = false)
+    private Long id;
 
-  @Column(nullable = false)
-  private String password;
+    @NonNull
+    @Column(nullable = false, unique = true)
+    private String login;
 
-  @Column(name = "first_name")
-  private String firstName;
+    @NonNull
+    @Column(nullable = false)
+    private String password;
 
-  @Column(name = "last_name")
-  private String lastName;
+    @Column(name = "first_name")
+    private String firstName;
 
-  private String email;
+    @Column(name = "last_name")
+    private String lastName;
 
-  @Column(name = "phone_number")
-  private String phoneNumber;
+    private String email;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "attendingDoctor")
-  private List<MedicalCase> medicalCaseData;
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "createdBy")
-  private List<MedicalCase> createdMedicalCaseData;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "attendingDoctor")
+    private List<MedicalCase> medicalCaseData;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "medicalDoctor")
-  private List<Medication> medications;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "createdBy")
+    private List<MedicalCase> createdMedicalCaseData;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "medicalDoctor")
-  private List<Treatment> treatments;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "medicalDoctor")
+    private List<Medication> medications;
 
-  @ManyToMany(fetch = FetchType.LAZY, mappedBy = "allowedDoctors")
-  private List<MedicalCase> allowedMedicalCases;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "medicalDoctor")
+    private List<Treatment> treatments;
 
-  @Override
-  public Collection<? extends GrantedAuthority> getAuthorities() {
-    return List.of();
-  }
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "allowedDoctors")
+    private List<MedicalCase> allowedMedicalCases;
 
-  @Override
-  public String getUsername() {
-    return login;
-  }
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
 
-  @Override
-  public String getPassword() {
-    return password;
-  }
+    @Override
+    public String getUsername() {
+        return login;
+    }
 
-  @Override
-  public boolean isAccountNonExpired() {
-    return true;
-  }
+    @Override
+    public @NonNull String getPassword() {
+        return password;
+    }
 
-  @Override
-  public boolean isAccountNonLocked() {
-    return true;
-  }
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
 
-  @Override
-  public boolean isCredentialsNonExpired() {
-    return true;
-  }
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
 
-  @Override
-  public boolean isEnabled() {
-    return true;
-  }
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

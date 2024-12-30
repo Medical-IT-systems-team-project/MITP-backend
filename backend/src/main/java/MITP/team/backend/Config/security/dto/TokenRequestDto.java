@@ -3,9 +3,7 @@ package MITP.team.backend.Config.security.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
 
-@Builder
 public record TokenRequestDto(
 
         @NotNull(message = "{login.not.null}")

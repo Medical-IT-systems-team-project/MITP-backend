@@ -14,13 +14,10 @@ public class LoginAndRegisterMapper {
   private final PasswordEncoder passwordEncoder;
 
     public LoginRequest fromRegisterRequestDto(RegisterRequestDto dto) {
-        return LoginRequest.builder()
-        .login(dto.login())
-        .password(passwordEncoder.encode(dto.password()))
-        .build();
+      return new LoginRequest(dto.login(), passwordEncoder.encode(dto.password()));
   }
 
     public RegisterResponseDto fromUserResponseDto(LoginResponse dto, String message) {
-    return RegisterResponseDto.builder().login(dto.login()).message(message).build();
+      return new RegisterResponseDto(dto.login(), message);
   }
 }

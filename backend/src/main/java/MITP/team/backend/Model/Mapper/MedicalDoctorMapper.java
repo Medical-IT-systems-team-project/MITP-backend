@@ -8,19 +8,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class MedicalDoctorMapper {
 
-  public MedicalDoctor mapToMedicalDoctor(LoginRequest medicalDoctorRequest) {
-    return MedicalDoctor.builder()
-        .login(medicalDoctorRequest.login())
-        .password(medicalDoctorRequest.password())
-        .build();
-  }
+    public MedicalDoctor mapToMedicalDoctor(LoginRequest medicalDoctorRequest) {
+        return MedicalDoctor.of(medicalDoctorRequest.login(), medicalDoctorRequest.password());
+    }
 
-  public LoginResponse mapToMedicalDoctorResponseDto(MedicalDoctor medicalDoctor) {
-    return LoginResponse.builder()
-        .login(medicalDoctor.getLogin())
-        .password(medicalDoctor.getPassword())
-        .build();
-  }
+    public LoginResponse mapToMedicalDoctorResponseDto(MedicalDoctor medicalDoctor) {
+        return new LoginResponse(medicalDoctor.getLogin(), medicalDoctor.getPassword());
+    }
 
 
 }
