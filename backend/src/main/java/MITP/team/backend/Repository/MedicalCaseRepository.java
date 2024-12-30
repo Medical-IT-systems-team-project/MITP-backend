@@ -16,4 +16,6 @@ public interface MedicalCaseRepository extends JpaRepository<MedicalCase, Long> 
   MedicalCase getMedicalCaseByPatientIdAndStatus(Long Id, MedicalCaseStatus status);
 
   List<MedicalCase> getMedicalCaseByPatientId(Long Id);
+
+    List<MedicalCase> getAllMedicalCaseByPatientId(Long id);
 }
