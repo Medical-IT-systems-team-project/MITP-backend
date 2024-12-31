@@ -58,7 +58,8 @@
             <column name="end_date" type="DATE">
                 <constraints nullable="false"/>
             </column>
-            <column name="dosage_form" type="VARCHAR(255)"/>
+            <column name="dosage" type="VARCHAR(255)"/>
+            <column name="frequency" type="VARCHAR(255)"/>
             <column name="strength" type="VARCHAR(255)"/>
             <column name="unit" type="VARCHAR(255)"/>
             <column name="medical_case_id" type="BIGINT"/>

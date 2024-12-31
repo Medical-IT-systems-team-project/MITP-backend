@@ -13,7 +13,7 @@ public record MedicationRequestDto(
         @NotNull @FutureOrPresent LocalDate startDate,
         @NotNull @Future LocalDate endDate,
         @NotBlank String details,
-        @NotBlank String dosageForm,
+        @NotBlank String dosage,
         @NotBlank String strength,
         @NotBlank String unit,
         @NotBlank String frequency,

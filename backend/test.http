@@ -15,7 +15,7 @@ POST http://localhost:8080/login
 Content-Type: application/json
 
 {
-  "login": "asmith",
+  "login": "jbrown",
   "password": "somePassword"
 }
 
@@ -78,7 +78,7 @@ Authorization: Bearer {{JWT_token}}
 
 
 ###
-POST http://localhost:8080/doctor/new/medication
+POST http://localhost:8080/doctor/medication/new
 Content-Type: application/json
 Authorization: Bearer {{JWT_token}}
 
@@ -90,7 +90,7 @@ Authorization: Bearer {{JWT_token}}
   "medicalCaseId": 1,
   "medicalDoctorId": 1,
   "dosage": "1x1",
-  "frequency": "1x1",
+  "frequency": "1x dziennie",
   "strength": "200mg",
   "unit": "tabletki"
 }
@@ -106,7 +106,7 @@ Authorization: Bearer {{JWT_token}}
 
 
 ###
-GET http://localhost:8080/medical-case/A12345/summary
+GET http://localhost:8080/medical-case/A123451234/summary
 Content-Type: application/json
 Authorization: Bearer {{JWT_token}}
 
@@ -163,3 +163,9 @@ Authorization: Bearer {{JWT_token}}
 ###
 PATCH http://localhost:8080/medical-case/1?force=true
 Authorization: Bearer {{JWT_token}}
+
+###
+PATCH http://127.0.0.1:8080/medical-case/allowed-doctor/123445
+Authorization: Bearer {{JWT_token}}
+
+
