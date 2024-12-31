@@ -1,6 +1,5 @@
 package MITP.team.backend.Controller;
 
-import MITP.team.backend.Model.Dto.ImportedPatientDto;
 import MITP.team.backend.Model.Dto.MedicationRequestDto;
 import MITP.team.backend.Model.Dto.StatusRequestDto;
 import MITP.team.backend.Model.Dto.TreatmentRequestDto;
@@ -64,11 +63,5 @@ public class DoctorController {
     @GetMapping("/medical-case/all")
     public ResponseEntity<?> getMedicalCases(Authentication auth) {
         return ResponseEntity.ok().body(doctorService.getMedicalCases(auth));
-    }
-
-    @PatchMapping("/import-patient")
-    public ResponseEntity<?> importPatient(@RequestBody ImportedPatientDto importedPatientDto) {
-        doctorService.importPatient(importedPatientDto);
-        return ResponseEntity.ok("Patient imported");
     }
 }

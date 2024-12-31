@@ -63,7 +63,7 @@ public class MedicalCaseService implements IMedicalCaseService {
                                 PatientNotFoundException::new);
 
         List<MedicalCase> allPatientsCases =
-                medicalCaseRepository.getMedicalCaseByPatientId(patient.getId());
+                medicalCaseRepository.getAllMedicalCaseByPatientId(patient.getId());
 
         return allPatientsCases.stream().map(medicalCaseMapper::mapToMedicalDataResponseDto).toList();
     }
@@ -142,4 +142,22 @@ public class MedicalCaseService implements IMedicalCaseService {
     public void changeStatusToCanceled(List<MedicalItem> incompleteItems) {
         incompleteItems.forEach(item -> item.setStatus(MedicalStatus.CANCELLED));
     }
+
+    @Override
+    public void addAllowedDoctor(String accessId, Authentication authentication) {
+        Patient patient =
+                patientRepository
+                        .findByAccessId(accessId)
+                        .orElseThrow(
+                                PatientNotFoundException::new);
+        MedicalCase medicalCase = medicalCaseRepository.getMedicalCaseByPatientIdAndStatus(patient.getId(), MedicalCaseStatus.ONGOING);
+        String username = (String) authentication.getPrincipal();
+        MedicalDoctor medicalDoctor =
+                medicalDoctorRepository
+                        .findByLogin(username)
+                        .orElseThrow(() -> new SecurityException("Unauthorized access"));
+        medicalCase.getAllowedDoctors().add(medicalDoctor);
+        medicalCaseRepository.save(medicalCase);
+    }
+
 }
