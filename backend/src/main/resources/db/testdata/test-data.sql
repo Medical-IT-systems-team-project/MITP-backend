@@ -93,7 +93,7 @@ VALUES ('Hip replacement surgery', '2025-12-10 00:00:00.000000', 'Hip Surgery', 
 
 -- 5 WYPELNIJ DANE LEKÓW
 -- Medications for Patient 1 (medical_case_id = 1, medical_doctor_id = 1)
-INSERT INTO projekt_med.medication (dosage_form, end_date, name, start_date, status, strength, unit,
+INSERT INTO projekt_med.medication (dosage, end_date, name, start_date, status, strength, unit,
                                     medical_case_id, medical_doctor_id)
 VALUES ('Tablet', '2025-12-10 00:00:00.000000', 'Paracetamol', '2025-12-01 00:00:00.000000', 'PLANNED', '500', 'mg', 1,
         1),
@@ -107,7 +107,7 @@ VALUES ('Tablet', '2025-12-10 00:00:00.000000', 'Paracetamol', '2025-12-01 00:00
         1);
 
 -- Medications for Patient 2 (medical_case_id = 2, medical_doctor_id = 2)
-INSERT INTO projekt_med.medication (dosage_form, end_date, name, start_date, status, strength, unit,
+INSERT INTO projekt_med.medication (dosage, end_date, name, start_date, status, strength, unit,
                                     medical_case_id, medical_doctor_id)
 VALUES ('Tablet', '2025-12-10 00:00:00.000000', 'Aspirin', '2025-12-01 00:00:00.000000', 'PLANNED', '300', 'mg', 2, 2),
        ('Capsule', '2025-12-15 00:00:00.000000', 'Amoxicillin', '2025-12-05 00:00:00.000000', 'ONGOING', '250', 'mg', 2,
@@ -119,7 +119,7 @@ VALUES ('Tablet', '2025-12-10 00:00:00.000000', 'Aspirin', '2025-12-01 00:00:00.
         2, 2);
 
 -- Medications for Patient 3 (medical_case_id = 3, medical_doctor_id = 3)
-INSERT INTO projekt_med.medication (dosage_form, end_date, name, start_date, status, strength, unit,
+INSERT INTO projekt_med.medication (dosage, end_date, name, start_date, status, strength, unit,
                                     medical_case_id, medical_doctor_id)
 VALUES ('Tablet', '2025-12-10 00:00:00.000000', 'Simvastatin', '2025-12-01 00:00:00.000000', 'PLANNED', '20', 'mg', 3,
         3),
@@ -132,7 +132,7 @@ VALUES ('Tablet', '2025-12-10 00:00:00.000000', 'Simvastatin', '2025-12-01 00:00
        ('Tablet', '2026-01-01 00:00:00.000000', 'Losartan', '2025-12-20 00:00:00.000000', 'PLANNED', '50', 'mg', 3, 3);
 
 -- Medications for Patient 4 (medical_case_id = 4, medical_doctor_id = 4)
-INSERT INTO projekt_med.medication (dosage_form, end_date, name, start_date, status, strength, unit,
+INSERT INTO projekt_med.medication (dosage, end_date, name, start_date, status, strength, unit,
                                     medical_case_id, medical_doctor_id)
 VALUES ('Tablet', '2025-12-10 00:00:00.000000', 'Amlodipine', '2025-12-01 00:00:00.000000', 'PLANNED', '10', 'mg', 4,
         4),
