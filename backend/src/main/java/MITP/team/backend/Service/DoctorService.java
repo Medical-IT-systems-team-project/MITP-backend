@@ -23,8 +23,6 @@ public class DoctorService implements IDoctorService {
     private final MedicalCaseMapper medicalCaseMapper;
     private final MedicalDoctorRepository doctorRepository;
 
-
-
     @Override
     public Set<MedicalCaseResponseDto> getMedicalCases(Authentication auth) {
         String username = (String) auth.getPrincipal();

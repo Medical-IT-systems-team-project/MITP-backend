@@ -27,4 +27,6 @@ public interface IMedicalCaseService {
 
   void changeStatusToCanceled(List<MedicalItem> incompleteItems);
 
+  void addAllowedDoctor(String accessId, Authentication authentication);
+
 }

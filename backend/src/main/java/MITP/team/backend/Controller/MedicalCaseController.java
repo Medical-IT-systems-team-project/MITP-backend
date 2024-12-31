@@ -71,4 +71,10 @@ public class MedicalCaseController {
         emailService.sendSummaryEmail(Id);
         return ResponseEntity.ok("Case closed");
     }
+
+    @PatchMapping("/allowed-doctor/{accessId}")
+    public ResponseEntity<?> addAllowedDoctor(@PathVariable String accessId, Authentication authentication) {
+        medicalDataService.addAllowedDoctor(accessId, authentication);
+        return ResponseEntity.ok("Doctor added to allowed");
+    }
 }
