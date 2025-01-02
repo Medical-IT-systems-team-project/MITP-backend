@@ -108,12 +108,11 @@ Authorization: Bearer {{JWT_token}}
 ###
 GET http://localhost:8080/medical-case/A123451234/summary
 Content-Type: application/json
-Authorization: Bearer {{JWT_token}}
 
 ###
-GET http://localhost:8080/medical-case/A12345/history
+GET http://localhost:8080/medical-case/A123451234/history
 Content-Type: application/json
-Authorization: Bearer {{JWT_token}}
+
 
 
 ###

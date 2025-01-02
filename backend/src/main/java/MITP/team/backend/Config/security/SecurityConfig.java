@@ -55,7 +55,6 @@ public class SecurityConfig {
                         .requestMatchers("/swagger-ui/**").permitAll()
                         .requestMatchers("/swagger-ui.html").permitAll()
                         //medicalCase
-                        .requestMatchers("/medical-case/**").authenticated()
                         .requestMatchers(HttpMethod.GET, "/medical-case/{Id}/summary").permitAll()
                         .requestMatchers(HttpMethod.GET, "/medical-case/{Id}/history").permitAll()
                         .requestMatchers(HttpMethod.GET, "/medical-case/{Id}/treatment/all").permitAll()
