@@ -55,41 +55,22 @@ This is the backend of the Medical-IT-Systems-Team-Project. It is a RESTful API 
 - **Restart access ID for patients**: Option to reset patient access IDs for security.
 - **Patient summary email**: Automatically send a summary email to patients with their treatment and medication details.
 
-## API Endpoints
+## API Documentation
 
-### Authentication
+API documentation is available via Swagger UI. Once the application is running, you can access it at:
 
-- **`/welcome`**: Displays a welcome message and checks if the server is running.
-- **`/login`**: Logs in a user (doctor or patient) with provided credentials.
-- **`/register`**: Registers a new user (doctor or patient) in the system.
-- **`/delete/{login}`**: Deletes the user with the specified login (only accessible by admin).
+- [Swagger UI Documentation](https://caretrack.skni.umcs.pl/swagger-ui/index.html)
 
-### User Management
+## Application Access
 
-- **`/find/{login}`**: Finds a user (doctor or patient) by their login.
-- **`/update/{login}`**: Updates the user's profile information.
-- **`/patient/restart`**: Resets the access ID for the patient (useful for security reasons).
-- **`/patient/{accessId}`**: Fetches detailed patient information using their access ID.
+You can access the application using the following link:
 
-### Doctor's Management
+- [CareTrack Application](https://caretrack.skni.umcs.pl)
 
-- **`/doctor/medical-case/all`**: Retrieves all medical cases assigned to the doctor.
-- **`/doctor/medication/new`**: Adds a new medication to a patient's treatment plan.
-- **`/doctor/medication/{Id}/status`**: Updates the status of a specific medication (e.g., active, completed).
-- **`/doctor/patient/all`**: Retrieves all patients assigned to the doctor.
-- **`/doctor/patient/all/unassigned`**: Retrieves a list of unassigned patients for the doctor.
-- **`/doctor/treatment/new`**: Adds a new treatment plan for a patient.
-- **`/doctor/treatment/{Id}/status`**: Updates the status of a specific treatment plan.
+Here is a screenshot of the welcome page:
 
-### Medical Case Management
+![Welcome Page](img.png)
 
-- **`/medical-case/new`**: Creates a new medical case for a patient.
-- **`/medical-case/{Id}`**: Fetches details of a specific medical case by its ID.
-- **`/medical-case/{Id}/medication/all`**: Retrieves a list of all medications linked to a specific medical case.
-- **`/medical-case/{Id}/treatment/all`**: Retrieves a list of all treatments linked to a specific medical case.
-- **`/medical-case/{accessId}/history`**: Fetches the medical history for a patient using their access ID.
-- **`/medical-case/{accessId}/summary`**: Sends a summary email with the patient's treatment and medication details.
-- **`/medical-case/allowed-doctor/{accessId}`**: Fetches the list of doctors who are allowed to view the medical case for a specific patient.
 
 ## Setup
 1. Clone the repository: `git clone 
