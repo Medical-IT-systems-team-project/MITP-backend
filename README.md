@@ -69,7 +69,7 @@ You can access the application using the following link:
 
 Here is a screenshot of the welcome page:
 
-![Welcome Page](img.png)
+![Welcome Page](backend/Screenshot 2025-01-07 at 17.05.12.png)
 
 
 ## Setup
